@@ -1,7 +1,6 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
 
 
@@ -338,7 +337,6 @@ export default function ConversationPage() {
                 </section>
             </main>
 
-            <Footer />
 
             {/* Watermark */}
             <div className="page-watermark" aria-hidden="true">

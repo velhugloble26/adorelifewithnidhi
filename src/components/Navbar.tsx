@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
@@ -9,7 +8,7 @@ const LOGO_URL =
     "https://lh3.googleusercontent.com/aida-public/AB6AXuBzUq9CxfMlZyYyJU5RWDlJwf27Uf6PWJqmAYXFD742d3u1I9nGWiImtfJE1wP-9KXTnDZSz16LsuIqYCq1hrzUk-hdHwsmiZTPmMu5KDzZZTT_qYLBKLgtdqESyJYkMEQnLthhiP1QJXzwB_WdlJLKkE5B3choWYd8BG4NcrhlwBdD6FPV6on-DQautDU1A4qQs0epEkodHeExtS1y57v4wnolCDdHA8-8WtBxaV0OoQ59n3ZpTWnBfnaMSEntw2Ba-Q";
 
 const navLinks = [
-    { href: "/", label: "Home" },
+    { href: "/home", label: "Home" },
     { href: "/story", label: "Story" },
     { href: "/therapy", label: "Therapy" },
     { href: "/conversation", label: "Conversation" },
@@ -27,7 +26,7 @@ export default function Navbar() {
                     style={{ paddingLeft: "clamp(1rem, 10vw, 9rem)", paddingRight: "clamp(1rem, 10vw, 9rem)" }}
                 >
                     {/* Brand */}
-                    <Link href="/" aria-label="Adore Life – Home">
+                    <Link href="/home" aria-label="Adore Life – Home">
                         <img
                             src={LOGO_URL}
                             alt="Adore Life"
@@ -40,8 +39,8 @@ export default function Navbar() {
                     <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
                         {navLinks.map(({ href, label }) => {
                             const active =
-                                href === "/"
-                                    ? pathname === "/"
+                                href === "/home"
+                                    ? pathname === "/home"
                                     : pathname.startsWith(href);
                             return (
                                 <Link
@@ -86,8 +85,8 @@ export default function Navbar() {
                     >
                         {navLinks.map(({ href, label }) => {
                             const active =
-                                href === "/"
-                                    ? pathname === "/"
+                                href === "/home"
+                                    ? pathname === "/home"
                                     : pathname.startsWith(href);
                             return (
                                 <Link

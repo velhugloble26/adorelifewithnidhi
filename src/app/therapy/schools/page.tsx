@@ -1,7 +1,6 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import Link from "next/link";
 import {
     PageHero,
@@ -156,7 +155,6 @@ export default function SchoolsPage() {
                 </CtaSection>
 
             </main>
-            <Footer />
         </>
     );
 }

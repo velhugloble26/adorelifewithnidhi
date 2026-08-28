@@ -1,7 +1,6 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import Link from "next/link";
 
 const HERO_IMG =
@@ -297,7 +296,6 @@ export default function WomensWellnessPage() {
                 </section>
             </main>
 
-            <Footer />
         </>
     );
 }
