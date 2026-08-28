@@ -1,9 +1,8 @@
 import { z } from "zod";
-import { requireAdmin } from "@/utils/auth";
-import connectDB from "@/config/database";
-import RoleService from "@/services/roleServices";
-import apiResponse from "@/utils/common/apiResponse";
-
+import connectDB from "../../../../config/dbconnection";
+import RoleService from "../../../../services/roleServices";
+import { requireAdmin } from "../../../../utils/auth";
+import apiResponse from "../../../../utils/common/apiResponse";
 export async function DELETE(req) {
   try {
     const auth = await requireAdmin(req);

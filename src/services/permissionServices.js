@@ -1,4 +1,4 @@
-import { Permissions } from "../modal/schema";
+import { Permissions, UserRoles } from "../schema/schema";
 
 import {
   BadRequestError,
@@ -190,8 +190,6 @@ class PermissionService {
 
     // Before deleting a permission, make sure
     // no role currently uses it.
-    const { UserRoles } = await import("../modal/schema");
-
     const roleUsingPermission =
       await UserRoles.findOne({
         permissions: permissionId,

@@ -1,11 +1,11 @@
-import { requireAdmin } from "@/utils/auth";
-import connectDB from "@/config/database";
-import PermissionService from "@/services/permissionServices";
+import connectDB from "../../../../config/dbconnection";
 import {
   success,
   serverError,
   validationError,
-} from "@/utils/apiResponse";
+} from "../../../../utils/apiResponse";
+import PermissionService from "../../../../services/permissionServices";
+import { requireAdmin } from "../../../../utils/auth";
 import { z } from "zod";
 
 const updatePermissionSchema = z.object({

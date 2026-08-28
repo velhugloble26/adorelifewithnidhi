@@ -1,8 +1,6 @@
-import { requireAdmin } from "@/utils/auth";
-import connectDB from "@/config/database";
-import QuickQuoteService from "@/services/quickQuoteServices";
-import apiResponse from "@/utils/common/apiResponse";
-
+import connectDB from "../../../../config/dbconnection";
+import QuickQuoteService from "../../../../services/quickQuoteServices";
+import apiResponse from "../../../../utils/common/apiResponse";
 export async function GET(req) {
   try {
     const auth = await requireAdmin(req);

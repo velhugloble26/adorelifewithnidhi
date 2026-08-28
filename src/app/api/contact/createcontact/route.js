@@ -1,10 +1,11 @@
-import connectDB from "@/config/database";
-import ContactService from "@/services/contactServices";
+import connectDB from "../../../../config/dbconnection";
 import {
   success,
   serverError,
   validationError,
-} from "@/utils/apiResponse";
+} from "../../../../utils/apiResponse";
+import ContactService from "../../../../services/contactServices";
+
 import { z } from "zod";
 
 const createContactSchema = z.object({

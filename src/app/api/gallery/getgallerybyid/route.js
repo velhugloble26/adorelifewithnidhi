@@ -1,7 +1,10 @@
-import connectDB from "@/config/database";
-import GalleryService from "@/services/galleryServices";
-import { success, serverError, validationError } from "@/utils/apiResponse";
-
+import connectDB from "../../../../config/dbconnection";
+import {
+  success,
+  serverError,
+  validationError,
+} from "../../../../utils/apiResponse";
+import GalleryService from "../../../../services/galleryServices";
 export async function GET(req) {
   try {
     await connectDB();

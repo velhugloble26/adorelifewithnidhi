@@ -1,10 +1,11 @@
-import connectDB from "@/config/database";
-import QuickQuoteService from "@/services/quickQuoteServices";
+import connectDB from "../../../../config/dbconnection";
 import {
   success,
   serverError,
   validationError,
-} from "@/utils/apiResponse";
+} from "../../../../utils/apiResponse";
+import QuickQuoteService from "../../../../services/quickQuoteServices";
+
 import { z } from "zod";
 
 const createQuickQuoteSchema = z.object({

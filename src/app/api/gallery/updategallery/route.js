@@ -1,7 +1,12 @@
-import { requireAdmin } from "@/utils/auth";
-import connectDB from "@/config/database";
-import GalleryService from "@/services/galleryServices";
-import { success, serverError, validationError } from "@/utils/apiResponse";
+import connectDB from "../../../../config/dbconnection";
+import {
+  success,
+  serverError,
+  validationError,
+} from "../../../../utils/apiResponse";
+import GalleryService from "../../../../services/galleryServices";
+import { requireAdmin } from "../../../../utils/auth";
+
 import { z } from "zod";
 
 const schema = z.object({ galleryId: z.string().min(1), title: z.string().trim().min(1).max(200).optional(), description: z.string().trim().min(1).max(2000).optional(), image: z.string().trim().min(1).max(1000).optional() });

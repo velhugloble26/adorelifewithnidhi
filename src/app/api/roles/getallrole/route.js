@@ -1,10 +1,11 @@
-import { requireAdmin } from "@/utils/auth";
-import connectDB from "@/config/database";
-import RoleService from "@/services/roleServices";
+import connectDB from "../../../../config/dbconnection";
 import {
   success,
   serverError,
-} from "@/utils/apiResponse";
+} from "../../../../utils/apiResponse";
+import RoleService from "../../../../services/roleServices";
+import { requireAdmin } from "../../../../utils/auth";
+
 
 export async function GET(req) {
   try {

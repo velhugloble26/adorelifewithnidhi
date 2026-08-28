@@ -29,7 +29,7 @@ export default function Page() {
     <>
       <Navbar />
       <main>
-        <section className="section-pad mx-auto flex min-h-screen max-w-[1000px] flex-col items-center justify-center py-32 text-center">
+        <section className="section-pad mx-auto flex min-h-screen max-w-[1200px] flex-col items-center justify-center mt-[-40px] py-12 text-center">
           <h1 className="text-display-lg mb-8 max-w-2xl text-primary">Everyone deserves to be understood.</h1>
           <p className="text-headline-md mb-10 max-w-xl italic text-stone-grey">
             What if, for once, you didn&apos;t have to explain everything before someone understood?
@@ -51,7 +51,7 @@ export default function Page() {
 
         <div className="my-16 h-px w-full bg-gradient-to-r from-transparent via-stone-grey/20 to-transparent" />
 
-        <section id="recognition" className="section-pad mx-auto flex min-h-screen max-w-[800px] flex-col justify-center py-32">
+        <section id="recognition" className="section-pad mx-auto flex min-h-screen max-w-[1200px] flex-col justify-center py-32">
           <h2 className="text-display-lg mb-10 text-primary">Perhaps you&apos;ve been carrying more than you realise.</h2>
           <div className="text-body-lg space-y-8 text-on-surface-variant">
             <p>You may be functioning, working, caring for others and doing everything you&apos;re expected to do.</p>
@@ -71,7 +71,7 @@ export default function Page() {
         </section>
 
         <section className="section-pad flex min-h-screen items-center bg-muted-sand/30 py-32">
-          <div className="mx-auto w-full max-w-[800px]">
+          <div className="mx-auto w-full max-w-[1000px]">
             <h2 className="text-display-lg mb-10 text-center text-primary md:text-left">You don&apos;t need to have everything figured out to begin.</h2>
             <div className="text-body-lg mb-16 space-y-6 text-on-surface-variant">
               <p>Most of us learn to cope long before we learn to understand ourselves.</p>
@@ -86,7 +86,7 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="section-pad mx-auto flex min-h-screen max-w-[800px] flex-col items-center justify-center py-32 text-center">
+        <section className="section-pad mx-auto flex min-h-screen max-w-[1200px] flex-col items-center justify-center py-32 text-center">
           <h2 className="text-display-lg mb-10 text-primary">Understanding changes everything.</h2>
           <div className="text-body-lg mb-16 space-y-6 text-left text-on-surface-variant md:text-center">
             <p>When we begin to understand why we think, feel, and respond the way we do, something begins to shift.</p>
@@ -104,7 +104,7 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="section-pad mx-auto flex min-h-screen max-w-[800px] flex-col justify-center py-32">
+        <section className="section-pad mx-auto flex min-h-screen max-w-[1200px] flex-col justify-center py-32">
           <h2 className="text-display-lg mb-10 text-primary">Imagine having a space where you don&apos;t have to pretend you&apos;re okay.</h2>
           <div className="text-body-lg mb-16 space-y-6 text-on-surface-variant">
             <p>A space where you can speak honestly. Pause when you need to. Explore what feels difficult. Ask questions without feeling judged.</p>
@@ -122,7 +122,7 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="section-pad flex min-h-[716px] flex-col items-center justify-center bg-surface-dim py-32 text-center">
+        <section className="section-pad flex min-h-[1200px] flex-col items-center justify-center bg-surface-dim py-32 text-center">
           <h2 className="text-display-lg mb-6 text-primary">You don&apos;t have to know where to begin.</h2>
           <p className="text-body-lg mb-12 text-on-surface-variant">You only need to take the first step.</p>
           <Link href="/conversation" className="btn-primary mb-4 px-10 py-5">Begin To Adore Life</Link>

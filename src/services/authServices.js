@@ -7,8 +7,8 @@ import {
   NotFoundError,
   ConflictError,
 } from "../utils/common/errorhandlers";
-import { LoginOtp, UserRoles, Users } from "../modal/schema";
 import emailServices from "../utils/common/emailServices";
+import { LoginOtp, UserRoles, Users } from "../schema/schema";
 
 class AuthService {
   generateOtp() {

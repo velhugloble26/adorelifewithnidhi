@@ -1,4 +1,4 @@
-import { Contents } from "../modal/schema";
+import { Contents } from "../schema/schema";
 
 class ContactService {
   async createContact({ name, email, phone, subject, message }) {

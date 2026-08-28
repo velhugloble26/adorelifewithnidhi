@@ -26,7 +26,7 @@ export default function Navbar() {
                     style={{ paddingLeft: "clamp(1rem, 10vw, 9rem)", paddingRight: "clamp(1rem, 10vw, 9rem)" }}
                 >
                     {/* Brand */}
-                    <Link href="/home" aria-label="Adore Life – Home">
+                    <Link href="/" aria-label="Adore Life – Home">
                         <img
                             src={LOGO_URL}
                             alt="Adore Life"

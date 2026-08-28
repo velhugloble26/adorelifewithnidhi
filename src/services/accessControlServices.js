@@ -1,4 +1,4 @@
-import { Permissions, UserRoles } from "../modal/schema.js";
+import { Permissions, UserRoles } from "../schema/schema";
 export const DEFAULT_PERMISSIONS = [
   ["contacts.read","Read contact enquiries","contacts"],["contacts.create","Create contact enquiries","contacts"],["quotes.read","Read quick quote enquiries","quotes"],["quotes.create","Create quick quote enquiries","quotes"],
   ["blog.read","Read blog posts","blog"],["blog.create","Create blog posts","blog"],["blog.update","Update blog posts","blog"],["blog.delete","Delete blog posts","blog"],

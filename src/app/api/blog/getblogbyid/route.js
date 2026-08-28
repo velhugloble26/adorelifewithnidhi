@@ -1,7 +1,10 @@
-import connectDB from "@/config/database";
-import BlogService from "@/services/blogServices";
-import { success, serverError, validationError } from "@/utils/apiResponse";
-
+import connectDB from "../../../../config/dbconnection";
+import {
+  success,
+  serverError,
+  validationError,
+} from "../../../../utils/apiResponse";
+import BlogService from "../../../../services/blogServices";
 export async function GET(req) {
   try {
     await connectDB();

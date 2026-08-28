@@ -193,7 +193,83 @@ QuickContactSchema.pre('save', function () {
   this.updated_at = Date.now();
 });
 
+const ClientSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true, trim: true },
+    image: { type: String, required: true, trim: true },
+    message: { type: String, default: "", trim: true },
+    created_at: { type: Date, default: Date.now },
+    updated_at: { type: Date, default: Date.now },
+  },
+  { collection: 'client' }
+);
 
+ClientSchema.pre('save', function () {
+  this.updated_at = Date.now();
+})
+
+const SiteVisitorSchema = new mongoose.Schema(
+  {
+    visitorId: { type: String, required: true, unique: true, index: true, maxlength: 255 },
+    ipAddress: { type: String, default: null, index: true, maxlength: 255 },
+    userAgent: { type: String, default: null },
+    browser: { type: String, default: null, maxlength: 100 },
+    os: { type: String, default: null, maxlength: 100 },
+    device: { type: String, default: null, maxlength: 100 },
+    referrer: { type: String, default: null },
+    landingPage: { type: String, default: null },
+    firstSeenAt: { type: Date, default: Date.now },
+    lastSeenAt: { type: Date, default: Date.now }
+  },
+  { collection: "site_visitors", timestamps: false }
+);
+
+SiteVisitorSchema.pre('save', function () {
+  this.updated_at = Date.now();
+});
+
+const SiteSessionSchema = new mongoose.Schema(
+  {
+    sessionId: { type: String, required: true, unique: true, index: true, maxlength: 255 },
+    visitorId: { type: mongoose.Schema.Types.ObjectId, ref: "SiteVisitor", required: true, index: true },
+    ipAddress: { type: String, default: null, maxlength: 255 },
+    userAgent: { type: String, default: null },
+    browser: { type: String, default: null, maxlength: 100 },
+    os: { type: String, default: null, maxlength: 100 },
+    device: { type: String, default: null, maxlength: 100 },
+    referrer: { type: String, default: null },
+    landingPage: { type: String, default: null },
+    exitPage: { type: String, default: null },
+    pageViews: { type: Number, default: 0, min: 0 },
+    duration: { type: Number, default: 0, min: 0 },
+    startedAt: { type: Date, default: Date.now, index: true },
+    lastActivityAt: { type: Date, default: Date.now },
+    endedAt: { type: Date, default: null },
+    isActive: { type: Boolean, default: true, index: true }
+  },
+  { collection: "site_sessions", timestamps: false }
+);
+
+SiteSessionSchema.pre('save', function () {
+  this.updated_at = Date.now();
+});
+
+const PageVisitSchema = new mongoose.Schema(
+  {
+    sessionId: { type: mongoose.Schema.Types.ObjectId, ref: "SiteSession", required: true, index: true },
+    visitorId: { type: mongoose.Schema.Types.ObjectId, ref: "SiteVisitor", required: true, index: true },
+    page: { type: String, default: null },
+    title: { type: String, default: null, maxlength: 255 },
+    timeSpent: { type: Number, default: 0, min: 0 },
+    enteredAt: { type: Date, default: Date.now, index: true },
+    exitedAt: { type: Date, default: null }
+  },
+  { collection: "page_visits", timestamps: false }
+);
+
+PageVisitSchema.pre('save', function () {
+  this.updated_at = Date.now();
+});
 
 export const Contents = mongoose.models.Contents || mongoose.model('Contents', ContentSchema);
 export const QuickContacts = mongoose.models.QuickContacts || mongoose.model('QuickContacts', QuickContactSchema);
@@ -203,3 +279,7 @@ export const UserRoles = mongoose.models.UserRoles || mongoose.model('UserRoles'
 export const Users = mongoose.models.Users || mongoose.model('Users', UserSchema);
 export const LoginOtp = mongoose.models.LoginOtp || mongoose.model('LoginOtp', LoginOtpSchema);
 export const Blog = mongoose.models.Blog || mongoose.model('Blog', BlogSchema);
+export const Client = mongoose.models.Client || mongoose.model('Client', ClientSchema);
+export const SiteVisitor = mongoose.models.SiteVisitor || mongoose.model('SiteVisitor', SiteVisitorSchema);
+export const SiteSession = mongoose.models.SiteSession || mongoose.model('SiteSession', SiteSessionSchema);
+export const PageVisit = mongoose.models.PageVisit || mongoose.model('PageVisit', PageVisitSchema);

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import { UserRoles } from "@/modal/schema";
-import apiResponse from "@/utils/common/apiResponse";
+import { UserRoles } from "../schema/schema";
+import apiResponse from "./common/apiResponse";
 
 export async function requireRole(req, allowedRoles = ["admin"]) {
   const cookieToken = req.cookies?.get("accessToken")?.value;

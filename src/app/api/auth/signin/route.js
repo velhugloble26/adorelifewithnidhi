@@ -1,12 +1,11 @@
-// import connectDB from "@/config/database";
-import AuthService from "@/services/authServices";
+import connectDB from "../../../../config/dbconnection";
+import AuthService from "../../../../services/authServices";
 import {
   success,
   serverError,
   validationError,
-} from "@/utils/apiResponse";
+} from "../../../../utils/apiResponse";
 import { z } from "zod";
-import connectDB from "@/config/dbconnection";
 
 const signinSchema = z.object({
   email: z

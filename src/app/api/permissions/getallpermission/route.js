@@ -1,11 +1,10 @@
-import { requireAdmin } from "@/utils/auth";
-import connectDB from "@/config/database";
-import PermissionService from "@/services/permissionServices";
+import connectDB from "../../../../config/dbconnection";
 import {
   success,
   serverError,
-} from "@/utils/apiResponse";
-
+} from "../../../../utils/apiResponse";
+import PermissionService from "../../../../services/permissionServices";
+import { requireAdmin } from "../../../../utils/auth";
 export async function GET(req) {
   try {
     const auth = await requireAdmin(req);

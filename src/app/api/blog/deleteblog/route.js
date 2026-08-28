@@ -1,7 +1,12 @@
-import { requireAdmin } from "@/utils/auth";
-import connectDB from "@/config/database";
-import BlogService from "@/services/blogServices";
-import { success, serverError, validationError } from "@/utils/apiResponse";
+import connectDB from "../../../../config/dbconnection";
+import {
+  success,
+  serverError,
+  validationError,
+} from "../../../../utils/apiResponse"; 
+import BlogService from "../../../../services/blogServices";
+import { requireAdmin } from "../../../../utils/auth";
+
 import { z } from "zod";
 
 export async function DELETE(req) {

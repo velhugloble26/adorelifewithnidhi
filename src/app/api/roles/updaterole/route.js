@@ -1,11 +1,11 @@
-import { requireAdmin } from "@/utils/auth";
-import connectDB from "@/config/database";
-import RoleService from "@/services/roleServices";
+import connectDB from "../../../../config/dbconnection";
 import {
   success,
   serverError,
   validationError,
-} from "@/utils/apiResponse";
+} from "../../../../utils/apiResponse";
+import RoleService from "../../../../services/roleServices";
+import { requireAdmin } from "../../../../utils/auth";
 import { z } from "zod";
 
 const updateRoleSchema = z.object({

@@ -1,4 +1,4 @@
-import { Blog } from "../modal/schema";
+import { Blog } from "../schema/schema";
 import { deleteLocalUpload } from "../utils/uploads";
 
 class BlogService {

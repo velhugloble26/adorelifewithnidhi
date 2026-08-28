@@ -1,4 +1,4 @@
-import { requireAdmin } from "@/utils/auth";
+import { requireAdmin } from "../../../../utils/auth";
 import connectDB from "../../../../config/dbconnection";
 import RoleService from "../../../../services/roleServices";
 import apiResponse from "../../../../utils/common/apiResponse";

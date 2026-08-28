@@ -1,4 +1,4 @@
-import { QuickContacts } from "../modal/schema";
+import { QuickContacts } from "../schema/schema";
 
 class QuickQuoteService {
   async createQuickQuote({ name, email, phone, service, message }) {

@@ -1,4 +1,4 @@
-import { Gallery } from "../modal/schema";
+import { Gallery } from "../schema/schema";
 import { deleteLocalUpload } from "../utils/uploads";
 
 class GalleryService {

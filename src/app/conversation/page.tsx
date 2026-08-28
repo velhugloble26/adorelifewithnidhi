@@ -9,7 +9,7 @@ export default function ConversationPage() {
         <>
             <Navbar />
 
-            <main className="flex-grow flex flex-col items-center w-full max-w-[1440px] mx-auto">
+            <main className="flex-grow flex flex-col items-center w-full max-w-[1440px] mx-auto mt-[-40px]">
                 {/* ── Hero ── */}
                 <section className="section-pad pt-16 md:pt-32 pb-16 flex flex-col text-center max-w-4xl mx-auto w-full">
                     <h1 className="text-display-lg mb-8 ui-heading">

@@ -1,18 +1,8 @@
-// import {
-//   UserRole,
-//   Permission,
-//   Users,
-// } from "../modal/schema";
 
-import { Permissions, UserRoles, Users } from "../modal/schema";
+import { Permissions, UserRoles, Users } from "../schema/schema";
 import { BadRequestError, ConflictError, NotFoundError } from "../utils/common/errorhandlers";
 
 export const USER_TYPES = ["user", "admin", "sales"];
-// import {
-//   BadRequestError,
-//   NotFoundError,
-//   ConflictError,
-// } from "../utils/common/errorhandlers";
 
 class RoleService {
   async createRole({

@@ -1,10 +1,10 @@
-import { requireAdmin } from "@/utils/auth";
-import connectDB from "@/config/database";
-import ContactService from "@/services/contactServices";
+import connectDB from "../../../../config/dbconnection";
 import {
   success,
   serverError,
-} from "@/utils/apiResponse";
+} from "../../../../utils/apiResponse";
+import ContactService from "../../../../services/contactServices";
+import { requireAdmin } from "../../../../utils/auth";
 
 export async function GET(req) {
   try {

@@ -1,7 +1,7 @@
 import { z } from "zod";
-import connectDB from "@/config/database";
-import AuthService from "@/services/authServices";
-import apiResponse from "@/utils/common/apiResponse";
+import connectDB from "../../../../config/dbconnection";
+import AuthService from "../../../../services/authServices";
+import apiResponse from "../../../../utils/common/apiResponse";
 
 export async function POST(req) {
   try {
