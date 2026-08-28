@@ -76,20 +76,17 @@ export default function WomensWellnessPage() {
                 >
                     <div className="md:w-1/2 flex flex-col gap-6">
                         <p
-                            className="text-label-md uppercase tracking-widest"
-                            style={{ color: "var(--color-soft-teal)" }}
+                            className="text-label-md uppercase tracking-widest ui-accent"
                         >
                             Therapy for Women
                         </p>
                         <h1
-                            className="text-display-lg leading-tight"
-                            style={{ color: "var(--color-primary)" }}
+                            className="text-display-lg leading-tight ui-heading"
                         >
                             A space that holds all of you.
                         </h1>
                         <p
-                            className="text-body-lg max-w-lg"
-                            style={{ color: "var(--color-on-surface-variant)" }}
+                            className="text-body-lg max-w-lg ui-copy"
                         >
                             Women's wellness therapy at Adore Life is a dedicated space to explore what
                             it means to exist as a woman — the pressures, the roles, the invisible weight
@@ -98,23 +95,20 @@ export default function WomensWellnessPage() {
                         <div className="flex gap-4 flex-wrap mt-2">
                             <Link
                                 href="/conversation"
-                                className="btn-primary"
-                                style={{ paddingTop: "0.875rem", paddingBottom: "0.875rem", paddingLeft: "2rem", paddingRight: "2rem" }}
+                                className="btn-primary btn-md"
                             >
                                 Begin a Conversation
                             </Link>
                             <Link
                                 href="/therapy"
-                                className="btn-secondary"
-                                style={{ paddingTop: "0.875rem", paddingBottom: "0.875rem", paddingLeft: "2rem", paddingRight: "2rem" }}
+                                className="btn-secondary btn-md"
                             >
                                 All Therapy Services
                             </Link>
                         </div>
                     </div>
                     <div
-                        className="md:w-1/2 w-full aspect-[4/3] rounded-xl overflow-hidden"
-                        style={{ backgroundColor: "var(--color-surface-container)" }}
+                        className="md:w-1/2 w-full aspect-[4/3] rounded-xl overflow-hidden surface-container"
                     >
                         <img
                             src={HERO_IMG}
@@ -126,25 +120,21 @@ export default function WomensWellnessPage() {
 
                 {/* ── Intro ── */}
                 <section
-                    className="w-full py-16 md:py-24"
-                    style={{ backgroundColor: "var(--color-warm-ivory)" }}
+                    className="w-full py-16 md:py-24 surface-ivory"
                 >
                     <div className="section-pad w-full max-w-[1440px] mx-auto flex flex-col md:flex-row gap-16 items-start">
                         <div className="md:w-1/3 md:sticky md:top-32">
                             <h2
-                                className="text-headline-lg mb-4"
-                                style={{ color: "var(--color-primary)" }}
+                                className="text-headline-lg mb-4 ui-heading"
                             >
                                 Why a dedicated space matters
                             </h2>
                             <div
-                                className="w-12 h-px"
-                                style={{ backgroundColor: "var(--color-stone-grey)" }}
+                                className="w-12 h-px divider-muted"
                             />
                         </div>
                         <div
-                            className="md:w-2/3 flex flex-col gap-6 text-body-lg"
-                            style={{ color: "var(--color-on-surface-variant)" }}
+                            className="md:w-2/3 flex flex-col gap-6 text-body-lg ui-copy"
                         >
                             <p>
                                 Women navigate a particular kind of complexity — societal expectations,
@@ -164,14 +154,12 @@ export default function WomensWellnessPage() {
                 {/* ── Themes ── */}
                 <section className="section-pad w-full max-w-[1440px] mx-auto py-16 md:py-28">
                     <h2
-                        className="text-headline-lg text-center mb-4"
-                        style={{ color: "var(--color-primary)" }}
+                        className="text-headline-lg text-center mb-4 ui-heading"
                     >
                         What we explore together
                     </h2>
                     <p
-                        className="text-body-lg text-center mx-auto max-w-xl mb-14"
-                        style={{ color: "var(--color-on-surface-variant)" }}
+                        className="text-body-lg text-center mx-auto max-w-xl mb-14 ui-copy"
                     >
                         These themes often surface in women&apos;s wellness work. Every session is led by you.
                     </p>
@@ -186,20 +174,17 @@ export default function WomensWellnessPage() {
                                 }}
                             >
                                 <span
-                                    className="material-symbols-outlined text-3xl"
-                                    style={{ color: "var(--color-soft-teal)" }}
+                                    className="material-symbols-outlined text-3xl ui-accent"
                                 >
                                     {theme.icon}
                                 </span>
                                 <h3
-                                    className="text-title-md"
-                                    style={{ color: "var(--color-primary)" }}
+                                    className="text-title-md ui-heading"
                                 >
                                     {theme.title}
                                 </h3>
                                 <p
-                                    className="text-body-md"
-                                    style={{ color: "var(--color-on-surface-variant)" }}
+                                    className="text-body-md ui-copy"
                                 >
                                     {theme.body}
                                 </p>
@@ -210,15 +195,13 @@ export default function WomensWellnessPage() {
 
                 {/* ── Quotes ── */}
                 <section
-                    className="w-full py-16 md:py-24"
-                    style={{ backgroundColor: "var(--color-secondary-fixed)" }}
+                    className="w-full py-16 md:py-24 surface-secondary"
                 >
                     <div className="section-pad max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
                         {quotes.map((q) => (
                             <blockquote
                                 key={q}
-                                className="text-quote-intense italic text-center"
-                                style={{ color: "var(--color-on-secondary-fixed)" }}
+                                className="text-quote-intense italic text-center ui-text-light"
                             >
                                 {q}
                             </blockquote>
@@ -229,8 +212,7 @@ export default function WomensWellnessPage() {
                 {/* ── Process ── */}
                 <section className="section-pad w-full max-w-[1440px] mx-auto py-16 md:py-28">
                     <h2
-                        className="text-headline-lg mb-14"
-                        style={{ color: "var(--color-primary)" }}
+                        className="text-headline-lg mb-14 ui-heading"
                     >
                         How the work unfolds
                     </h2>
@@ -242,21 +224,18 @@ export default function WomensWellnessPage() {
                                 style={{ borderColor: "color-mix(in srgb, var(--color-outline-variant) 30%, transparent)" }}
                             >
                                 <div
-                                    className="text-display-lg font-light w-8 shrink-0"
-                                    style={{ color: "var(--color-stone-grey)" }}
+                                    className="text-display-lg font-light w-8 shrink-0 ui-muted"
                                 >
                                     {String(i + 1).padStart(2, "0")}
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <h3
-                                        className="text-headline-sm"
-                                        style={{ color: "var(--color-primary)" }}
+                                        className="text-headline-sm ui-heading"
                                     >
                                         {step.label}
                                     </h3>
                                     <p
-                                        className="text-body-lg max-w-xl"
-                                        style={{ color: "var(--color-on-surface-variant)" }}
+                                        className="text-body-lg max-w-xl ui-copy"
                                     >
                                         {step.body}
                                     </p>
@@ -268,27 +247,23 @@ export default function WomensWellnessPage() {
 
                 {/* ── CTA ── */}
                 <section
-                    className="w-full py-16 md:py-24 text-center"
-                    style={{ backgroundColor: "var(--color-tertiary-fixed)" }}
+                    className="w-full py-16 md:py-24 text-center surface-tertiary"
                 >
                     <div className="section-pad max-w-[600px] mx-auto">
                         <h2
-                            className="text-display-lg mb-6"
-                            style={{ color: "var(--color-on-tertiary-fixed)" }}
+                            className="text-display-lg mb-6 ui-tertiary-heading"
                         >
                             You don&apos;t have to hold it all alone.
                         </h2>
                         <p
-                            className="text-body-lg mb-10"
-                            style={{ color: "var(--color-on-tertiary-fixed-variant)" }}
+                            className="text-body-lg mb-10 ui-tertiary-copy"
                         >
                             Whenever you&apos;re ready — even if you&apos;re not quite sure what you need yet —
                             reaching out is enough of a start.
                         </p>
                         <Link
                             href="/conversation"
-                            className="btn-primary inline-flex"
-                            style={{ paddingTop: "1rem", paddingBottom: "1rem", paddingLeft: "2.5rem", paddingRight: "2.5rem" }}
+                            className="btn-primary inline-flex btn-wide"
                         >
                             Begin a Conversation
                         </Link>

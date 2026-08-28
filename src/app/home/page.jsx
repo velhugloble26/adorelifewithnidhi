@@ -144,10 +144,10 @@ export default function HomePage() {
             >
               adore life
             </div>
-            <h1 className="text-display-lg mb-8" style={{ color: "var(--color-primary)" }}>
+            <h1 className="text-display-lg mb-8 ui-heading">
               Because everyone deserves to be understood.
             </h1>
-            <p className="text-body-lg mb-12 max-w-[600px]" style={{ color: "var(--color-on-surface-variant)" }}>
+            <p className="text-body-lg mb-12 max-w-[600px] ui-copy">
               There are times when life feels heavier than it should. You may be
               overthinking, feeling emotionally exhausted, struggling in a relationship,
               questioning yourself, or simply wondering why you keep responding to life in
@@ -160,8 +160,7 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full">
               <Link
                 href="/conversation"
-                className="btn-primary w-full sm:w-auto"
-                style={{ paddingTop: "1rem", paddingBottom: "1rem", paddingLeft: "2rem", paddingRight: "2rem" }}
+                className="btn-primary w-full sm:w-auto btn-lg"
               >
                 Begin to Adore Life
               </Link>
@@ -197,15 +196,14 @@ export default function HomePage() {
 
         {/* ── Recognition ── */}
         <section
-          className="py-32 section-pad"
-          style={{ backgroundColor: "var(--color-surface-container-low)" }}
+          className="py-32 section-pad surface-low"
         >
           <div className="max-w-[1200px] mx-auto">
             <div className="max-w-[800px] mx-auto text-center mb-16">
-              <h2 className="text-headline-lg mb-6" style={{ color: "var(--color-primary)" }}>
+              <h2 className="text-headline-lg mb-6 ui-heading">
                 Perhaps you've been carrying this for longer than you realise.
               </h2>
-              <p className="text-body-lg" style={{ color: "var(--color-on-surface-variant)" }}>
+              <p className="text-body-lg ui-copy">
                 You may be managing life on the outside while quietly struggling on the
                 inside. Maybe you…
               </p>
@@ -227,15 +225,14 @@ export default function HomePage() {
                   }
                 >
                   <span
-                    className="material-symbols-outlined text-3xl mb-4"
-                    style={{ color: "var(--color-soft-teal)" }}
+                    className="material-symbols-outlined text-3xl mb-4 ui-accent"
                   >
                     {card.icon}
                   </span>
-                  <h3 className="text-headline-md mb-3" style={{ color: "var(--color-primary)" }}>
+                  <h3 className="text-headline-md mb-3 ui-heading">
                     {card.title}
                   </h3>
-                  <p className="text-body-md" style={{ color: "var(--color-on-surface-variant)" }}>
+                  <p className="text-body-md ui-copy">
                     {card.body}
                   </p>
                 </div>
@@ -244,8 +241,7 @@ export default function HomePage() {
 
             <div className="mt-16 text-center">
               <p
-                className="text-body-lg italic mb-8"
-                style={{ color: "var(--color-on-surface-variant)" }}
+                className="text-body-lg italic mb-8 ui-copy"
               >
                 You don't have to relate to all of these. Sometimes, one is enough to know
                 that something within you deserves attention.
@@ -277,19 +273,16 @@ export default function HomePage() {
 
         {/* ── Brand Truth ── */}
         <section
-          className="py-32 section-pad"
-          style={{ backgroundColor: "var(--color-warm-ivory)" }}
+          className="py-32 section-pad surface-ivory"
         >
           <div className="max-w-[800px] mx-auto">
             <h2
-              className="text-display-lg mb-8 text-center"
-              style={{ color: "var(--color-primary)" }}
+              className="text-display-lg mb-8 text-center ui-heading"
             >
               Knowing what to do isn't always enough.
             </h2>
             <div
-              className="text-body-lg space-y-6"
-              style={{ color: "var(--color-on-surface-variant)" }}
+              className="text-body-lg space-y-6 ui-copy"
             >
               <p>Most of us know, at least intellectually, what we should do.</p>
               <ul className="space-y-3 pl-8">
@@ -297,8 +290,7 @@ export default function HomePage() {
                   (item) => (
                     <li key={item} className="flex items-center gap-3">
                       <span
-                        className="w-1.5 h-1.5 rounded-full shrink-0"
-                        style={{ backgroundColor: "var(--color-stone-grey)" }}
+                        className="w-1.5 h-1.5 rounded-full shrink-0 divider-muted"
                       />
                       {item}
                     </li>
@@ -324,8 +316,7 @@ export default function HomePage() {
               }}
             >
               <p
-                className="text-quote-intense italic"
-                style={{ color: "var(--color-primary)" }}
+                className="text-quote-intense italic ui-heading"
               >
                 "You are not broken. There is a story behind what you feel, think and do."
               </p>
@@ -335,17 +326,15 @@ export default function HomePage() {
 
         {/* ── Progression ── */}
         <section
-          className="py-32 section-pad"
-          style={{ backgroundColor: "var(--color-surface)" }}
+          className="py-32 section-pad surface-base"
         >
           <div className="max-w-[1000px] mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-headline-lg mb-6" style={{ color: "var(--color-primary)" }}>
+              <h2 className="text-headline-lg mb-6 ui-heading">
                 Healing doesn't begin with answers. It begins with understanding.
               </h2>
               <p
-                className="text-body-lg max-w-[700px] mx-auto"
-                style={{ color: "var(--color-on-surface-variant)" }}
+                className="text-body-lg max-w-[700px] mx-auto ui-copy"
               >
                 When you feel genuinely understood, something changes. You don't have to
                 defend yourself. You can become curious about yourself instead of critical of
@@ -366,20 +355,18 @@ export default function HomePage() {
                     }}
                   >
                     <span
-                      className="text-label-md mb-2 block uppercase tracking-[0.2em]"
-                      style={{ color: "var(--color-soft-teal)", fontWeight: 300 }}
+                      className="text-label-md mb-2 block uppercase tracking-[0.2em] ui-label-accent"
                     >
                       {step.num}
                     </span>
-                    <span className="text-headline-md" style={{ color: "var(--color-primary)" }}>
+                    <span className="text-headline-md ui-heading">
                       {step.label}
                     </span>
                   </div>
                   {i < progressionSteps.length - 1 && (
                     <span
                       key={`arrow-${i}`}
-                      className="material-symbols-outlined rotate-90 md:rotate-0"
-                      style={{ color: "var(--color-stone-grey)" }}
+                      className="material-symbols-outlined rotate-90 md:rotate-0 ui-muted"
                     >
                       arrow_forward
                     </span>
@@ -407,20 +394,18 @@ export default function HomePage() {
                     }}
                   >
                     <span
-                      className="text-label-md mb-2 block uppercase tracking-[0.2em]"
-                      style={{ color: "var(--color-soft-teal)", fontWeight: 300 }}
+                      className="text-label-md mb-2 block uppercase tracking-[0.2em] ui-label-accent"
                     >
                       {step.num}
                     </span>
-                    <span className="text-headline-md" style={{ color: "var(--color-primary)" }}>
+                    <span className="text-headline-md ui-heading">
                       {step.label}
                     </span>
                   </div>
                   {i < progressionSteps2.length - 1 && (
                     <span
                       key={`arrow2-${i}`}
-                      className="material-symbols-outlined rotate-90 md:rotate-0 hidden md:block"
-                      style={{ color: "var(--color-stone-grey)" }}
+                      className="material-symbols-outlined rotate-90 md:rotate-0 hidden md:block ui-muted"
                     >
                       arrow_forward
                     </span>
@@ -430,7 +415,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-16 text-center">
-              <p className="text-body-md" style={{ color: "var(--color-stone-grey)" }}>
+              <p className="text-body-md ui-muted">
                 This is the belief at the heart of Adore Life.
               </p>
             </div>
@@ -439,8 +424,7 @@ export default function HomePage() {
 
         {/* ── Meet Nidhi ── */}
         <section
-          className="py-32 section-pad"
-          style={{ backgroundColor: "var(--color-surface-container-low)" }}
+          className="py-32 section-pad surface-low"
         >
           <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Image */}
@@ -471,14 +455,12 @@ export default function HomePage() {
             {/* Content */}
             <div className="lg:col-span-7 flex flex-col justify-center">
               <h2
-                className="text-display-lg mb-6"
-                style={{ color: "var(--color-primary)" }}
+                className="text-display-lg mb-6 ui-heading"
               >
                 Therapy begins with feeling understood.
               </h2>
               <div
-                className="text-body-lg space-y-6 mb-10"
-                style={{ color: "var(--color-on-surface-variant)" }}
+                className="text-body-lg space-y-6 mb-10 ui-copy"
               >
                 <p>Hi, I'm Nidhi.</p>
                 <p>
@@ -506,10 +488,10 @@ export default function HomePage() {
                   borderColor: "var(--color-surface-variant)",
                 }}
               >
-                <h3 className="text-headline-md mb-4" style={{ color: "var(--color-primary)" }}>
+                <h3 className="text-headline-md mb-4 ui-heading">
                   No two people carry the same story.
                 </h3>
-                <p className="text-body-md mb-6" style={{ color: "var(--color-on-surface-variant)" }}>
+                <p className="text-body-md mb-6 ui-copy">
                   Your therapy shouldn't be the same as everyone else's. My approach brings
                   together relevant, evidence-informed psychological approaches and adapts
                   them to the individual.
@@ -522,14 +504,12 @@ export default function HomePage() {
                   ].map((item) => (
                     <div key={item.label}>
                       <span
-                        className="text-label-md block mb-1 uppercase tracking-[0.2em]"
-                        style={{ color: "var(--color-soft-teal)", fontWeight: 300 }}
+                        className="text-label-md block mb-1 uppercase tracking-[0.2em] ui-label-accent"
                       >
                         {item.label}
                       </span>
                       <span
-                        className="text-body-md text-sm"
-                        style={{ color: "var(--color-on-surface-variant)" }}
+                        className="text-body-md text-sm ui-copy"
                       >
                         {item.body}
                       </span>
@@ -565,18 +545,16 @@ export default function HomePage() {
 
         {/* ── Help Areas ── */}
         <section
-          className="py-32 section-pad"
-          style={{ backgroundColor: "var(--color-surface)" }}
+          className="py-32 section-pad surface-base"
         >
           <div className="max-w-[1200px] mx-auto">
             <div className="text-center mb-16 max-w-[800px] mx-auto">
               <h2
-                className="text-display-lg mb-6"
-                style={{ color: "var(--color-primary)" }}
+                className="text-display-lg mb-6 ui-heading"
               >
                 Whatever you're carrying, you don't have to carry it alone.
               </h2>
-              <p className="text-body-lg" style={{ color: "var(--color-on-surface-variant)" }}>
+              <p className="text-body-lg ui-copy">
                 Adore Life offers support across different aspects of emotional wellbeing and
                 relationships.
               </p>
@@ -605,17 +583,15 @@ export default function HomePage() {
                   }}
                 >
                   <h3
-                    className="text-headline-md mb-4 transition-colors group-hover:text-[var(--color-soft-teal)]"
-                    style={{ color: "var(--color-primary)" }}
+                    className="text-headline-md mb-4 transition-colors group-hover:text-[var(--color-soft-teal)] ui-heading"
                   >
                     {area.title}
                   </h3>
-                  <p className="text-body-md mb-6" style={{ color: "var(--color-on-surface-variant)" }}>
+                  <p className="text-body-md mb-6 ui-copy">
                     {area.body}
                   </p>
                   <span
-                    className="text-label-md flex items-center"
-                    style={{ color: "var(--color-soft-teal)" }}
+                    className="text-label-md flex items-center ui-accent"
                   >
                     Explore{" "}
                     <span className="material-symbols-outlined ml-1 text-sm">arrow_outward</span>
@@ -628,19 +604,16 @@ export default function HomePage() {
 
         {/* ── Closing CTA ── */}
         <section
-          className="py-32 section-pad"
-          style={{ backgroundColor: "var(--color-muted-sand)" }}
+          className="py-32 section-pad surface-sand"
         >
           <div className="max-w-[800px] mx-auto text-center">
             <h2
-              className="text-display-lg mb-6"
-              style={{ color: "var(--color-primary)" }}
+              className="text-display-lg mb-6 ui-heading"
             >
               You don't have to have everything figured out.
             </h2>
             <div
-              className="text-body-lg space-y-4 mb-10"
-              style={{ color: "var(--color-on-surface-variant)" }}
+              className="text-body-lg space-y-4 mb-10 ui-copy"
             >
               <p>You don't need the perfect words.</p>
               <p>You don't need to know exactly what's wrong.</p>
@@ -669,8 +642,7 @@ export default function HomePage() {
               Begin a Conversation
             </Link>
             <p
-              className="text-body-md italic mt-4"
-              style={{ color: "var(--color-stone-grey)" }}
+              className="text-body-md italic mt-4 ui-muted"
             >
               Whenever you're ready, we'll begin wherever you are.
             </p>

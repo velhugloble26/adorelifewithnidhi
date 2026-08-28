@@ -59,13 +59,13 @@ export default function FAQPage() {
             <main className="flex-grow flex flex-col items-center w-full">
                 {/* ── Hero ── */}
                 <section className="w-full max-w-[800px] px-margin-mobile md:px-0 mx-auto mt-16 md:mt-32 mb-16 text-center">
-                    <h1 className="text-display-lg mb-6" style={{ color: "var(--color-primary)" }}>
+                    <h1 className="text-display-lg mb-6 ui-heading">
                         You may have questions.<br />
-                        <span className="italic" style={{ color: "var(--color-stone-grey)" }}>
+                        <span className="italic ui-muted">
                             That's completely okay.
                         </span>
                     </h1>
-                    <p className="text-body-lg max-w-2xl mx-auto" style={{ color: "var(--color-on-surface-variant)" }}>
+                    <p className="text-body-lg max-w-2xl mx-auto ui-copy">
                         Exploring therapy is a significant step. We've gathered some common questions to
                         help bring clarity and peace of mind as you consider beginning this process.
                     </p>
@@ -75,8 +75,7 @@ export default function FAQPage() {
                 <section className="w-full max-w-[600px] px-margin-mobile md:px-0 mx-auto mb-16 md:mb-32">
                     <div className="relative group">
                         <span
-                            className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 transition-colors"
-                            style={{ color: "var(--color-stone-grey)" }}
+                            className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 transition-colors ui-muted"
                         >
                             search
                         </span>
@@ -94,8 +93,7 @@ export default function FAQPage() {
                     {faqs.map((category, catIndex) => (
                         <div key={category.category} className="w-full">
                             <h2
-                                className="text-headline-lg mb-8 border-b pb-4"
-                                style={{ color: "var(--color-primary)", borderColor: "var(--color-surface-variant)" }}
+                                className="text-headline-lg mb-8 border-b pb-4 ui-heading-bordered"
                             >
                                 {category.category}
                             </h2>
@@ -103,26 +101,22 @@ export default function FAQPage() {
                                 {category.items.map((item, i) => (
                                     <details
                                         key={i}
-                                        className="group border-b pb-4"
-                                        style={{ borderColor: "var(--color-surface-variant)" }}
+                                        className="group border-b pb-4 border-surface"
                                     >
                                         <summary
-                                            className="flex justify-between items-center py-4 cursor-pointer focus:outline-none"
-                                            style={{ color: "var(--color-primary)" }}
+                                            className="flex justify-between items-center py-4 cursor-pointer focus:outline-none ui-heading"
                                         >
-                                            <span className="text-headline-md" style={{ fontSize: "20px" }}>
+                                            <span className="text-headline-md text-question">
                                                 {item.q}
                                             </span>
                                             <span
-                                                className="material-symbols-outlined faq-icon"
-                                                style={{ color: "var(--color-stone-grey)" }}
+                                                className="material-symbols-outlined faq-icon ui-muted"
                                             >
                                                 add
                                             </span>
                                         </summary>
                                         <div
-                                            className="text-body-md pb-4 pl-2"
-                                            style={{ color: "var(--color-on-surface-variant)" }}
+                                            className="text-body-md pb-4 pl-2 ui-copy"
                                         >
                                             <p>{item.a}</p>
                                         </div>
@@ -143,14 +137,13 @@ export default function FAQPage() {
 
                 {/* ── CTA ── */}
                 <section
-                    className="w-full py-16 text-center"
-                    style={{ backgroundColor: "var(--color-surface-container-high)" }}
+                    className="w-full py-16 text-center surface-high"
                 >
                     <div className="max-w-[600px] mx-auto px-4">
-                        <h2 className="text-headline-lg mb-4" style={{ color: "var(--color-primary)" }}>
+                        <h2 className="text-headline-lg mb-4 ui-heading">
                             Still seeking clarity?
                         </h2>
-                        <p className="text-body-md mb-8" style={{ color: "var(--color-on-surface-variant)" }}>
+                        <p className="text-body-md mb-8 ui-copy">
                             If your question isn't answered here, we invite you to reach out directly. We
                             are here to help you feel completely comfortable before beginning.
                         </p>

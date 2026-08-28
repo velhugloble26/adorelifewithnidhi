@@ -36,20 +36,20 @@ export default function IndividualTherapyPage() {
             <main>
                 {/* ── Breadcrumb ── */}
                 <nav className="section-pad pt-6 max-w-[1440px] mx-auto" aria-label="Breadcrumb">
-                    <ol className="flex gap-2 text-label-md" style={{ color: "var(--color-stone-grey)" }}>
-                        <li><Link href="/therapy" style={{ color: "var(--color-stone-grey)" }}>Therapy</Link></li>
+                    <ol className="flex gap-2 text-label-md ui-muted">
+                        <li><Link href="/therapy" className="ui-muted">Therapy</Link></li>
                         <li aria-hidden="true">/</li>
-                        <li style={{ color: "var(--color-primary)" }}>Individual Therapy</li>
+                        <li className="ui-heading">Individual Therapy</li>
                     </ol>
                 </nav>
 
                 {/* ── Hero ── */}
                 <section className="section-pad pt-12 pb-16 md:pb-32 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-[1440px] mx-auto">
                     <div>
-                        <h1 className="text-display-lg mb-6" style={{ color: "var(--color-primary)" }}>
+                        <h1 className="text-display-lg mb-6 ui-heading">
                             A space to understand yourself.
                         </h1>
-                        <div className="space-y-4 text-body-lg mb-10" style={{ color: "var(--color-on-surface-variant)" }}>
+                        <div className="space-y-4 text-body-lg mb-10 ui-copy">
                             <p>
                                 Individual therapy at Adore Life offers you a private, confidential space to
                                 explore what is happening in your life—without judgement, pressure or
@@ -63,15 +63,13 @@ export default function IndividualTherapyPage() {
                         </div>
                         <Link
                             href="/conversation"
-                            className="btn-primary inline-flex"
-                            style={{ paddingTop: "1rem", paddingBottom: "1rem", paddingLeft: "2rem", paddingRight: "2rem" }}
+                            className="btn-primary inline-flex btn-lg"
                         >
                             Begin a Conversation
                         </Link>
                     </div>
                     <div
-                        className="aspect-[4/5] rounded-xl overflow-hidden"
-                        style={{ backgroundColor: "var(--color-muted-sand)" }}
+                        className="aspect-[4/5] rounded-xl overflow-hidden surface-sand"
                     >
                         <img
                             src={INDIVIDUAL_IMG}
@@ -83,13 +81,11 @@ export default function IndividualTherapyPage() {
 
                 {/* ── Quote ── */}
                 <section
-                    className="py-16 md:py-24"
-                    style={{ backgroundColor: "var(--color-muted-sand)" }}
+                    className="py-16 md:py-24 surface-sand"
                 >
                     <div className="section-pad max-w-[1440px] mx-auto text-center">
                         <blockquote
-                            className="text-quote-intense italic max-w-3xl mx-auto"
-                            style={{ color: "var(--color-primary)" }}
+                            className="text-quote-intense italic max-w-3xl mx-auto ui-heading"
                         >
                             "The aim of individual therapy is not to make you a different person. It is to help you understand yourself well enough that you can choose differently."
                         </blockquote>
@@ -100,16 +96,14 @@ export default function IndividualTherapyPage() {
                 <section className="section-pad py-16 md:py-32 max-w-[1440px] mx-auto">
                     <div className="text-center max-w-3xl mx-auto mb-16">
                         <div
-                            className="inline-flex items-center gap-2 mb-4 text-label-md uppercase tracking-widest"
-                            style={{ color: "var(--color-stone-grey)" }}
+                            className="inline-flex items-center gap-2 mb-4 text-label-md uppercase tracking-widest ui-muted"
                         >
                             <span
-                                className="w-8 h-px"
-                                style={{ backgroundColor: "var(--color-stone-grey)" }}
+                                className="w-8 h-px divider-muted"
                             />
                             What We Work With
                         </div>
-                        <h2 className="text-headline-lg" style={{ color: "var(--color-primary)" }}>
+                        <h2 className="text-headline-lg ui-heading">
                             Individual therapy can be helpful for many things.
                         </h2>
                     </div>
@@ -117,19 +111,15 @@ export default function IndividualTherapyPage() {
                         {challenges.map((c) => (
                             <div
                                 key={c.title}
-                                className="p-8 rounded-xl border transition-shadow duration-300 hover:shadow-md"
-                                style={{
-                                    backgroundColor: "var(--color-surface)",
-                                    borderColor: "var(--color-surface-variant)",
-                                }}
+                                className="p-8 rounded-xl border transition-shadow duration-300 hover:shadow-md ui-card"
                             >
-                                <span className="material-symbols-outlined text-3xl mb-4 block" style={{ color: "var(--color-soft-teal)" }}>
+                                <span className="material-symbols-outlined text-3xl mb-4 block ui-accent">
                                     {c.icon}
                                 </span>
-                                <h3 className="text-headline-md mb-2" style={{ color: "var(--color-primary)" }}>
+                                <h3 className="text-headline-md mb-2 ui-heading">
                                     {c.title}
                                 </h3>
-                                <p className="text-body-md" style={{ color: "var(--color-on-surface-variant)" }}>
+                                <p className="text-body-md ui-copy">
                                     {c.body}
                                 </p>
                             </div>
@@ -139,12 +129,11 @@ export default function IndividualTherapyPage() {
 
                 {/* ── Process ── */}
                 <section
-                    className="py-16 md:py-32"
-                    style={{ backgroundColor: "var(--color-surface-container-low)" }}
+                    className="py-16 md:py-32 surface-low"
                 >
                     <div className="section-pad max-w-[1440px] mx-auto">
                         <div className="text-center max-w-3xl mx-auto mb-16">
-                            <h2 className="text-headline-lg" style={{ color: "var(--color-primary)" }}>
+                            <h2 className="text-headline-lg ui-heading">
                                 How individual therapy works at Adore Life.
                             </h2>
                         </div>
@@ -152,20 +141,18 @@ export default function IndividualTherapyPage() {
                             {processSteps.map((step, i) => (
                                 <div
                                     key={step.label}
-                                    className="flex gap-6 p-6 rounded-lg relative"
-                                    style={{ backgroundColor: "var(--color-surface-bright)" }}
+                                    className="flex gap-6 p-6 rounded-lg relative surface-bright"
                                 >
                                     <div
-                                        className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-1"
-                                        style={{ backgroundColor: "var(--color-soft-teal)" }}
+                                        className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-1 surface-accent"
                                     >
                                         <span className="text-white text-sm font-bold">{i + 1}</span>
                                     </div>
                                     <div>
-                                        <h3 className="text-headline-md mb-2" style={{ color: "var(--color-primary)" }}>
+                                        <h3 className="text-headline-md mb-2 ui-heading">
                                             {step.label}
                                         </h3>
-                                        <p className="text-body-md" style={{ color: "var(--color-on-surface-variant)" }}>
+                                        <p className="text-body-md ui-copy">
                                             {step.body}
                                         </p>
                                     </div>
@@ -177,16 +164,15 @@ export default function IndividualTherapyPage() {
 
                 {/* ── CTA ── */}
                 <section className="section-pad py-16 md:py-32 max-w-[1440px] mx-auto text-center">
-                    <h2 className="text-headline-lg mb-6" style={{ color: "var(--color-primary)" }}>
+                    <h2 className="text-headline-lg mb-6 ui-heading">
                         Ready to begin?
                     </h2>
-                    <p className="text-body-lg mb-10 max-w-xl mx-auto" style={{ color: "var(--color-on-surface-variant)" }}>
+                    <p className="text-body-lg mb-10 max-w-xl mx-auto ui-copy">
                         You don't need to know exactly what to say. Reach out, and we'll take it from there.
                     </p>
                     <Link
                         href="/conversation"
-                        className="btn-primary inline-flex"
-                        style={{ paddingTop: "1rem", paddingBottom: "1rem", paddingLeft: "2rem", paddingRight: "2rem" }}
+                        className="btn-primary inline-flex btn-lg"
                     >
                         Begin a Conversation
                     </Link>

@@ -338,6 +338,62 @@ details > summary::-webkit-details-marker {
   transform: scale(0.97);
 }
 
+/* Shared content colors */
+.ui-heading { color: var(--color-primary); }
+.ui-copy { color: var(--color-on-surface-variant); }
+.ui-text { color: var(--color-on-surface); }
+.ui-muted { color: var(--color-stone-grey); }
+.ui-accent { color: var(--color-soft-teal); }
+.ui-sage { color: var(--color-sage-green); }
+
+/* Shared surfaces and borders */
+.surface-base { background-color: var(--color-surface); }
+.surface-bright { background-color: var(--color-surface-bright); }
+.surface-lowest { background-color: var(--color-surface-container-lowest); }
+.surface-low { background-color: var(--color-surface-container-low); }
+.surface-container { background-color: var(--color-surface-container); }
+.surface-high { background-color: var(--color-surface-container-high); }
+.surface-sand { background-color: var(--color-muted-sand); }
+.surface-ivory { background-color: var(--color-warm-ivory); }
+.surface-accent { background-color: var(--color-soft-teal); }
+.border-surface { border-color: var(--color-surface-variant); }
+.border-dim { border-color: var(--color-surface-dim); }
+
+/* Shared control sizing */
+.btn-lg { padding: 1rem 2rem; }
+.btn-md { padding: 0.875rem 2rem; }
+.btn-wide { padding: 1rem 2.5rem; }
+
+/* Reusable cards, labels, and themed content blocks */
+.ui-card {
+  background-color: var(--color-surface);
+  border-color: var(--color-surface-variant);
+}
+
+.ui-link-accent {
+  color: var(--color-soft-teal);
+  border-color: var(--color-soft-teal);
+}
+
+.ui-label-accent {
+  color: var(--color-soft-teal);
+  font-weight: 300;
+}
+
+.ui-heading-bordered {
+  color: var(--color-primary);
+  border-color: var(--color-surface-variant);
+}
+
+.ui-text-light { color: var(--color-on-secondary-fixed); }
+.ui-copy-light { color: var(--color-on-secondary-fixed-variant); }
+.ui-tertiary-heading { color: var(--color-on-tertiary-fixed); }
+.ui-tertiary-copy { color: var(--color-on-tertiary-fixed-variant); }
+.surface-secondary { background-color: var(--color-secondary-fixed); }
+.surface-tertiary { background-color: var(--color-tertiary-fixed); }
+.divider-muted { background-color: var(--color-stone-grey); }
+.text-question { font-size: 20px; }
+
 /* Responsive section padding utility */
 .section-pad {
   padding-left: 1rem;

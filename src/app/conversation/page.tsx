@@ -12,10 +12,10 @@ export default function ConversationPage() {
             <main className="flex-grow flex flex-col items-center w-full max-w-[1440px] mx-auto">
                 {/* ── Hero ── */}
                 <section className="section-pad pt-16 md:pt-32 pb-16 flex flex-col text-center max-w-4xl mx-auto w-full">
-                    <h1 className="text-display-lg mb-8" style={{ color: "var(--color-primary)" }}>
+                    <h1 className="text-display-lg mb-8 ui-heading">
                         You don't have to know where to begin.
                     </h1>
-                    <div className="space-y-4 text-body-lg" style={{ color: "var(--color-on-surface-variant)" }}>
+                    <div className="space-y-4 text-body-lg ui-copy">
                         <p>You may have spent days, months or even years trying to understand what you're experiencing.</p>
                         <p>You may know exactly what you want help with. Or you may simply know that something doesn't feel right anymore.</p>
                         <p>You don't need to have all the answers before reaching out. We can begin by understanding where you are.</p>
@@ -26,8 +26,7 @@ export default function ConversationPage() {
                 <section className="section-pad pb-16 md:pb-32 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start w-full">
                     {/* Form card */}
                     <div
-                        className="col-span-1 lg:col-span-7 rounded-xl p-6 md:p-12 relative overflow-hidden group"
-                        style={{ backgroundColor: "var(--color-surface)" }}
+                        className="col-span-1 lg:col-span-7 rounded-xl p-6 md:p-12 relative overflow-hidden group surface-base"
                     >
                         {/* Decorative blob */}
                         <div
@@ -36,10 +35,10 @@ export default function ConversationPage() {
                         />
 
                         <div className="mb-10 relative z-10">
-                            <h2 className="text-headline-lg mb-3" style={{ color: "var(--color-primary)" }}>
+                            <h2 className="text-headline-lg mb-3 ui-heading">
                                 Tell us a little about yourself.
                             </h2>
-                            <p className="text-body-md" style={{ color: "var(--color-on-surface-variant)" }}>
+                            <p className="text-body-md ui-copy">
                                 You don't need to tell us your entire story here. Just share enough for us to understand how we can begin.
                             </p>
                         </div>
@@ -50,8 +49,7 @@ export default function ConversationPage() {
                                 <div className="flex flex-col relative group/field">
                                     <label
                                         htmlFor="name"
-                                        className="text-label-md mb-1 transition-colors"
-                                        style={{ color: "var(--color-stone-grey)" }}
+                                        className="text-label-md mb-1 transition-colors ui-muted"
                                     >
                                         Name
                                     </label>
@@ -68,8 +66,7 @@ export default function ConversationPage() {
                                 <div className="flex flex-col relative group/field">
                                     <label
                                         htmlFor="phone"
-                                        className="text-label-md mb-1 transition-colors"
-                                        style={{ color: "var(--color-stone-grey)" }}
+                                        className="text-label-md mb-1 transition-colors ui-muted"
                                     >
                                         Phone / WhatsApp
                                     </label>
@@ -88,8 +85,7 @@ export default function ConversationPage() {
                             <div className="flex flex-col relative group/field">
                                 <label
                                     htmlFor="email"
-                                    className="text-label-md mb-1"
-                                    style={{ color: "var(--color-stone-grey)" }}
+                                    className="text-label-md mb-1 ui-muted"
                                 >
                                     Email Address
                                 </label>
@@ -108,8 +104,7 @@ export default function ConversationPage() {
                                 <div className="flex flex-col relative group/field">
                                     <label
                                         htmlFor="session"
-                                        className="text-label-md mb-1"
-                                        style={{ color: "var(--color-stone-grey)" }}
+                                        className="text-label-md mb-1 ui-muted"
                                     >
                                         Preferred Session
                                     </label>
@@ -121,8 +116,7 @@ export default function ConversationPage() {
                                             <option value="unsure">I'm Not Sure</option>
                                         </select>
                                         <span
-                                            className="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none"
-                                            style={{ color: "var(--color-stone-grey)" }}
+                                            className="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none ui-muted"
                                         >
                                             expand_more
                                         </span>
@@ -132,8 +126,7 @@ export default function ConversationPage() {
                                 <div className="flex flex-col relative group/field">
                                     <label
                                         htmlFor="format"
-                                        className="text-label-md mb-1"
-                                        style={{ color: "var(--color-stone-grey)" }}
+                                        className="text-label-md mb-1 ui-muted"
                                     >
                                         Preferred Format
                                     </label>
@@ -145,8 +138,7 @@ export default function ConversationPage() {
                                             <option value="either">Either</option>
                                         </select>
                                         <span
-                                            className="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none"
-                                            style={{ color: "var(--color-stone-grey)" }}
+                                            className="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none ui-muted"
                                         >
                                             expand_more
                                         </span>
@@ -158,12 +150,11 @@ export default function ConversationPage() {
                             <div className="flex flex-col relative group/field pt-4">
                                 <label
                                     htmlFor="message"
-                                    className="text-headline-md mb-3"
-                                    style={{ color: "var(--color-primary)" }}
+                                    className="text-headline-md mb-3 ui-heading"
                                 >
                                     What would you like us to understand about you before we meet?
                                 </label>
-                                <p className="text-body-md mb-4" style={{ color: "var(--color-on-surface-variant)" }}>
+                                <p className="text-body-md mb-4 ui-copy">
                                     You don't need to explain everything. A few words are enough. Perhaps{" "}
                                     <em>"I've been feeling anxious for a while,"</em> or simply{" "}
                                     <em>"I think I need some help."</em>
@@ -199,10 +190,9 @@ export default function ConversationPage() {
                     <div className="col-span-1 lg:col-span-5 flex flex-col gap-6">
                         {/* Contact card */}
                         <div
-                            className="rounded-xl p-8 lg:p-10"
-                            style={{ backgroundColor: "var(--color-muted-sand)" }}
+                            className="rounded-xl p-8 lg:p-10 surface-sand"
                         >
-                            <h3 className="text-headline-md mb-6" style={{ color: "var(--color-primary)" }}>
+                            <h3 className="text-headline-md mb-6 ui-heading">
                                 Contact
                             </h3>
                             <ul className="space-y-6">
@@ -212,17 +202,16 @@ export default function ConversationPage() {
                                     { icon: "mail", label: "Email", value: "hello@adorelife.in", href: "mailto:hello@adorelife.in" },
                                 ].map((item) => (
                                     <li key={item.label} className="flex items-start gap-4">
-                                        <span className="material-symbols-outlined mt-1" style={{ color: "var(--color-soft-teal)" }}>
+                                        <span className="material-symbols-outlined mt-1 ui-accent">
                                             {item.icon}
                                         </span>
                                         <div>
-                                            <span className="text-label-md block mb-1" style={{ color: "var(--color-stone-grey)" }}>
+                                            <span className="text-label-md block mb-1 ui-muted">
                                                 {item.label}
                                             </span>
                                             <a
                                                 href={item.href}
-                                                className="text-body-lg transition-colors"
-                                                style={{ color: "var(--color-on-surface)" }}
+                                                className="text-body-lg transition-colors ui-text"
                                                 target={item.href.startsWith("http") ? "_blank" : undefined}
                                                 rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
                                                 onMouseEnter={(e) =>
@@ -242,18 +231,17 @@ export default function ConversationPage() {
 
                         {/* Clinic card */}
                         <div
-                            className="rounded-xl p-8 lg:p-10"
-                            style={{ backgroundColor: "var(--color-muted-sand)" }}
+                            className="rounded-xl p-8 lg:p-10 surface-sand"
                         >
-                            <h3 className="text-headline-md mb-6" style={{ color: "var(--color-primary)" }}>
+                            <h3 className="text-headline-md mb-6 ui-heading">
                                 Visit
                             </h3>
                             <div className="flex items-start gap-4">
-                                <span className="material-symbols-outlined mt-1" style={{ color: "var(--color-soft-teal)" }}>
+                                <span className="material-symbols-outlined mt-1 ui-accent">
                                     location_on
                                 </span>
-                                <div className="text-body-md" style={{ color: "var(--color-on-surface-variant)" }}>
-                                    <p className="font-bold mb-1" style={{ color: "var(--color-on-surface)" }}>
+                                <div className="text-body-md ui-copy">
+                                    <p className="font-bold mb-1 ui-text">
                                         Somani Health Clinic
                                     </p>
                                     <p>Office 8, Tropical Lagoon,</p>
@@ -262,8 +250,7 @@ export default function ConversationPage() {
                                     <p>Maharashtra, India</p>
                                     <a
                                         href="#"
-                                        className="inline-flex items-center gap-2 mt-4 text-label-md transition-colors"
-                                        style={{ color: "var(--color-soft-teal)" }}
+                                        className="inline-flex items-center gap-2 mt-4 text-label-md transition-colors ui-accent"
                                         onMouseEnter={(e) =>
                                             ((e.currentTarget as HTMLAnchorElement).style.color = "var(--color-primary)")
                                         }
@@ -292,7 +279,7 @@ export default function ConversationPage() {
                             >
                                 info
                             </span>
-                            <div className="text-body-md text-sm" style={{ color: "var(--color-on-surface-variant)" }}>
+                            <div className="text-body-md text-sm ui-copy">
                                 <p
                                     className="text-label-md mb-1 uppercase tracking-widest"
                                     style={{ color: "var(--color-on-surface)", fontWeight: 300 }}
@@ -316,20 +303,17 @@ export default function ConversationPage() {
                 {/* ── Closing ── */}
                 <section className="section-pad py-16 md:py-32 flex flex-col items-center text-center w-full">
                     <h2
-                        className="text-headline-lg mb-6 max-w-2xl"
-                        style={{ color: "var(--color-primary)" }}
+                        className="text-headline-lg mb-6 max-w-2xl ui-heading"
                     >
                         You don't have to know exactly what to say.
                     </h2>
                     <div
-                        className="text-body-lg max-w-xl mx-auto space-y-4"
-                        style={{ color: "var(--color-on-surface-variant)" }}
+                        className="text-body-lg max-w-xl mx-auto space-y-4 ui-copy"
                     >
                         <p>Sometimes the first message is as simple as: "I think I need some help."</p>
                         <p>That's enough. We'll begin from there.</p>
                         <p
-                            className="pt-4 text-quote-intense italic"
-                            style={{ color: "var(--color-primary)" }}
+                            className="pt-4 text-quote-intense italic ui-heading"
                         >
                             "We'll begin wherever you are."
                         </p>

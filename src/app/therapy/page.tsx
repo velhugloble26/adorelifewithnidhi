@@ -80,14 +80,12 @@ export default function TherapyPage() {
                     className="section-pad py-16 md:py-32 flex flex-col items-center justify-center text-center max-w-[1440px] mx-auto"
                 >
                     <h1
-                        className="text-display-lg max-w-3xl mb-8"
-                        style={{ color: "var(--color-primary)" }}
+                        className="text-display-lg max-w-3xl mb-8 ui-heading"
                     >
                         What if therapy begins with understanding?
                     </h1>
                     <div
-                        className="max-w-2xl text-body-lg space-y-6 mb-12"
-                        style={{ color: "var(--color-on-surface-variant)" }}
+                        className="max-w-2xl text-body-lg space-y-6 mb-12 ui-copy"
                     >
                         <p>You don't need to arrive with a diagnosis.</p>
                         <p>You don't need to know exactly what is wrong.</p>
@@ -99,8 +97,7 @@ export default function TherapyPage() {
                     </div>
                     <Link
                         href="/conversation"
-                        className="btn-primary inline-flex"
-                        style={{ paddingTop: "1rem", paddingBottom: "1rem", paddingLeft: "2rem", paddingRight: "2rem" }}
+                        className="btn-primary inline-flex btn-lg"
                     >
                         Begin a Conversation
                     </Link>
@@ -132,8 +129,7 @@ export default function TherapyPage() {
                             </h2>
                         </div>
                         <div
-                            className="md:col-span-7 text-body-lg space-y-6"
-                            style={{ color: "var(--color-on-surface-variant)" }}
+                            className="md:col-span-7 text-body-lg space-y-6 ui-copy"
                         >
                             <p>Life can leave us carrying thoughts, emotions and patterns that we don't always understand.</p>
                             <p>Sometimes we know what we're feeling. Sometimes we only know that something doesn't feel right.</p>
@@ -168,8 +164,7 @@ export default function TherapyPage() {
                                 ))}
                             </ul>
                             <p
-                                className="text-headline-md mt-8"
-                                style={{ color: "var(--color-primary)" }}
+                                className="text-headline-md mt-8 ui-heading"
                             >
                                 Therapy isn't about finding fault. It's about finding understanding.
                             </p>
@@ -179,13 +174,11 @@ export default function TherapyPage() {
 
                 {/* ── What therapy is NOT ── */}
                 <section
-                    className="py-16 md:py-32 my-16 md:my-32"
-                    style={{ backgroundColor: "var(--color-muted-sand)" }}
+                    className="py-16 md:py-32 my-16 md:my-32 surface-sand"
                 >
                     <div className="section-pad max-w-[1440px] mx-auto text-center max-w-4xl">
                         <h2
-                            className="text-headline-lg mb-8"
-                            style={{ color: "var(--color-primary)" }}
+                            className="text-headline-lg mb-8 ui-heading"
                         >
                             Therapy isn't someone telling you how to live.
                         </h2>
@@ -220,12 +213,11 @@ export default function TherapyPage() {
                 <section className="section-pad py-16 max-w-[1440px] mx-auto">
                     <div className="text-center max-w-3xl mx-auto mb-16">
                         <h2
-                            className="text-headline-lg mb-6"
-                            style={{ color: "var(--color-primary)" }}
+                            className="text-headline-lg mb-6 ui-heading"
                         >
                             You don't have to be in crisis to seek therapy.
                         </h2>
-                        <p className="text-body-lg" style={{ color: "var(--color-on-surface-variant)" }}>
+                        <p className="text-body-lg ui-copy">
                             Therapy can be useful whenever something in your emotional life, relationships
                             or way of coping feels difficult, confusing or stuck. You might be experiencing:
                         </p>
@@ -234,8 +226,7 @@ export default function TherapyPage() {
                         {therapyFor.map((group) => (
                             <div
                                 key={group.title}
-                                className="p-8 rounded-xl"
-                                style={{ backgroundColor: "var(--color-warm-ivory)" }}
+                                className="p-8 rounded-xl surface-ivory"
                             >
                                 <h3
                                     className="text-headline-md mb-6 pb-4 border-b"
@@ -247,8 +238,7 @@ export default function TherapyPage() {
                                     {group.title}
                                 </h3>
                                 <ul
-                                    className="space-y-4 text-body-md"
-                                    style={{ color: "var(--color-on-surface-variant)" }}
+                                    className="space-y-4 text-body-md ui-copy"
                                 >
                                     {group.items.map((item) => (
                                         <li key={item}>{item}</li>
@@ -258,13 +248,13 @@ export default function TherapyPage() {
                         ))}
                     </div>
                     <div className="mt-16 text-center">
-                        <p className="text-body-lg mb-2" style={{ color: "var(--color-on-surface-variant)" }}>
+                        <p className="text-body-lg mb-2 ui-copy">
                             Or perhaps you simply have a sense that:
                         </p>
-                        <p className="text-headline-md mb-4" style={{ color: "var(--color-primary)" }}>
+                        <p className="text-headline-md mb-4 ui-heading">
                             "I don't feel like myself anymore."
                         </p>
-                        <p className="text-body-md" style={{ color: "var(--color-stone-grey)" }}>
+                        <p className="text-body-md ui-muted">
                             You don't need a perfect reason to begin.
                         </p>
                     </div>
@@ -272,26 +262,22 @@ export default function TherapyPage() {
 
                 {/* ── Journey steps ── */}
                 <section
-                    className="section-pad py-16 md:py-32 max-w-[1440px] mx-auto border-t mt-16"
-                    style={{ borderColor: "var(--color-surface-variant)" }}
+                    className="section-pad py-16 md:py-32 max-w-[1440px] mx-auto border-t mt-16 border-surface"
                 >
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                         <div>
                             <span
-                                className="text-label-md uppercase tracking-widest mb-4 block"
-                                style={{ color: "var(--color-stone-grey)" }}
+                                className="text-label-md uppercase tracking-widest mb-4 block ui-muted"
                             >
                                 The Adore Life Journey™
                             </span>
                             <h2
-                                className="text-headline-lg mb-6"
-                                style={{ color: "var(--color-primary)" }}
+                                className="text-headline-lg mb-6 ui-heading"
                             >
                                 From feeling understood to experiencing emotional freedom.
                             </h2>
                             <p
-                                className="text-body-lg mb-12 max-w-lg"
-                                style={{ color: "var(--color-on-surface-variant)" }}
+                                className="text-body-lg mb-12 max-w-lg ui-copy"
                             >
                                 There is no fixed timeline or formula for therapy. But the journey often
                                 involves moving through several layers of understanding.
@@ -306,8 +292,7 @@ export default function TherapyPage() {
                                 {journeySteps.map((step) => (
                                     <div key={step.num} className="relative flex items-start gap-6">
                                         <div
-                                            className="flex items-center justify-center w-6 h-6 rounded-full text-white z-10 shrink-0 shadow-sm absolute -left-11"
-                                            style={{ backgroundColor: "var(--color-soft-teal)" }}
+                                            className="flex items-center justify-center w-6 h-6 rounded-full text-white z-10 shrink-0 shadow-sm absolute -left-11 surface-accent"
                                         >
                                             <span
                                                 className="text-label-md"
@@ -318,12 +303,11 @@ export default function TherapyPage() {
                                         </div>
                                         <div>
                                             <h4
-                                                className="text-headline-md mb-2"
-                                                style={{ color: "var(--color-primary)" }}
+                                                className="text-headline-md mb-2 ui-heading"
                                             >
                                                 {step.title}
                                             </h4>
-                                            <p className="text-body-md" style={{ color: "var(--color-on-surface-variant)" }}>
+                                            <p className="text-body-md ui-copy">
                                                 {step.body}
                                             </p>
                                         </div>
@@ -346,7 +330,7 @@ export default function TherapyPage() {
                     </div>
 
                     <div className="mt-12 text-center">
-                        <p className="text-headline-md" style={{ color: "var(--color-primary)" }}>
+                        <p className="text-headline-md ui-heading">
                             The goal isn't to become someone else. It is to become more fully yourself.
                         </p>
                     </div>
@@ -354,18 +338,16 @@ export default function TherapyPage() {
 
                 {/* ── FAQ ── */}
                 <section
-                    className="section-pad py-16 max-w-[1440px] mx-auto"
-                    style={{ backgroundColor: "var(--color-surface-container-lowest)" }}
+                    className="section-pad py-16 max-w-[1440px] mx-auto surface-lowest"
                 >
                     <div className="max-w-3xl mx-auto">
                         <div className="text-center mb-12">
                             <h2
-                                className="text-headline-lg mb-4"
-                                style={{ color: "var(--color-primary)" }}
+                                className="text-headline-lg mb-4 ui-heading"
                             >
                                 Questions you may be wondering about.
                             </h2>
-                            <p className="text-body-lg" style={{ color: "var(--color-stone-grey)" }}>
+                            <p className="text-body-lg ui-muted">
                                 It's completely okay if you're not sure how this works.
                             </p>
                         </div>
@@ -373,27 +355,23 @@ export default function TherapyPage() {
                             {faqItems.map((item, i) => (
                                 <details
                                     key={i}
-                                    className="group border-b pb-4"
-                                    style={{ borderColor: "var(--color-surface-variant)" }}
+                                    className="group border-b pb-4 border-surface"
                                     {...(i === 0 ? { open: true } : {})}
                                 >
                                     <summary
-                                        className="flex justify-between items-center py-4 cursor-pointer focus:outline-none"
-                                        style={{ color: "var(--color-primary)" }}
+                                        className="flex justify-between items-center py-4 cursor-pointer focus:outline-none ui-heading"
                                     >
-                                        <span className="text-headline-md" style={{ fontSize: "20px" }}>
+                                        <span className="text-headline-md text-question">
                                             {item.q}
                                         </span>
                                         <span
-                                            className="material-symbols-outlined faq-icon"
-                                            style={{ color: "var(--color-stone-grey)" }}
+                                            className="material-symbols-outlined faq-icon ui-muted"
                                         >
                                             add
                                         </span>
                                     </summary>
                                     <div
-                                        className="text-body-md pb-4 pl-2"
-                                        style={{ color: "var(--color-on-surface-variant)" }}
+                                        className="text-body-md pb-4 pl-2 ui-copy"
                                     >
                                         <p>{item.a}</p>
                                     </div>
@@ -409,21 +387,18 @@ export default function TherapyPage() {
                     className="section-pad py-16 md:py-32 flex flex-col items-center justify-center text-center max-w-[1440px] mx-auto my-16 md:my-32"
                 >
                     <h2
-                        className="text-headline-lg max-w-2xl mb-8"
-                        style={{ color: "var(--color-primary)" }}
+                        className="text-headline-lg max-w-2xl mb-8 ui-heading"
                     >
                         You don't need to know exactly what you need.
                     </h2>
                     <div
-                        className="max-w-xl text-body-lg space-y-6 mb-12"
-                        style={{ color: "var(--color-on-surface-variant)" }}
+                        className="max-w-xl text-body-lg space-y-6 mb-12 ui-copy"
                     >
                         <p>
                             Sometimes the first step is simply saying:
                             <br />
                             <strong
-                                className="text-headline-md mt-2 block"
-                                style={{ color: "var(--color-primary)" }}
+                                className="text-headline-md mt-2 block ui-heading"
                             >
                                 "Something isn't feeling right, and I want to understand why."
                             </strong>
@@ -433,14 +408,12 @@ export default function TherapyPage() {
                     <div className="flex flex-col items-center gap-6">
                         <Link
                             href="/conversation"
-                            className="btn-primary inline-flex"
-                            style={{ paddingTop: "1rem", paddingBottom: "1rem", paddingLeft: "2rem", paddingRight: "2rem" }}
+                            className="btn-primary inline-flex btn-lg"
                         >
                             Begin a Conversation
                         </Link>
                         <span
-                            className="text-body-md italic"
-                            style={{ color: "var(--color-stone-grey)" }}
+                            className="text-body-md italic ui-muted"
                         >
                             Whenever you're ready, we'll begin wherever you are.
                         </span>

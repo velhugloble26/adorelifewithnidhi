@@ -23,20 +23,20 @@ export default function CorporateWellbeingPage() {
             <main>
                 {/* ── Breadcrumb ── */}
                 <nav className="section-pad pt-6 max-w-[1440px] mx-auto" aria-label="Breadcrumb">
-                    <ol className="flex gap-2 text-label-md" style={{ color: "var(--color-stone-grey)" }}>
-                        <li><Link href="/therapy" style={{ color: "var(--color-stone-grey)" }}>Therapy</Link></li>
+                    <ol className="flex gap-2 text-label-md ui-muted">
+                        <li><Link href="/therapy" className="ui-muted">Therapy</Link></li>
                         <li aria-hidden="true">/</li>
-                        <li style={{ color: "var(--color-primary)" }}>Corporate Wellbeing</li>
+                        <li className="ui-heading">Corporate Wellbeing</li>
                     </ol>
                 </nav>
 
                 {/* ── Hero ── */}
                 <section className="section-pad py-16 md:py-32 flex flex-col md:flex-row items-center gap-12 max-w-[1440px] mx-auto">
                     <div className="flex-1 space-y-6">
-                        <h1 className="text-display-lg" style={{ color: "var(--color-primary)" }}>
+                        <h1 className="text-display-lg ui-heading">
                             Healthier workplaces begin with understanding people.
                         </h1>
-                        <p className="text-body-lg max-w-2xl" style={{ color: "var(--color-on-surface-variant)" }}>
+                        <p className="text-body-lg max-w-2xl ui-copy">
                             We partner with forward-thinking organisations to cultivate environments where
                             individuals thrive. Emotional safety and resilience are the foundation of
                             sustainable success.
@@ -44,8 +44,7 @@ export default function CorporateWellbeingPage() {
                         <div className="pt-4">
                             <Link
                                 href="/conversation"
-                                className="inline-flex items-center gap-2 text-label-md transition-colors group"
-                                style={{ color: "var(--color-primary)" }}
+                                className="inline-flex items-center gap-2 text-label-md transition-colors group ui-heading"
                                 onMouseEnter={(e) =>
                                     ((e.currentTarget as HTMLAnchorElement).style.color = "var(--color-soft-teal)")
                                 }
@@ -62,8 +61,7 @@ export default function CorporateWellbeingPage() {
                     </div>
                     <div className="flex-1 w-full relative">
                         <div
-                            className="aspect-[4/3] rounded-lg overflow-hidden"
-                            style={{ backgroundColor: "var(--color-muted-sand)" }}
+                            className="aspect-[4/3] rounded-lg overflow-hidden surface-sand"
                         >
                             <img
                                 src={CORPORATE_IMG}
@@ -76,14 +74,13 @@ export default function CorporateWellbeingPage() {
 
                 {/* ── What Organisations Are Seeing ── */}
                 <section
-                    className="section-pad py-16 md:py-32 mb-16 md:mb-32 mx-4 md:mx-auto max-w-[1440px] rounded-3xl"
-                    style={{ backgroundColor: "var(--color-warm-ivory)" }}
+                    className="section-pad py-16 md:py-32 mb-16 md:mb-32 mx-4 md:mx-auto max-w-[1440px] rounded-3xl surface-ivory"
                 >
                     <div className="max-w-3xl mx-auto text-center mb-12">
-                        <h2 className="text-headline-lg mb-4" style={{ color: "var(--color-primary)" }}>
+                        <h2 className="text-headline-lg mb-4 ui-heading">
                             What organisations are often seeing
                         </h2>
-                        <p className="text-body-md" style={{ color: "var(--color-on-surface-variant)" }}>
+                        <p className="text-body-md ui-copy">
                             The modern workplace demands more than just output. When emotional wellbeing
                             is overlooked, the signs become visible across the organisation.
                         </p>
@@ -92,8 +89,7 @@ export default function CorporateWellbeingPage() {
                         {challenges.map((c) => (
                             <div
                                 key={c.title}
-                                className="p-8 rounded-lg flex flex-col items-start gap-4 transition-colors duration-500"
-                                style={{ backgroundColor: "var(--color-surface)" }}
+                                className="p-8 rounded-lg flex flex-col items-start gap-4 transition-colors duration-500 surface-base"
                                 onMouseEnter={(e) =>
                                     ((e.currentTarget as HTMLDivElement).style.backgroundColor = "var(--color-muted-sand)")
                                 }
@@ -110,10 +106,10 @@ export default function CorporateWellbeingPage() {
                                 >
                                     <span className="material-symbols-outlined">{c.icon}</span>
                                 </div>
-                                <h3 className="text-headline-md" style={{ color: "var(--color-primary)" }}>
+                                <h3 className="text-headline-md ui-heading">
                                     {c.title}
                                 </h3>
-                                <p className="text-body-md" style={{ color: "var(--color-on-surface-variant)" }}>
+                                <p className="text-body-md ui-copy">
                                     {c.body}
                                 </p>
                             </div>

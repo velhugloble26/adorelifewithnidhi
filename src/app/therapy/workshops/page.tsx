@@ -16,20 +16,20 @@ export default function WorkshopsPage() {
             <main className="pt-16">
                 {/* ── Breadcrumb ── */}
                 <nav className="section-pad max-w-[1440px] mx-auto mb-8" aria-label="Breadcrumb">
-                    <ol className="flex gap-2 text-label-md" style={{ color: "var(--color-stone-grey)" }}>
-                        <li><Link href="/therapy" style={{ color: "var(--color-stone-grey)" }}>Therapy</Link></li>
+                    <ol className="flex gap-2 text-label-md ui-muted">
+                        <li><Link href="/therapy" className="ui-muted">Therapy</Link></li>
                         <li aria-hidden="true">/</li>
-                        <li style={{ color: "var(--color-primary)" }}>Workshops & Webinars</li>
+                        <li className="ui-heading">Workshops & Webinars</li>
                     </ol>
                 </nav>
 
                 {/* ── Hero Section ── */}
                 <section className="section-pad py-16 max-w-[1440px] mx-auto text-center md:text-left">
                     <div className="max-w-[800px] mx-auto md:mx-0">
-                        <h1 className="text-display-lg mb-6" style={{ color: "var(--color-primary)" }}>
+                        <h1 className="text-display-lg mb-6 ui-heading">
                             Conversations that help us understand ourselves—and each other.
                         </h1>
-                        <p className="text-body-lg mb-12" style={{ color: "var(--color-on-surface-variant)" }}>
+                        <p className="text-body-lg mb-12 ui-copy">
                             Bringing the insights of clinical psychology into practical, everyday contexts for
                             teams, communities, and individuals.
                         </p>
@@ -78,21 +78,19 @@ export default function WorkshopsPage() {
 
                 {/* ── Why Workshops Section ── */}
                 <section
-                    className="py-16 md:py-32"
-                    style={{ backgroundColor: "var(--color-surface-container-low)" }}
+                    className="py-16 md:py-32 surface-low"
                 >
                     <div className="section-pad max-w-[1440px] mx-auto">
                         <div className="max-w-[800px] mx-auto text-center">
                             <span
-                                className="text-label-md uppercase tracking-wider block mb-4"
-                                style={{ color: "var(--color-sage-green)" }}
+                                className="text-label-md uppercase tracking-wider block mb-4 ui-sage"
                             >
                                 The Principle
                             </span>
-                            <h2 className="text-headline-lg mb-8" style={{ color: "var(--color-primary)" }}>
+                            <h2 className="text-headline-lg mb-8 ui-heading">
                                 Making Psychology Practical
                             </h2>
-                            <p className="text-body-lg" style={{ color: "var(--color-on-surface-variant)" }}>
+                            <p className="text-body-lg ui-copy">
                                 Therapy is deeply personal, but many of the tools for emotional wellbeing can be
                                 learned and shared in community. Workshops and webinars bridge the gap between
                                 clinical insight and everyday application, creating spaces where groups can explore

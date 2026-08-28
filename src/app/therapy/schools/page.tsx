@@ -71,20 +71,17 @@ export default function SchoolsPage() {
                     body="Equipping young people, parents, and educators with the tools to navigate the complexities of growing up."
                     centered
                 >
-                    <Link href="/conversation" className="btn-primary"
-                        style={{ padding: "0.875rem 2rem" }}>
+                    <Link href="/conversation" className="btn-primary btn-md">
                         Start a Conversation
                     </Link>
-                    <Link href="/community" className="btn-secondary"
-                        style={{ padding: "0.875rem 2rem" }}>
+                    <Link href="/community" className="btn-secondary btn-md">
                         Community Programmes
                     </Link>
                 </PageHero>
 
                 {/* ── Pressures ── */}
                 <section
-                    className="w-full py-16 md:py-24"
-                    style={{ backgroundColor: "var(--color-surface-container-lowest)" }}
+                    className="w-full py-16 md:py-24 surface-lowest"
                 >
                     <div className="section-pad w-full max-w-[1440px] mx-auto">
                         <SectionHeading
@@ -146,8 +143,7 @@ export default function SchoolsPage() {
                 >
                     <Link
                         href="/conversation"
-                        className="btn-primary inline-flex items-center gap-2"
-                        style={{ padding: "1rem 2.5rem" }}
+                        className="btn-primary inline-flex items-center gap-2 btn-wide"
                     >
                         Start a Conversation
                         <span className="material-symbols-outlined text-xl">arrow_forward</span>

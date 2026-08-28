@@ -23,10 +23,10 @@ export default function InsightsPage() {
             <main className="section-pad py-16 md:py-32 w-full max-w-[1440px] mx-auto flex flex-col items-center">
                 {/* ── Hero ── */}
                 <section className="text-center max-w-3xl mx-auto mb-16 md:mb-32">
-                    <h1 className="text-display-lg mb-6" style={{ color: "var(--color-primary)" }}>
+                    <h1 className="text-display-lg mb-6 ui-heading">
                         A little more understanding can change the way you see yourself.
                     </h1>
-                    <p className="text-body-lg" style={{ color: "var(--color-on-surface-variant)" }}>
+                    <p className="text-body-lg ui-copy">
                         Explore curated insights, guided reflections, and practical resources
                         designed to foster emotional clarity and self-compassion. This is a quiet
                         space to learn, unlearn, and grow at your own pace.
@@ -59,21 +59,17 @@ export default function InsightsPage() {
                             >
                                 Featured
                             </span>
-                            <h2 className="text-headline-lg mb-4" style={{ color: "var(--color-primary)" }}>
+                            <h2 className="text-headline-lg mb-4 ui-heading">
                                 Why do I know what to do, but still find myself doing the opposite?
                             </h2>
-                            <p className="text-body-md mb-8" style={{ color: "var(--color-on-surface-variant)" }}>
+                            <p className="text-body-md mb-8 ui-copy">
                                 Understanding the disconnect between our logical intentions and
                                 emotional responses. A gentle exploration of self-sabotage and how to
                                 cultivate alignment without self-judgment.
                             </p>
                             <Link
                                 href="#"
-                                className="text-label-md w-max pb-1 transition-colors border-b"
-                                style={{
-                                    color: "var(--color-soft-teal)",
-                                    borderColor: "var(--color-soft-teal)",
-                                }}
+                                className="text-label-md w-max pb-1 transition-colors border-b ui-link-accent"
                                 onMouseEnter={(e) => {
                                     (e.currentTarget as HTMLAnchorElement).style.color = "var(--color-primary)";
                                     (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--color-primary)";
@@ -91,7 +87,7 @@ export default function InsightsPage() {
 
                 {/* ── Category Grid ── */}
                 <section className="w-full">
-                    <h3 className="text-headline-md mb-8 text-center" style={{ color: "var(--color-primary)" }}>
+                    <h3 className="text-headline-md mb-8 text-center ui-heading">
                         Explore by Theme
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -126,10 +122,10 @@ export default function InsightsPage() {
                                         {theme.icon}
                                     </span>
                                 </div>
-                                <h4 className="text-headline-md mb-2" style={{ color: "var(--color-primary)" }}>
+                                <h4 className="text-headline-md mb-2 ui-heading">
                                     {theme.title}
                                 </h4>
-                                <p className="text-body-md" style={{ color: "var(--color-on-surface-variant)" }}>
+                                <p className="text-body-md ui-copy">
                                     {theme.body}
                                 </p>
                             </Link>

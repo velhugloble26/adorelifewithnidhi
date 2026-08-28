@@ -23,17 +23,17 @@ export default function CommunityPage() {
             <main className="flex-grow flex flex-col items-center w-full">
                 {/* ── Hero Section ── */}
                 <section className="section-pad w-full max-w-[1440px] pt-16 md:pt-32 pb-16 flex flex-col items-center text-center">
-                    <h1 className="text-display-lg max-w-4xl mx-auto leading-tight mb-8" style={{ color: "var(--color-primary)" }}>
+                    <h1 className="text-display-lg max-w-4xl mx-auto leading-tight mb-8 ui-heading">
                         Understanding should be accessible to everyone.
                     </h1>
                     <div className="mb-8 max-w-md mx-auto">
                         <img src={TITLE_IMG} alt="Because Everyone Deserves To Feel Understood" className="w-full h-auto" />
                     </div>
-                    <p className="text-body-lg max-w-2xl mx-auto mb-12" style={{ color: "var(--color-on-surface-variant)" }}>
+                    <p className="text-body-lg max-w-2xl mx-auto mb-12 ui-copy">
                         We extend our practice beyond the therapy room, collaborating with communities and
                         NGOs to create safe spaces where transformative dialogue can begin.
                     </p>
-                    <div className="w-full aspect-[21/9] rounded-lg overflow-hidden relative" style={{ backgroundColor: "var(--color-surface-container)" }}>
+                    <div className="w-full aspect-[21/9] rounded-lg overflow-hidden relative surface-container">
                         <img
                             className="w-full h-full object-cover mix-blend-multiply opacity-90"
                             src={HERO_IMG}
@@ -45,10 +45,10 @@ export default function CommunityPage() {
                 {/* ── Why Community Matters ── */}
                 <section className="section-pad w-full max-w-[1440px] py-16 md:py-32 flex flex-col md:flex-row gap-16 items-start">
                     <div className="md:w-1/3 md:sticky md:top-32">
-                        <h2 className="text-headline-lg mb-4" style={{ color: "var(--color-primary)" }}>Why Community Matters</h2>
-                        <div className="w-12 h-px mb-6" style={{ backgroundColor: "var(--color-stone-grey)" }}></div>
+                        <h2 className="text-headline-lg mb-4 ui-heading">Why Community Matters</h2>
+                        <div className="w-12 h-px mb-6 divider-muted"></div>
                     </div>
-                    <div className="md:w-2/3 flex flex-col gap-8 text-body-lg" style={{ color: "var(--color-on-surface-variant)" }}>
+                    <div className="md:w-2/3 flex flex-col gap-8 text-body-lg ui-copy">
                         <p>
                             Healing rarely happens in isolation. The language we use, the spaces we inhabit,
                             and the people we surround ourselves with profoundly shape our capacity to
@@ -64,16 +64,15 @@ export default function CommunityPage() {
                 </section>
 
                 {/* ── Programme Themes (Bento Grid) ── */}
-                <section className="w-full py-16 md:py-32" style={{ backgroundColor: "var(--color-warm-ivory)" }}>
+                <section className="w-full py-16 md:py-32 surface-ivory">
                     <div className="section-pad max-w-[1440px] mx-auto">
-                        <h2 className="text-headline-lg text-center mb-16" style={{ color: "var(--color-primary)" }}>
+                        <h2 className="text-headline-lg text-center mb-16 ui-heading">
                             Our Programme Themes
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-min">
                             {/* Card 1 */}
                             <div
-                                className="p-10 rounded-lg flex flex-col gap-6 md:col-span-2 aspect-auto md:aspect-[2/1] justify-end relative overflow-hidden group"
-                                style={{ backgroundColor: "var(--color-muted-sand)" }}
+                                className="p-10 rounded-lg flex flex-col gap-6 md:col-span-2 aspect-auto md:aspect-[2/1] justify-end relative overflow-hidden group surface-sand"
                             >
                                 <div className="absolute inset-0 z-0">
                                     <img
@@ -83,11 +82,11 @@ export default function CommunityPage() {
                                     />
                                 </div>
                                 <div className="relative z-10">
-                                    <span className="material-symbols-outlined mb-2 text-3xl" style={{ color: "var(--color-soft-teal)" }}>
+                                    <span className="material-symbols-outlined mb-2 text-3xl ui-accent">
                                         forum
                                     </span>
-                                    <h3 className="text-headline-md mb-2" style={{ color: "var(--color-primary)" }}>Awareness Talks</h3>
-                                    <p className="text-body-md max-w-md" style={{ color: "var(--color-on-surface-variant)" }}>
+                                    <h3 className="text-headline-md mb-2 ui-heading">Awareness Talks</h3>
+                                    <p className="text-body-md max-w-md ui-copy">
                                         Gentle, introductory sessions exploring emotional literacy, the power of
                                         boundaries, and the foundations of self-compassion.
                                     </p>
@@ -100,12 +99,12 @@ export default function CommunityPage() {
                                 style={{ backgroundColor: "var(--color-surface-container-high)", borderColor: "color-mix(in srgb, var(--color-stone-grey) 20%, transparent)" }}
                             >
                                 <div>
-                                    <span className="material-symbols-outlined mb-4 text-3xl" style={{ color: "var(--color-sage-green)" }}>
+                                    <span className="material-symbols-outlined mb-4 text-3xl ui-sage">
                                         psychology_alt
                                     </span>
-                                    <h3 className="text-headline-md mb-2" style={{ color: "var(--color-primary)" }}>Interactive Workshops</h3>
+                                    <h3 className="text-headline-md mb-2 ui-heading">Interactive Workshops</h3>
                                 </div>
-                                <p className="text-body-md" style={{ color: "var(--color-on-surface-variant)" }}>
+                                <p className="text-body-md ui-copy">
                                     Deep-dive sessions providing practical tools for navigating anxiety, fostering
                                     resilience, and engaging in difficult conversations.
                                 </p>
@@ -120,9 +119,9 @@ export default function CommunityPage() {
                                     <span className="material-symbols-outlined mb-4 text-3xl" style={{ color: "var(--color-tertiary)" }}>
                                         nature_people
                                     </span>
-                                    <h3 className="text-headline-md mb-2" style={{ color: "var(--color-on-tertiary-fixed)" }}>Youth Programmes</h3>
+                                    <h3 className="text-headline-md mb-2 ui-tertiary-heading">Youth Programmes</h3>
                                 </div>
-                                <p className="text-body-md" style={{ color: "var(--color-on-tertiary-fixed-variant)" }}>
+                                <p className="text-body-md ui-tertiary-copy">
                                     Tailored spaces for young people to develop emotional vocabulary and safe
                                     coping mechanisms in a pressured world.
                                 </p>
@@ -143,7 +142,7 @@ export default function CommunityPage() {
 
                 {/* ── Who We Work With ── */}
                 <section className="section-pad w-full max-w-[1440px] mx-auto py-16 md:py-32 flex flex-col items-center">
-                    <h2 className="text-headline-lg mb-12" style={{ color: "var(--color-primary)" }}>Who We Work With</h2>
+                    <h2 className="text-headline-lg mb-12 ui-heading">Who We Work With</h2>
                     <div className="flex flex-wrap justify-center gap-4 max-w-3xl">
                         {[
                             "Non-Governmental Organisations",
@@ -169,24 +168,22 @@ export default function CommunityPage() {
 
                 {/* ── Partnership CTA ── */}
                 <section
-                    className="section-pad w-full py-16 md:py-32 flex flex-col items-center text-center"
-                    style={{ backgroundColor: "var(--color-secondary-fixed)" }}
+                    className="section-pad w-full py-16 md:py-32 flex flex-col items-center text-center surface-secondary"
                 >
                     <div className="max-w-2xl">
-                        <span className="material-symbols-outlined mb-6 text-4xl" style={{ color: "var(--color-on-secondary-fixed-variant)" }}>
+                        <span className="material-symbols-outlined mb-6 text-4xl ui-copy-light">
                             handshake
                         </span>
-                        <h2 className="text-display-lg mb-6" style={{ color: "var(--color-on-secondary-fixed)" }}>
+                        <h2 className="text-display-lg mb-6 ui-text-light">
                             Let's build a quieter space, together.
                         </h2>
-                        <p className="text-body-lg mb-10" style={{ color: "var(--color-on-secondary-fixed-variant)" }}>
+                        <p className="text-body-lg mb-10 ui-copy-light">
                             If your organisation aligns with our mission to make emotional literacy accessible
                             and compassionate, we would be honoured to start a conversation.
                         </p>
                         <Link
                             href="/conversation"
-                            className="btn-primary inline-flex"
-                            style={{ paddingTop: "1rem", paddingBottom: "1rem", paddingLeft: "2rem", paddingRight: "2rem" }}
+                            className="btn-primary inline-flex btn-lg"
                         >
                             Explore a Partnership
                         </Link>
