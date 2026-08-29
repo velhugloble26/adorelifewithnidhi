@@ -181,8 +181,10 @@ const QuickContactSchema = new mongoose.Schema(
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true, lowercase: true },
     phone: { type: String, default: "", trim: true },
-    message: { type: String, default: "", trim: true },
     selectedOption: { type: String, default: "", trim: true },
+    preferredSession: { type: String, default: "", trim: true },
+    preferredFormat: { type: String, default: "", trim: true },
+    message: { type: String, default: "", trim: true },
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
   },
@@ -207,6 +209,66 @@ const ClientSchema = new mongoose.Schema(
 ClientSchema.pre('save', function () {
   this.updated_at = Date.now();
 })
+
+const BookingSchema = new mongoose.Schema(
+  {
+    bookingId: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      index: true,
+    },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'Users', default: null, index: true },
+    userEmail: { type: String, default: null, trim: true, lowercase: true },
+    packageId: { type: String, required: true, trim: true },
+    packageName: { type: String, required: true, trim: true },
+    packagePrice: { type: Number, required: true, min: 0 },
+    selectedDate: { type: String, required: true, trim: true },
+    selectedTime: { type: String, required: true, trim: true },
+    sessionType: {
+      type: String,
+      required: true,
+      trim: true,
+      enum: ['Online', 'Offline'],
+    },
+    firstName: { type: String, required: true, trim: true },
+    lastName: { type: String, required: true, trim: true },
+    email: { type: String, required: true, trim: true, lowercase: true },
+    phone: { type: String, required: true, trim: true },
+    whatsappNumber: { type: String, required: true, trim: true },
+    paymentMethod: {
+      type: String,
+      required: true,
+      trim: true,
+      enum: ['cash', 'online'],
+    },
+    paymentStatus: {
+      type: String,
+      default: 'pending',
+      trim: true,
+      enum: ['pending', 'paid', 'failed', 'cancelled'],
+    },
+    bookingStatus: {
+      type: String,
+      default: 'pending',
+      trim: true,
+      enum: ['pending', 'confirmed', 'completed', 'cancelled', 'no_show'],
+    },
+    razorpayOrderId: { type: String, default: null, trim: true },
+    razorpayPaymentId: { type: String, default: null, trim: true },
+    razorpaySignature: { type: String, default: null, trim: true },
+    created_at: { type: Date, default: Date.now },
+    updated_at: { type: Date, default: Date.now },
+  },
+  { collection: 'bookings' }
+);
+
+BookingSchema.index({ selectedDate: 1, selectedTime: 1, sessionType: 1 }, { unique: true });
+
+BookingSchema.pre('save', function () {
+  this.updated_at = Date.now();
+});
 
 const SiteVisitorSchema = new mongoose.Schema(
   {
@@ -280,6 +342,7 @@ export const Users = mongoose.models.Users || mongoose.model('Users', UserSchema
 export const LoginOtp = mongoose.models.LoginOtp || mongoose.model('LoginOtp', LoginOtpSchema);
 export const Blog = mongoose.models.Blog || mongoose.model('Blog', BlogSchema);
 export const Client = mongoose.models.Client || mongoose.model('Client', ClientSchema);
+export const Booking = mongoose.models.Booking || mongoose.model('Booking', BookingSchema);
 export const SiteVisitor = mongoose.models.SiteVisitor || mongoose.model('SiteVisitor', SiteVisitorSchema);
 export const SiteSession = mongoose.models.SiteSession || mongoose.model('SiteSession', SiteSessionSchema);
 export const PageVisit = mongoose.models.PageVisit || mongoose.model('PageVisit', PageVisitSchema);

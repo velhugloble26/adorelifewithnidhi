@@ -6,5 +6,16 @@ export const success = (message, data, statusCode) =>
 export const serverError = (message) =>
   apiResponse.serverError(message);
 
-export const validationError = (errors, statusCode = 422) =>
-  apiResponse.validationError("Validation failed.", errors, statusCode);
+// Supports both legacy (errors, statusCode) and current
+// (message, errors, statusCode) route-handler contracts.
+export const validationError = (messageOrErrors, errorsOrStatus = 422, statusCode) => {
+  if (typeof statusCode === "number") {
+    return apiResponse.validationError(messageOrErrors, errorsOrStatus, statusCode);
+  }
+
+  if (typeof errorsOrStatus === "number") {
+    return apiResponse.validationError("Validation failed.", messageOrErrors, errorsOrStatus);
+  }
+
+  return apiResponse.validationError(messageOrErrors, errorsOrStatus, 422);
+};

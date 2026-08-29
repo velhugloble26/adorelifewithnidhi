@@ -1,10 +1,62 @@
 "use client";
 
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 
-
+const initialForm = {
+    name: "",
+    phone: "",
+    email: "",
+    preferredSession: "",
+    preferredFormat: "",
+    message: "",
+};
 
 export default function ConversationPage() {
+    const [form, setForm] = useState(initialForm);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
+    const handleChange = (field: keyof typeof initialForm, value: string) => {
+        setForm((current) => ({ ...current, [field]: value }));
+    };
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setLoading(true);
+        setError("");
+        setSuccess("");
+
+        try {
+            const response = await fetch("/api/quick-quotes/createquickquote", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: form.name,
+                    phone: form.phone,
+                    email: form.email,
+                    preferredSession: form.preferredSession,
+                    preferredFormat: form.preferredFormat,
+                    message: form.message,
+                }),
+            });
+
+            const payload = await response.json();
+
+            if (!response.ok || !payload.success) {
+                throw new Error(payload.message || payload.errors?.[0] || "Unable to send your enquiry.");
+            }
+
+            setSuccess("Thank you. Your session request has been sent successfully.");
+            setForm(initialForm);
+        } catch (err: any) {
+            setError(err.message || "Unable to send your enquiry.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <>
             <Navbar />
@@ -43,7 +95,10 @@ export default function ConversationPage() {
                             </p>
                         </div>
 
-                        <form action="#" method="POST" className="space-y-8 relative z-10">
+                        <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
+                            {error && <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+                            {success && <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{success}</div>}
+
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {/* Name */}
                                 <div className="flex flex-col relative group/field">
@@ -58,6 +113,8 @@ export default function ConversationPage() {
                                         name="name"
                                         type="text"
                                         required
+                                        value={form.name}
+                                        onChange={(e) => handleChange("name", e.target.value)}
                                         placeholder="How should we address you?"
                                         className="ghost-input"
                                     />
@@ -75,6 +132,8 @@ export default function ConversationPage() {
                                         name="phone"
                                         type="tel"
                                         required
+                                        value={form.phone}
+                                        onChange={(e) => handleChange("phone", e.target.value)}
                                         placeholder="Best number to reach you"
                                         className="ghost-input"
                                     />
@@ -94,6 +153,8 @@ export default function ConversationPage() {
                                     name="email"
                                     type="email"
                                     required
+                                    value={form.email}
+                                    onChange={(e) => handleChange("email", e.target.value)}
                                     placeholder="Where should we send details?"
                                     className="ghost-input"
                                 />
@@ -109,8 +170,14 @@ export default function ConversationPage() {
                                         Preferred Session
                                     </label>
                                     <div className="relative">
-                                        <select id="session" name="session" className="ghost-input pr-8 w-full">
-                                            <option value="" disabled selected>Select an option</option>
+                                        <select
+                                            id="session"
+                                            name="session"
+                                            value={form.preferredSession}
+                                            onChange={(e) => handleChange("preferredSession", e.target.value)}
+                                            className="ghost-input pr-8 w-full"
+                                        >
+                                            <option value="">Select an option</option>
                                             <option value="individual">Individual Therapy</option>
                                             <option value="couples">Couples Therapy</option>
                                             <option value="unsure">I'm Not Sure</option>
@@ -131,8 +198,14 @@ export default function ConversationPage() {
                                         Preferred Format
                                     </label>
                                     <div className="relative">
-                                        <select id="format" name="format" className="ghost-input pr-8 w-full">
-                                            <option value="" disabled selected>Select an option</option>
+                                        <select
+                                            id="format"
+                                            name="format"
+                                            value={form.preferredFormat}
+                                            onChange={(e) => handleChange("preferredFormat", e.target.value)}
+                                            className="ghost-input pr-8 w-full"
+                                        >
+                                            <option value="">Select an option</option>
                                             <option value="online">Online</option>
                                             <option value="in-person">In-person</option>
                                             <option value="either">Either</option>
@@ -163,6 +236,8 @@ export default function ConversationPage() {
                                     id="message"
                                     name="message"
                                     rows={3}
+                                    value={form.message}
+                                    onChange={(e) => handleChange("message", e.target.value)}
                                     placeholder="Your message..."
                                     className="ghost-input resize-none"
                                 />
@@ -171,7 +246,8 @@ export default function ConversationPage() {
                             <div className="pt-6">
                                 <button
                                     type="submit"
-                                    className="btn-primary w-full md:w-auto focus:outline-none focus:ring-2 focus:ring-offset-2"
+                                    disabled={loading}
+                                    className="btn-primary w-full md:w-auto focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-70"
                                     style={{
                                         paddingTop: "1rem",
                                         paddingBottom: "1rem",
@@ -180,7 +256,7 @@ export default function ConversationPage() {
                                         "--tw-ring-color": "var(--color-soft-teal)",
                                     } as React.CSSProperties}
                                 >
-                                    Request a Session
+                                    {loading ? "Sending..." : "Request a Session"}
                                 </button>
                             </div>
                         </form>

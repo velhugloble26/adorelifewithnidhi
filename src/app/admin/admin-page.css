@@ -1,0 +1,1 @@
+body:has(.admin-nav-link) > footer { display: none; }

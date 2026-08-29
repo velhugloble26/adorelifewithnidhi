@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 
-const LOGO_URL =
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuDjbnxJtbDFBXfipjblNxSEYqqz0CJSqSbzWq4LJwMUsJdpOW7-R9MrHjGJOCCo7UpP8NNRk6d59qBH8bM88iF3vGICwDzqu-4lDgrKr8d3zJ5e3y-LOqtGhfeQ738qV6CeNzLSCWaY0EjmCB3tZ0iLJzZ-ZNZyONqdUEEhxjM0RV-Q2QzwZKrkf6X8WrzTrFS0sXAg9pjOZFsXXe5RQSJg5DviG6kHewRfoTQEo6oKRL7HakascLABmvSbwLYi2TtiVQ";
+const LOGO_URL = "/website_logo.png";
 
 export default function Footer() {
     return (
@@ -36,26 +35,16 @@ export default function Footer() {
                     © Adore Life. Because everyone deserves to be understood.
                 </p>
 
-                {/* Legal links */}
-                <nav className="flex gap-6" aria-label="Footer navigation">
-                    {["Privacy", "Terms", "Support"].map((label) => (
-                        <Link
-                            key={label}
-                            href={`/${label.toLowerCase()}`}
-                            className="text-label-md transition-colors duration-300"
-                            style={{ color: "var(--color-on-surface-variant)" }}
-                            onMouseEnter={(e) =>
-                                (e.currentTarget.style.color = "var(--color-soft-teal)")
-                            }
-                            onMouseLeave={(e) =>
-                            (e.currentTarget.style.color =
-                                "var(--color-on-surface-variant)")
-                            }
-                        >
-                            {label}
-                        </Link>
-                    ))}
-                </nav>
+                {/* Footer action */}
+                <div className="flex items-center justify-center">
+                    <Link
+                        href="/login?redirect=/my-bookings"
+                        className="btn-primary"
+                        style={{ paddingTop: "0.7rem", paddingBottom: "0.7rem" }}
+                    >
+                        My Bookings
+                    </Link>
+                </div>
             </div>
         </footer>
     );

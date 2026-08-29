@@ -1,6 +1,8 @@
 import connectDB from "../../../../config/dbconnection";
 import QuickQuoteService from "../../../../services/quickQuoteServices";
 import apiResponse from "../../../../utils/common/apiResponse";
+import { requireAdmin } from "../../../../utils/auth";
+
 export async function GET(req) {
   try {
     const auth = await requireAdmin(req);

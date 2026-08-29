@@ -2,21 +2,38 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const LOGO_URL =
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuBzUq9CxfMlZyYyJU5RWDlJwf27Uf6PWJqmAYXFD742d3u1I9nGWiImtfJE1wP-9KXTnDZSz16LsuIqYCq1hrzUk-hdHwsmiZTPmMu5KDzZZTT_qYLBKLgtdqESyJYkMEQnLthhiP1QJXzwB_WdlJLKkE5B3choWYd8BG4NcrhlwBdD6FPV6on-DQautDU1A4qQs0epEkodHeExtS1y57v4wnolCDdHA8-8WtBxaV0OoQ59n3ZpTWnBfnaMSEntw2Ba-Q";
-
-const navLinks = [
-    { href: "/home", label: "Home" },
-    { href: "/story", label: "Story" },
-    { href: "/therapy", label: "Therapy" },
-    { href: "/conversation", label: "Conversation" },
-];
+const LOGO_URL = "/website_logo.png";
 
 export default function Navbar() {
     const pathname = usePathname();
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        let active = true;
+
+        fetch("/api/auth/me")
+            .then((res) => res.ok ? res.json() : null)
+            .then((payload) => {
+                if (!active) return;
+                setIsAuthenticated(Boolean(payload?.success && payload?.data?.user));
+            })
+            .catch(() => setIsAuthenticated(false));
+
+        return () => {
+            active = false;
+        };
+    }, []);
+
+    const navLinks = [
+        { href: "/home", label: "Home" },
+        { href: "/story", label: "Story" },
+        { href: "/therapy", label: "Therapy" },
+        { href: "/book-session", label: "Book Your Session" },
+        { href: "/conversation", label: "Conversation" },
+    ];
 
     return (
         <>

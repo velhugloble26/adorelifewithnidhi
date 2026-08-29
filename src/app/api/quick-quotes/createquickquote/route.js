@@ -25,19 +25,36 @@ const createQuickQuoteSchema = z.object({
     .trim()
     .min(7, "Invalid phone number")
     .max(20, "Invalid phone number")
-    .optional(),
+    .optional()
+    .or(z.literal("")),
 
   service: z
     .string()
     .trim()
-    .min(1, "Service is required")
-    .max(200),
+    .max(200)
+    .optional()
+    .or(z.literal("")),
+
+  preferredSession: z
+    .string()
+    .trim()
+    .max(200)
+    .optional()
+    .or(z.literal("")),
+
+  preferredFormat: z
+    .string()
+    .trim()
+    .max(200)
+    .optional()
+    .or(z.literal("")),
 
   message: z
     .string()
     .trim()
     .max(5000)
-    .optional(),
+    .optional()
+    .or(z.literal("")),
 });
 
 export async function POST(req) {
