@@ -9,10 +9,19 @@ import {
 } from "../../../../services/bookingServices";
 import { Booking } from "../../../../schema/schema";
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZZER_PAY_KEY_ID,
-  key_secret: process.env.RAZZER_PAY_KEY_SECRET,
-});
+function getRazorpayClient() {
+  const keyId = process.env.RAZZER_PAY_KEY_ID;
+  const keySecret = process.env.RAZZER_PAY_KEY_SECRET;
+
+  if (!keyId || !keySecret) {
+    throw new Error("RAZORPAY credentials are not configured.");
+  }
+
+  return new Razorpay({
+    key_id: keyId,
+    key_secret: keySecret,
+  });
+}
 
 function getRequestUser(req) {
   const token = req.cookies.get("accessToken")?.value;
@@ -36,6 +45,11 @@ export async function POST(req) {
 
     if (Object.keys(errors).length > 0) {
       return validationError("Please complete the booking details correctly.", errors, 422);
+    }
+
+    const keyId = process.env.RAZZER_PAY_KEY_ID;
+    if (!keyId) {
+      return serverError("Razorpay is not configured for this environment.");
     }
 
     const packageInfo = BOOKING_PACKAGES.find((item) => item.id === body.packageId) || BOOKING_PACKAGES[0];
@@ -71,6 +85,7 @@ export async function POST(req) {
       bookingStatus: "pending",
     });
 
+    const razorpay = getRazorpayClient();
     const order = await razorpay.orders.create({
       amount: Number(packageInfo.price) * 100,
       currency: "INR",
@@ -89,7 +104,7 @@ export async function POST(req) {
 
     return success("Razorpay order created successfully.", {
       order,
-      keyId: process.env.RAZZER_PAY_KEY_ID,
+      keyId,
       amount: Number(packageInfo.price) * 100,
       currency: "INR",
       bookingId: booking.bookingId,

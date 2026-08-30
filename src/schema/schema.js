@@ -105,6 +105,13 @@ const UserSchema = new mongoose.Schema(
       trim: true,
     },
     password: { type: String, required: true },
+    phone: { type: String, default: '', trim: true },
+    status: {
+      type: String,
+      enum: ['active', 'inactive', 'suspended'],
+      default: 'active',
+      trim: true,
+    },
     role_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'UserRoles',

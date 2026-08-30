@@ -1,10 +1,31 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const LOGO_URL = "/website_logo.png";
 
 export default function Footer() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        let active = true;
+
+        fetch("/api/auth/me", { cache: "no-store" })
+            .then((response) => response.ok ? response.json() : null)
+            .then((payload) => {
+                if (!active) return;
+                setIsAuthenticated(Boolean(payload?.success && payload?.data?.user));
+            })
+            .catch(() => setIsAuthenticated(false));
+
+        return () => {
+            active = false;
+        };
+    }, []);
+
+    const bookingHref = isAuthenticated ? "/my-bookings" : "/login?redirect=/my-bookings";
+
     return (
         <footer
             className="w-full"
@@ -38,7 +59,7 @@ export default function Footer() {
                 {/* Footer action */}
                 <div className="flex items-center justify-center">
                     <Link
-                        href="/login?redirect=/my-bookings"
+                        href={bookingHref}
                         className="btn-primary"
                         style={{ paddingTop: "0.7rem", paddingBottom: "0.7rem" }}
                     >

@@ -16,8 +16,18 @@ export default function LoginPage() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    setRedirectTarget(params.get("redirect") || "/my-bookings");
-  }, []);
+    const nextTarget = params.get("redirect") || "/my-bookings";
+    setRedirectTarget(nextTarget);
+
+    fetch("/api/auth/me", { cache: "no-store" })
+      .then((response) => response.ok ? response.json() : null)
+      .then((payload) => {
+        if (payload?.success && payload?.data?.user) {
+          router.replace(nextTarget);
+        }
+      })
+      .catch(() => undefined);
+  }, [router]);
 
   const submitCredentials = async (event: FormEvent) => {
     event.preventDefault();

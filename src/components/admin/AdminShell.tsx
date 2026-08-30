@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 const links = [
   ["/admin", "dashboard", "Overview"],
+  ["/admin/users", "people", "Users"],
   ["/admin/bookings", "calendar_month", "Bookings"],
   ["/admin/blogs", "article", "Blogs"],
   ["/admin/gallery", "photo_library", "Gallery"],
@@ -41,14 +42,11 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   }, [pathname, router]);
 
   async function logout() {
-    const refreshToken = localStorage.getItem("refreshToken") || "cookie-session";
     await fetch("/api/auth/logout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ refreshToken }),
+      body: JSON.stringify({}),
     }).catch(() => null);
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
     router.replace("/login?redirect=/admin");
   }
 
