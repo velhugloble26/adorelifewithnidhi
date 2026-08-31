@@ -67,6 +67,13 @@ const LoginOtpSchema = new mongoose.Schema(
       default: false,
     },
 
+    purpose: {
+      type: String,
+      enum: ["signup"],
+      default: "signup",
+      index: true,
+    },
+
     created_at: {
       type: Date,
       default: Date.now,
@@ -112,6 +119,8 @@ const UserSchema = new mongoose.Schema(
       default: 'active',
       trim: true,
     },
+    emailVerified: { type: Boolean, default: true, index: true },
+    emailVerifiedAt: { type: Date, default: null },
     role_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'UserRoles',
@@ -277,6 +286,23 @@ BookingSchema.pre('save', function () {
   this.updated_at = Date.now();
 });
 
+const UnavailableSlotSchema = new mongoose.Schema(
+  {
+    selectedDate: { type: String, required: true, trim: true },
+    selectedTime: { type: String, required: true, trim: true },
+    sessionType: { type: String, required: true, trim: true, enum: ['Online', 'Offline'] },
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Users', default: null },
+    created_at: { type: Date, default: Date.now },
+    updated_at: { type: Date, default: Date.now },
+  },
+  { collection: 'unavailable_slots' }
+);
+
+UnavailableSlotSchema.index({ selectedDate: 1, selectedTime: 1, sessionType: 1 }, { unique: true });
+UnavailableSlotSchema.pre('save', function () {
+  this.updated_at = Date.now();
+});
+
 const SiteVisitorSchema = new mongoose.Schema(
   {
     visitorId: { type: String, required: true, unique: true, index: true, maxlength: 255 },
@@ -350,6 +376,7 @@ export const LoginOtp = mongoose.models.LoginOtp || mongoose.model('LoginOtp', L
 export const Blog = mongoose.models.Blog || mongoose.model('Blog', BlogSchema);
 export const Client = mongoose.models.Client || mongoose.model('Client', ClientSchema);
 export const Booking = mongoose.models.Booking || mongoose.model('Booking', BookingSchema);
+export const UnavailableSlot = mongoose.models.UnavailableSlot || mongoose.model('UnavailableSlot', UnavailableSlotSchema);
 export const SiteVisitor = mongoose.models.SiteVisitor || mongoose.model('SiteVisitor', SiteVisitorSchema);
 export const SiteSession = mongoose.models.SiteSession || mongoose.model('SiteSession', SiteSessionSchema);
 export const PageVisit = mongoose.models.PageVisit || mongoose.model('PageVisit', PageVisitSchema);

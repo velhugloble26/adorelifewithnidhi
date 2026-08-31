@@ -1,5 +1,7 @@
 "use client";
 
+import { MY_BOOKING } from "@/utils/api";
+
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,7 +17,7 @@ export default function BookingDetailPage() {
   useEffect(() => {
     const load = async () => {
       try {
-        const response = await fetch(`/api/bookings/my/${params.bookingId}`, { cache: "no-store" });
+        const response = await fetch(MY_BOOKING(params.bookingId), { cache: "no-store" });
         const payload = await response.json();
 
         if (!response.ok || !payload.success) {

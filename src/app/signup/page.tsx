@@ -1,138 +1,21 @@
 "use client";
 
+import { RESEND_OTP, SIGNUP, VERIFY_OTP } from "@/utils/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
-import Navbar from "@/components/Navbar";
-
-type FormErrors = Partial<Record<"name" | "email" | "password" | "confirmPassword" | "submit", string>>;
-
+import { FormEvent, useEffect, useState } from "react";
+type FormErrors = Partial<Record<"name" | "email" | "password" | "confirmPassword" | "otp" | "submit", string>>;
 export default function SignupPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ name: "", email: "", password: "", confirmPassword: "" });
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
-
-  function update(field: keyof typeof form, value: string) {
-    setForm((current) => ({ ...current, [field]: value }));
-    setErrors((current) => ({ ...current, [field]: "", submit: "" }));
-  }
-
-  function validate() {
-    const nextErrors: FormErrors = {};
-    if (form.name.trim().length < 2) nextErrors.name = "Name must contain at least 2 characters.";
-    if (!/^\S+@\S+\.\S+$/.test(form.email)) nextErrors.email = "Enter a valid email address.";
-    if (form.password.length < 8) nextErrors.password = "Password must contain at least 8 characters.";
-    if (form.password !== form.confirmPassword) nextErrors.confirmPassword = "Passwords do not match.";
-    setErrors(nextErrors);
-    return Object.keys(nextErrors).length === 0;
-  }
-
-  async function submit(event: FormEvent) {
-    event.preventDefault();
-    if (!validate()) return;
-    setLoading(true);
-    setSuccess("");
-
-    try {
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: form.name.trim(), email: form.email.trim(), password: form.password }),
-      });
-      const payload = await response.json();
-
-      if (!response.ok || !payload.success) {
-        const details = Array.isArray(payload.errors) ? payload.errors.join(" ") : payload.message;
-        throw new Error(details || "Unable to create your account.");
-      }
-
-      setSuccess("Account created successfully. Taking you to login…");
-      window.setTimeout(() => router.replace("/login"), 900);
-    } catch (error) {
-      setErrors({ submit: error instanceof Error ? error.message : "Unable to create your account." });
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return (
-    <main className="auth-page">
-      <div className="auth-card">
-        <h1 className="auth-title">Create an account</h1>
-
-        <p className="auth-subtitle">Keep your session bookings and details together in one secure place.</p>
-
-        <form onSubmit={submit} className="auth-form" noValidate>
-          <div>
-            <label className="auth-field">Name</label>
-            <input
-              className="auth-input"
-              autoComplete="name"
-              value={form.name}
-              onChange={(event) => update("name", event.target.value)}
-              required
-              maxLength={100}
-            />
-            {errors.name && <span className="auth-inline-message mt-1 block">{errors.name}</span>}
-          </div>
-
-          <div>
-            <label className="auth-field">Email</label>
-            <input
-              type="email"
-              className="auth-input"
-              autoComplete="email"
-              value={form.email}
-              onChange={(event) => update("email", event.target.value)}
-              required
-            />
-            {errors.email && <span className="auth-inline-message mt-1 block">{errors.email}</span>}
-          </div>
-
-          <div>
-            <label className="auth-field">Password</label>
-            <input
-              type="password"
-              className="auth-input"
-              autoComplete="new-password"
-              value={form.password}
-              onChange={(event) => update("password", event.target.value)}
-              required
-              minLength={8}
-              maxLength={128}
-            />
-            {errors.password ? <span className="auth-inline-message mt-1 block">{errors.password}</span> : <span className="mt-1 block text-[11px] text-[#5a6770]">Use at least 8 characters.</span>}
-          </div>
-
-          <div>
-            <label className="auth-field">Confirm password</label>
-            <input
-              type="password"
-              className="auth-input"
-              autoComplete="new-password"
-              value={form.confirmPassword}
-              onChange={(event) => update("confirmPassword", event.target.value)}
-              required
-            />
-            {errors.confirmPassword && <span className="auth-inline-message mt-1 block">{errors.confirmPassword}</span>}
-          </div>
-
-          {errors.submit && <div role="alert" className="auth-inline-message">{errors.submit}</div>}
-          {success && <div role="status" className="auth-inline-message success">{success}</div>}
-
-          <button type="submit" className="auth-button" disabled={loading || Boolean(success)}>
-            {loading ? "Creating account…" : "Create account"}
-          </button>
-        </form>
-
-        <div className="auth-footer">
-          <span>Already have an account?</span>
-          <br />
-          <Link href="/login" className="auth-link">Log in</Link>
-        </div>
-      </div>
-    </main>
-  );
+  const [step, setStep] = useState<"details" | "otp">("details");
+  const [form, setForm] = useState({ name: "", email: "", password: "", confirmPassword: "", otp: "" });
+  const [errors, setErrors] = useState<FormErrors>({}); const [loading, setLoading] = useState(false); const [success, setSuccess] = useState(""); const [resendSeconds, setResendSeconds] = useState(0);
+  useEffect(() => { if (resendSeconds <= 0) return; const timer = window.setInterval(() => setResendSeconds((value) => Math.max(0, value - 1)), 1000); return () => window.clearInterval(timer); }, [resendSeconds]);
+  function update(field: keyof typeof form, value: string) { setForm((current) => ({ ...current, [field]: value })); setErrors((current) => ({ ...current, [field]: "", submit: "" })); }
+  function validateDetails() { const next: FormErrors = {}; if (form.name.trim().length < 2) next.name = "Name must contain at least 2 characters."; if (!/^\S+@\S+\.\S+$/.test(form.email.trim())) next.email = "Enter a valid email address."; if (form.password.length < 8) next.password = "Password must contain at least 8 characters."; if (form.password !== form.confirmPassword) next.confirmPassword = "Passwords do not match."; setErrors(next); return Object.keys(next).length === 0; }
+  async function submitDetails(event: FormEvent) { event.preventDefault(); if (loading || !validateDetails()) return; setLoading(true); setSuccess(""); try { const response = await fetch(SIGNUP, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: form.name.trim(), email: form.email.trim().toLowerCase(), password: form.password }) }); const payload = await response.json().catch(() => null); if (!response.ok || !payload?.success) { const detail = Array.isArray(payload?.errors) ? payload.errors.join(" ") : payload?.message; throw new Error(detail || "Unable to create your account."); } setStep("otp"); setResendSeconds(60); setSuccess("We sent a 6-digit verification OTP to your email."); } catch (error) { setErrors({ submit: error instanceof Error ? error.message : "Unable to create your account." }); } finally { setLoading(false); } }
+  async function verifyOtp(event: FormEvent) { event.preventDefault(); if (loading) return; if (!/^\d{6}$/.test(form.otp)) { setErrors({ otp: "Enter the 6-digit OTP." }); return; } setLoading(true); setErrors({}); setSuccess(""); try { const response = await fetch(VERIFY_OTP, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: form.email.trim().toLowerCase(), otp: form.otp }) }); const payload = await response.json().catch(() => null); if (!response.ok || !payload?.success) { const detail = Array.isArray(payload?.errors) ? payload.errors.join(" ") : payload?.message; throw new Error(detail || "Unable to verify OTP."); } setSuccess("Email verified successfully. Your account is ready."); window.setTimeout(() => router.replace(payload.data?.user?.role === "admin" ? "/admin" : "/my-bookings"), 700); } catch (error) { setErrors({ otp: error instanceof Error ? error.message : "Unable to verify OTP." }); } finally { setLoading(false); } }
+  async function resendOtp() { if (loading || resendSeconds > 0) return; setLoading(true); setErrors({}); setSuccess(""); try { const response = await fetch(RESEND_OTP, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: form.email.trim().toLowerCase() }) }); const payload = await response.json().catch(() => null); if (!response.ok || !payload?.success) { const detail = Array.isArray(payload?.errors) ? payload.errors.join(" ") : payload?.message; throw new Error(detail || "Unable to resend OTP."); } setResendSeconds(60); setSuccess("A new verification OTP has been sent."); } catch (error) { setErrors({ submit: error instanceof Error ? error.message : "Unable to resend OTP." }); } finally { setLoading(false); } }
+  return <main className="auth-page"><div className="auth-card"><h1 className="auth-title">{step === "details" ? "Create an account" : "Verify your email"}</h1><p className="auth-subtitle">{step === "details" ? "Keep your session bookings and details together in one secure place." : "Enter the OTP sent to " + form.email + ". It expires in 5 minutes."}</p>{step === "details" ? <form onSubmit={submitDetails} className="auth-form" noValidate><AuthField label="Name" error={errors.name}><input className="auth-input" autoComplete="name" value={form.name} onChange={(e) => update("name", e.target.value)} maxLength={100} /></AuthField><AuthField label="Email" error={errors.email}><input type="email" className="auth-input" autoComplete="email" value={form.email} onChange={(e) => update("email", e.target.value)} /></AuthField><AuthField label="Password" error={errors.password} hint="Use at least 8 characters."><input type="password" className="auth-input" autoComplete="new-password" value={form.password} onChange={(e) => update("password", e.target.value)} minLength={8} maxLength={128} /></AuthField><AuthField label="Confirm password" error={errors.confirmPassword}><input type="password" className="auth-input" autoComplete="new-password" value={form.confirmPassword} onChange={(e) => update("confirmPassword", e.target.value)} /></AuthField>{errors.submit && <div role="alert" className="auth-inline-message">{errors.submit}</div>}<button type="submit" className="auth-button" disabled={loading}>{loading ? "Sending OTP…" : "Create account"}</button></form> : <form onSubmit={verifyOtp} className="auth-form" noValidate><AuthField label="Verification OTP" error={errors.otp}><input className="auth-input text-center tracking-[0.35em]" inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={form.otp} onChange={(e) => update("otp", e.target.value.replace(/\D/g, ""))} /></AuthField>{errors.submit && <div role="alert" className="auth-inline-message">{errors.submit}</div>}{success && <div role="status" className="auth-inline-message success">{success}</div>}<button type="submit" className="auth-button" disabled={loading}>{loading ? "Verifying…" : "Verify OTP"}</button><button type="button" className="text-[15px] font-medium text-[#173f4d] underline disabled:cursor-not-allowed disabled:opacity-50" disabled={loading || resendSeconds > 0} onClick={resendOtp}>{resendSeconds > 0 ? "Resend OTP in " + resendSeconds + "s" : "Resend OTP"}</button><button type="button" className="text-[15px] text-[#5a6770] underline" disabled={loading} onClick={() => { setStep("details"); setSuccess(""); setErrors({}); }}>Change details</button></form>}<div className="auth-footer"><span>Already have an account?</span><br /><Link href="/login" className="auth-link">Log in</Link></div></div></main>;
 }
+function AuthField({ label, error, hint, children }: { label: string; error?: string; hint?: string; children: React.ReactNode }) { return <div><label className="auth-field">{label}</label>{children}{error ? <span className="auth-inline-message mt-1 block">{error}</span> : hint ? <span className="mt-1 block text-[11px] text-[#5a6770]">{hint}</span> : null}</div>; }

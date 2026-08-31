@@ -39,18 +39,18 @@ export async function POST(req) {
     const service = AuthService;
 
     const result =
-      await service.verifySigninOtp(
+      await service.verifySignupOtp(
         validation.data
       );
 
-    const response = success("Sign in completed successfully.", result);
+    const response = success("Email verified and signup completed successfully.", result);
     const secure = process.env.NODE_ENV === "production";
     response.cookies.set("accessToken", result.accessToken, { httpOnly: true, secure, sameSite: "lax", path: "/", maxAge: 15 * 60 });
     response.cookies.set("refreshToken", result.refreshToken, { httpOnly: true, secure, sameSite: "lax", path: "/", maxAge: 7 * 24 * 60 * 60 });
     return response;
   } catch (error) {
     console.error(
-      "VERIFY_SIGNIN_OTP_ERROR:",
+      "VERIFY_SIGNUP_OTP_ERROR:",
       error
     );
 

@@ -1,5 +1,7 @@
 "use client";
 
+import { AUTH_ME } from "@/utils/api";
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -11,7 +13,7 @@ export default function Footer() {
     useEffect(() => {
         let active = true;
 
-        fetch("/api/auth/me", { cache: "no-store" })
+        fetch(AUTH_ME, { cache: "no-store" })
             .then((response) => response.ok ? response.json() : null)
             .then((payload) => {
                 if (!active) return;

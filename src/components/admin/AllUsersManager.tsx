@@ -1,5 +1,7 @@
 "use client";
 
+import { ADMIN_USER, ADMIN_USERS, GET_ALL_PERMISSIONS, GET_ALL_ROLES } from "@/utils/api";
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { EmptyState, LoadingState, Modal, Notice, PageHeader, requestApi, SearchBar } from "./AdminUI";
 
@@ -12,6 +14,7 @@ type UserRecord = {
   email: string;
   phone?: string;
   status: UserStatus;
+  emailVerified?: boolean;
   created_at?: string;
   role?: Role | null;
   role_id?: string;
@@ -41,14 +44,17 @@ export default function AllUsersManager() {
       if (statusFilter !== "all") params.set("status", statusFilter);
 
       const [usersPayload, rolesPayload, permissionPayload] = await Promise.all([
-        requestApi(`/api/admin/users?${params.toString()}`),
-        requestApi("/api/roles/getallrole"),
-        requestApi("/api/permissions/getallpermission?page=1&limit=200"),
+        requestApi(`${ADMIN_USERS}?${params.toString()}`),
+        requestApi(GET_ALL_ROLES),
+        requestApi(GET_ALL_PERMISSIONS + "?page=1&limit=200"),
       ]);
 
-      setUsers(usersPayload.data || []);
-      setRoles(rolesPayload.data || []);
-      setPermissions(permissionPayload.data?.data || []);
+      const nextUsers = Array.isArray(usersPayload.data)
+        ? usersPayload.data
+        : usersPayload.data?.data || [];
+      setUsers(nextUsers);
+      setRoles(Array.isArray(rolesPayload.data) ? rolesPayload.data : rolesPayload.data?.data || []);
+      setPermissions(Array.isArray(permissionPayload.data) ? permissionPayload.data : permissionPayload.data?.data || []);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to load users.");
     } finally {
@@ -101,6 +107,7 @@ export default function AllUsersManager() {
                 <th>Phone</th>
                 <th>Role</th>
                 <th>Status</th>
+                <th>Email verification</th>
                 <th>Created</th>
                 <th>Actions</th>
               </tr>
@@ -121,6 +128,7 @@ export default function AllUsersManager() {
                       {user.status}
                     </span>
                   </td>
+                  <td><span className={`admin-badge ${user.emailVerified !== false ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"}`}>{user.emailVerified !== false ? "Verified" : "Pending"}</span></td>
                   <td>{user.created_at ? new Date(user.created_at).toLocaleDateString() : "—"}</td>
                   <td>
                     <button className="admin-button-secondary" onClick={() => setEditingUser(user)}>
@@ -196,7 +204,7 @@ function UserEditor({
     setError("");
 
     try {
-      const payload = await requestApi(`/api/admin/users/${user._id}`, {
+      const payload = await requestApi(ADMIN_USER(user._id), {
         method: "PATCH",
         body: JSON.stringify({
           roleId: selectedRoleId,

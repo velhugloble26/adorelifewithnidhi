@@ -1,5 +1,7 @@
 "use client";
 
+import { AUTH_ME, LOGOUT } from "@/utils/api";
+
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -25,7 +27,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     let active = true;
-    fetch("/api/auth/me", { cache: "no-store" })
+    fetch(AUTH_ME, { cache: "no-store" })
       .then((response) => response.json())
       .then((payload) => {
         if (!active) return;
@@ -42,7 +44,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   }, [pathname, router]);
 
   async function logout() {
-    await fetch("/api/auth/logout", {
+    await fetch(LOGOUT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),

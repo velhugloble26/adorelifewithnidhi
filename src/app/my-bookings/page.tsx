@@ -1,5 +1,7 @@
 "use client";
 
+import { AUTH_ME, MY_BOOKINGS } from "@/utils/api";
+
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -15,7 +17,7 @@ function MyBookingsContent() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch("/api/auth/me", { cache: "no-store" });
+        const response = await fetch(AUTH_ME, { cache: "no-store" });
         const payload = await response.json();
 
         if (!payload.success || !payload.data?.user) {
@@ -24,7 +26,7 @@ function MyBookingsContent() {
           return;
         }
 
-        const bookingsResponse = await fetch("/api/bookings/my", { cache: "no-store" });
+        const bookingsResponse = await fetch(MY_BOOKINGS, { cache: "no-store" });
         const bookingsPayload = await bookingsResponse.json();
 
         if (!bookingsResponse.ok || !bookingsPayload.success) {

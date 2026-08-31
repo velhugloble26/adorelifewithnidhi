@@ -52,7 +52,7 @@ export async function POST(req) {
       );
 
     return apiResponse.created(
-      "Account created successfully.",
+      "Verification OTP sent successfully.",
       result
     );
   } catch (error) {

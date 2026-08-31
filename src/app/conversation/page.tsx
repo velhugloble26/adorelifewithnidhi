@@ -1,6 +1,9 @@
 "use client";
 
+import { CREATE_QUOTE_CONTACTS } from "@/utils/api";
+
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 
 const initialForm = {
@@ -17,6 +20,7 @@ export default function ConversationPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const router = useRouter();
 
     const handleChange = (field: keyof typeof initialForm, value: string) => {
         setForm((current) => ({ ...current, [field]: value }));
@@ -24,21 +28,22 @@ export default function ConversationPage() {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        if (loading) return;
         setLoading(true);
         setError("");
         setSuccess("");
 
         try {
-            const response = await fetch("/api/quick-quotes/createquickquote", {
+            const response = await fetch(CREATE_QUOTE_CONTACTS, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    name: form.name,
-                    phone: form.phone,
-                    email: form.email,
+                    name: form.name.trim(),
+                    phone: form.phone.trim(),
+                    email: form.email.trim().toLowerCase(),
                     preferredSession: form.preferredSession,
                     preferredFormat: form.preferredFormat,
-                    message: form.message,
+                    message: form.message.trim(),
                 }),
             });
 
@@ -50,8 +55,10 @@ export default function ConversationPage() {
 
             setSuccess("Thank you. Your session request has been sent successfully.");
             setForm(initialForm);
-        } catch (err: any) {
-            setError(err.message || "Unable to send your enquiry.");
+            router.replace("/book-session");
+
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Unable to send your enquiry.");
         } finally {
             setLoading(false);
         }
@@ -325,8 +332,10 @@ export default function ConversationPage() {
                                     <p>Thane West – 400615</p>
                                     <p>Maharashtra, India</p>
                                     <a
-                                        href="#"
+                                        href="https://maps.google.com/?q=Somani%20Health%20Clinic%20Anand%20Nagar%20Ghodbunder%20Road%20Thane%20West%20400615"
                                         className="inline-flex items-center gap-2 mt-4 text-label-md transition-colors ui-accent"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         onMouseEnter={(e) =>
                                             ((e.currentTarget as HTMLAnchorElement).style.color = "var(--color-primary)")
                                         }
@@ -338,6 +347,17 @@ export default function ConversationPage() {
                                         <span className="material-symbols-outlined text-sm">arrow_forward</span>
                                     </a>
                                 </div>
+                            </div>
+
+                            <div className="mt-6 overflow-hidden rounded-xl border border-white/60 bg-white/40">
+                                <iframe
+                                    title="Somani Health Clinic location map"
+                                    src="https://www.google.com/maps?q=Somani%20Health%20Clinic%20Anand%20Nagar%20Ghodbunder%20Road%20Thane%20West%20400615&output=embed"
+                                    className="h-64 w-full border-0"
+                                    loading="lazy"
+                                    allowFullScreen
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                />
                             </div>
                         </div>
 

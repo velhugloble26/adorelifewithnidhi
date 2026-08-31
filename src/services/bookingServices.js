@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { Booking } from "../schema/schema";
+import { Booking, UnavailableSlot } from "../schema/schema";
 
 export const BOOKING_PACKAGES = [
   { id: "regular", name: "Regular Session", price: 2000 },
@@ -75,32 +75,32 @@ export async function getBookingAvailability(days = 7) {
     date.setDate(today.getDate() + offset);
     const dateKey = formatDateKey(date);
 
-    const bookings = await Booking.find({
-      selectedDate: dateKey,
-      bookingStatus: { $ne: "cancelled" },
-    }).lean();
+    const [bookings, unavailableSlots] = await Promise.all([
+      Booking.find({ selectedDate: dateKey, bookingStatus: { $ne: "cancelled" } }).lean(),
+      UnavailableSlot.find({ selectedDate: dateKey }).lean(),
+    ]);
 
-    const bookedSlots = new Set(
-      bookings.map((booking) => `${booking.selectedTime}|${booking.sessionType}`)
-    );
-
-    const availableSlots = DEFAULT_TIME_SLOTS.filter(
-      (slot) => !bookedSlots.has(`${slot.time}|${slot.type}`)
-    ).map((slot) => ({
-      time: slot.time,
-      sessionType: slot.type,
-      label: `${slot.type} • ${slot.time}`,
-    }));
+    const bookedKeys = new Set(bookings.map((booking) => `${booking.selectedTime}|${booking.sessionType}`));
+    const unavailableKeys = new Set(unavailableSlots.map((slot) => `${slot.selectedTime}|${slot.sessionType}`));
+    const slots = DEFAULT_TIME_SLOTS.map((slot) => {
+      const key = `${slot.time}|${slot.type}`;
+      const status = bookedKeys.has(key) ? "booked" : unavailableKeys.has(key) ? "unavailable" : "available";
+      return { time: slot.time, sessionType: slot.type, label: `${slot.type} • ${slot.time}`, status };
+    });
 
     dates.push({
       date: dateKey,
       label: formatDateLabel(date),
-      isAvailable: availableSlots.length > 0,
-      slots: availableSlots,
+      isAvailable: slots.some((slot) => slot.status === "available"),
+      slots,
     });
   }
 
   return dates;
+}
+
+export async function isSlotUnavailable(selectedDate, selectedTime, sessionType) {
+  return Boolean(await UnavailableSlot.exists({ selectedDate, selectedTime, sessionType }));
 }
 
 export async function createCashBooking(payload) {
@@ -109,6 +109,12 @@ export async function createCashBooking(payload) {
     const error = new Error("Validation failed.");
     error.statusCode = 422;
     error.details = errors;
+    throw error;
+  }
+
+  if (await isSlotUnavailable(payload.selectedDate, payload.selectedTime, payload.sessionType)) {
+    const error = new Error("This slot is marked as not available. Please select another time.");
+    error.statusCode = 409;
     throw error;
   }
 

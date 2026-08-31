@@ -1,5 +1,7 @@
 "use client";
 
+import { BOOKING_AVAILABILITY, BOOKING_PACKAGES, CREATE_BOOKING, CREATE_BOOKING_ORDER, VERIFY_BOOKING_PAYMENT } from "@/utils/api";
+
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -10,15 +12,6 @@ const steps = [
   "Booking Details",
   "Payment",
   "Confirmation",
-];
-
-const emptyStateSlots = [
-  { time: "09:00 AM", type: "Offline" },
-  { time: "10:30 AM", type: "Offline" },
-  { time: "12:00 PM", type: "Offline" },
-  { time: "04:00 PM", type: "Online" },
-  { time: "06:00 PM", type: "Online" },
-  { time: "07:30 PM", type: "Online" },
 ];
 
 const initialBooking = {
@@ -38,6 +31,7 @@ export default function BookSessionPage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [packages, setPackages] = useState<any[]>([]);
   const [dates, setDates] = useState<any[]>([]);
+  const [activeDate, setActiveDate] = useState("");
   const [loading, setLoading] = useState(true);
   const [availabilityLoading, setAvailabilityLoading] = useState(false);
   const [booking, setBooking] = useState(initialBooking);
@@ -57,7 +51,7 @@ export default function BookSessionPage() {
   );
 
   const fetchPackages = async () => {
-    const response = await fetch("/api/bookings/packages");
+    const response = await fetch(BOOKING_PACKAGES);
     const result = await response.json();
     if (result.success) {
       setPackages(result.data.packages);
@@ -68,10 +62,16 @@ export default function BookSessionPage() {
   const fetchAvailability = async () => {
     setAvailabilityLoading(true);
     try {
-      const response = await fetch("/api/bookings/availability");
+      const response = await fetch(BOOKING_AVAILABILITY);
       const result = await response.json();
       if (result.success) {
-        setDates(result.data.dates || []);
+        const upcomingDates = (result.data.dates || []).slice(1, 6);
+        setDates(upcomingDates);
+        setActiveDate((current) =>
+          upcomingDates.some((date: any) => date.date === current)
+            ? current
+            : upcomingDates[0]?.date || ""
+        );
       }
     } finally {
       setAvailabilityLoading(false);
@@ -139,7 +139,7 @@ export default function BookSessionPage() {
   const handleCashBooking = async () => {
     setIsSubmitting(true);
     try {
-      const response = await fetch("/api/bookings/create", {
+      const response = await fetch(CREATE_BOOKING, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...booking, packageId: booking.packageId, paymentMethod: "cash" }),
@@ -170,7 +170,7 @@ export default function BookSessionPage() {
     setPaymentProcessing(true);
 
     try {
-      const orderResponse = await fetch("/api/bookings/create-order", {
+      const orderResponse = await fetch(CREATE_BOOKING_ORDER, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...booking, paymentMethod: "online" }),
@@ -190,7 +190,7 @@ export default function BookSessionPage() {
         description: selectedPackage?.name || "Session booking",
         order_id: order.id,
         handler: async function (response: any) {
-          const verifyResponse = await fetch("/api/bookings/verify-payment", {
+          const verifyResponse = await fetch(VERIFY_BOOKING_PAYMENT, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -252,8 +252,11 @@ export default function BookSessionPage() {
   };
 
   const visibleDates = dates.length > 0 ? dates : [
-    { date: "", label: "Today is fully booked", isAvailable: false, slots: emptyStateSlots },
+    { date: "", label: "No upcoming dates", isAvailable: false, slots: [] },
   ];
+
+  const activeDateData = visibleDates.find((date) => date.date === activeDate) || visibleDates[0];
+  const visibleSlots = (activeDateData?.slots || []).slice(0, 6);
 
   if (loading) {
     return (
@@ -333,46 +336,80 @@ export default function BookSessionPage() {
                 </button>
               </div>
 
-              {visibleDates.every((date) => !date.isAvailable) ? (
-                <div className="rounded-2xl border border-dashed border-[#c3ced6] bg-[#f8fafb] p-10 text-center">
-                  <div className="text-4xl mb-4">📅</div>
-                  <h3 className="text-headline-md ui-heading">Today is fully booked</h3>
-                  <p className="text-body-md ui-copy mt-2">Please check availability for upcoming dates to find another suitable session slot.</p>
+              <div className="space-y-6">
+                <div role="tablist" aria-label="Choose a session date" className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+                  {visibleDates.map((date) => {
+                    const isActive = date.date === activeDateData?.date;
+                    return (
+                      <button
+                        key={date.date || "no-upcoming-dates"}
+                        type="button"
+                        role="tab"
+                        aria-selected={isActive}
+                        aria-controls="available-time-slots"
+                        onClick={() => {
+                          setActiveDate(date.date);
+                          if (booking.selectedDate !== date.date) {
+                            setBooking((current) => ({ ...current, selectedDate: "", selectedTime: "", sessionType: "" }));
+                          }
+                          setErrors((current) => ({ ...current, selectedDate: "", selectedTime: "", sessionType: "" }));
+                        }}
+                        className={`rounded-xl border px-3 py-4 text-center transition ${isActive ? "border-[#003044] bg-[#003044] text-white shadow-md" : "border-slate-200 bg-[#f9fafb] text-[#1b1c19] hover:border-[#003044]"}`}
+                      >
+                        <span className="text-label-md font-semibold">{date.label}</span>
+                      </button>
+                    );
+                  })}
                 </div>
-              ) : (
-                <div className="space-y-6">
-                  {visibleDates.map((date) => (
-                    <div key={date.date || "full-booked"} className="rounded-xl border border-slate-200 bg-[#f9fafb] p-4">
-                      <div className="mb-3 text-label-md uppercase tracking-[0.12em] text-[#4a4f52]">{date.label}</div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                        {date.slots.length === 0 ? (
-                          <div className="text-body-md ui-copy">No availability.</div>
-                        ) : (
-                          date.slots.map((slot: any) => {
-                            const active = booking.selectedDate === date.date && booking.selectedTime === slot.time && booking.sessionType === slot.sessionType;
-                            return (
-                              <button
-                                type="button"
-                                key={`${date.date}-${slot.time}-${slot.sessionType}`}
-                                onClick={() => {
-                                  updateField("selectedDate", date.date);
-                                  updateField("selectedTime", slot.time);
-                                  updateField("sessionType", slot.sessionType);
-                                }}
-                                className={`rounded-xl border p-3 text-left transition ${active ? "border-[#003044] bg-[#003044] text-white" : "border-slate-200 bg-white text-[#1b1c19]"}`}
-                              >
-                                <div className="text-label-md uppercase tracking-[0.08em]">{slot.sessionType}</div>
-                                <div className="mt-2 text-body-lg font-medium">{slot.time}</div>
-                              </button>
-                            );
-                          })
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                <div id="available-time-slots" role="tabpanel" className="rounded-xl border border-slate-200 bg-[#f9fafb] p-4">
+                  <div className="mb-3 text-label-md uppercase tracking-[0.12em] text-[#4a4f52]">
+                    Available times for {activeDateData?.label}
+                  </div>
+                  <div className="mb-4 flex flex-wrap gap-4 text-sm ui-copy" aria-label="Slot status legend">
+                    <span className="flex items-center gap-2"><span className="h-3 w-3 rounded-sm border border-emerald-300 bg-emerald-100" />Booked</span>
+                    <span className="flex items-center gap-2"><span className="h-3 w-3 rounded-sm border border-slate-300 bg-white" />Available</span>
+                    <span className="flex items-center gap-2"><span className="h-3 w-3 rounded-sm border border-red-300 bg-red-100" />Not Available</span>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+                    {visibleSlots.length === 0 ? (
+                      <div className="text-body-md ui-copy md:col-span-2 lg:col-span-3">No slots configured for this date.</div>
+                    ) : (
+                      visibleSlots.map((slot: any) => {
+                        const active = booking.selectedDate === activeDateData.date && booking.selectedTime === slot.time && booking.sessionType === slot.sessionType;
+                        const isAvailable = slot.status === "available";
+                        const statusClass = slot.status === "booked"
+                          ? "border-emerald-300 bg-emerald-100 text-emerald-950 cursor-not-allowed"
+                          : slot.status === "unavailable"
+                            ? "border-red-300 bg-red-100 text-red-950 cursor-not-allowed"
+                            : active
+                              ? "border-[#003044] bg-[#e9f2f5] text-[#003044] ring-2 ring-[#003044]/20"
+                              : "border-slate-200 bg-white text-[#1b1c19] hover:border-[#003044]";
+                        return (
+                          <button
+                            type="button"
+                            key={`${activeDateData.date}-${slot.time}-${slot.sessionType}`}
+                            disabled={!isAvailable}
+                            aria-label={`${slot.label}, ${slot.status === "unavailable" ? "not available" : slot.status}`}
+                            onClick={() => {
+                              updateField("selectedDate", activeDateData.date);
+                              updateField("selectedTime", slot.time);
+                              updateField("sessionType", slot.sessionType);
+                            }}
+                            className={`rounded-xl border p-3 text-left transition ${statusClass}`}
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="text-label-md uppercase tracking-[0.08em]">{slot.sessionType}</span>
+                              <span className="text-xs font-semibold uppercase tracking-wide">{slot.status === "unavailable" ? "Not Available" : slot.status}</span>
+                            </div>
+                            <div className="mt-2 text-body-lg font-medium">{slot.time}</div>
+                          </button>
+                        );
+                      })
+                    )}
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
 
             <div className="flex justify-end">

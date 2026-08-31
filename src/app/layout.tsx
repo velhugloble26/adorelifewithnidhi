@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { EB_Garamond, Montserrat } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
+import EnquiryModal from "@/components/EnquiryModal";
+import FloatingContactActions from "@/components/FloatingContactActions";
 
 const ebGaramond = EB_Garamond({
   subsets: ["latin"],
@@ -66,7 +68,10 @@ export default function RootLayout({
         }}
       >
         {children}
+        <EnquiryModal />
         <Footer />
+
+        <FloatingContactActions />
       </body>
     </html>
   );

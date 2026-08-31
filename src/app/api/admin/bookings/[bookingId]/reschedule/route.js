@@ -2,6 +2,7 @@ import connectDB from "../../../../../../config/dbconnection";
 import { success, validationError, serverError } from "../../../../../../utils/apiResponse";
 import { requireAdmin } from "../../../../../../utils/auth";
 import { Booking } from "../../../../../../schema/schema";
+import { isSlotUnavailable } from "../../../../../../services/bookingServices";
 
 export async function PATCH(req, { params }) {
   try {
@@ -19,6 +20,10 @@ export async function PATCH(req, { params }) {
     const booking = await Booking.findOne({ bookingId });
     if (!booking) {
       return validationError("Booking not found.", null, 404);
+    }
+
+    if (await isSlotUnavailable(body.date, body.time, body.sessionType)) {
+      return validationError("This slot is marked as not available.", null, 409);
     }
 
     const conflictingBooking = await Booking.findOne({

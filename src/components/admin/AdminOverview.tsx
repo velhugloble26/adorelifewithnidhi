@@ -1,15 +1,16 @@
 "use client";
 
+import { ADMIN_BOOKINGS, GET_ALL_BLOGS, GET_ALL_CONTACTS, GET_ALL_GALLERY, GET_ALL_QUOTES } from "@/utils/api";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { LoadingState, Notice, PageHeader, requestApi } from "./AdminUI";
 
 const sources = [
-  ["Bookings", "/api/admin/bookings?limit=1", "/admin/bookings", "calendar_month"],
-  ["Blogs", "/api/blog/getallblog?limit=1", "/admin/blogs", "article"],
-  ["Gallery items", "/api/gallery/getallgallery?limit=1", "/admin/gallery", "photo_library"],
-  ["Contact enquiries", "/api/contact/getallcontact?limit=1", "/admin/enquiries", "mail"],
-  ["Quick quotes", "/api/quick-quotes/getallquickquote?limit=1", "/admin/enquiries", "request_quote"],
+  ["Bookings", ADMIN_BOOKINGS + "?limit=1", "/admin/bookings", "calendar_month"],
+  ["Blogs", GET_ALL_BLOGS + "?limit=1", "/admin/blogs", "article"],
+  ["Gallery items", GET_ALL_GALLERY + "?limit=1", "/admin/gallery", "photo_library"],
+  ["Contact enquiries", GET_ALL_CONTACTS + "?limit=1", "/admin/enquiries", "mail"],
+  ["Quick quotes", GET_ALL_QUOTES + "?limit=1", "/admin/enquiries", "request_quote"],
 ] as const;
 
 export default function AdminOverview() {

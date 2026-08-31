@@ -16,7 +16,7 @@ export async function getAuthenticatedUser(req) {
     if (payload.type !== "access") return null;
 
     const user = await Users.findById(payload.sub).select("-password -refreshTokens").populate({ path: "role_id" });
-    if (!user) return null;
+    if (!user || user.emailVerified === false || user.status !== "active") return null;
 
     return {
       id: user._id.toString(),

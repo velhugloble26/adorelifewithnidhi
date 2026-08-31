@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
+import { CREATE_BLOGS, CREATE_GALLERY, DELETE_BLOG_BY_ID, DELETE_GALLERY_BY_ID, GET_ALL_BLOGS, GET_ALL_GALLERY, UPDATE_BLOG_BY_ID, UPDATE_GALLERY_BY_ID, UPLOAD_IMAGE } from "@/utils/api";
+
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { EmptyState, fieldClass, LoadingState, Modal, Notice, PageHeader, Pager, Pagination, requestApi, SearchBar } from "./AdminUI";
 
@@ -8,8 +10,8 @@ type ContentItem = { _id: string; title: string; slug?: string; category?: strin
 type Kind = "blog" | "gallery";
 
 const contracts = {
-  blog: { label: "Blog", plural: "Blogs", list: "/api/blog/getallblog", create: "/api/blog/createblog", update: "/api/blog/updateblog", remove: "/api/blog/deleteblog", id: "blogId", folder: "blogs" },
-  gallery: { label: "Gallery item", plural: "Gallery", list: "/api/gallery/getallgallery", create: "/api/gallery/creategallery", update: "/api/gallery/updategallery", remove: "/api/gallery/deletegallery", id: "galleryId", folder: "gallery" },
+  blog: { label: "Blog", plural: "Blogs", list: GET_ALL_BLOGS, create: CREATE_BLOGS, update: UPDATE_BLOG_BY_ID, remove: DELETE_BLOG_BY_ID, id: "blogId", folder: "blogs" },
+  gallery: { label: "Gallery item", plural: "Gallery", list: GET_ALL_GALLERY, create: CREATE_GALLERY, update: UPDATE_GALLERY_BY_ID, remove: DELETE_GALLERY_BY_ID, id: "galleryId", folder: "gallery" },
 } as const;
 
 const blank = { title: "", slug: "", category: "", excerpt: "", description: "", image: "", content: "" };
@@ -76,7 +78,7 @@ function ContentForm({ kind, item, onClose, onSaved }: { kind: Kind; item?: Cont
   function autoSlug(title: string) { set("title", title); if (!item) set("slug", title.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")); }
   async function upload(file?: File) {
     if (!file) return; setUploading(true); setError("");
-    try { const data = new FormData(); data.set("image", file); data.set("folder", config.folder); const payload = await requestApi("/api/uploads/image", { method: "POST", body: data }); set("image", payload.data?.url); }
+    try { const data = new FormData(); data.set("image", file); data.set("folder", config.folder); const payload = await requestApi(UPLOAD_IMAGE, { method: "POST", body: data }); set("image", payload.data?.url); }
     catch (err) { setError(err instanceof Error ? err.message : "Upload failed."); } finally { setUploading(false); }
   }
   async function submit(event: FormEvent) {

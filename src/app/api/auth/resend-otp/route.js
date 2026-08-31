@@ -8,6 +8,6 @@ export async function POST(req) {
     await connectDB();
     const validation = z.object({ email: z.string().trim().email().transform((value) => value.toLowerCase()) }).safeParse(await req.json());
     if (!validation.success) return apiResponse.validationError("Validation failed.", validation.error.issues.map((issue) => issue.message), 422);
-    return apiResponse.success("OTP resent successfully.", await AuthService.resendSigninOtp(validation.data.email));
+    return apiResponse.success("Verification OTP resent successfully.", await AuthService.resendSignupOtp(validation.data.email));
   } catch (error) { return apiResponse.error(error); }
 }

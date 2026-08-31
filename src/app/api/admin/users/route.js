@@ -49,6 +49,7 @@ export async function GET(req) {
       email: user.email,
       phone: user.phone || "",
       status: user.status || "active",
+      emailVerified: user.emailVerified !== false,
       created_at: user.created_at,
       role_id: user.role_id?._id?.toString?.() || user.role_id?.toString?.() || null,
       role: user.role_id ? {

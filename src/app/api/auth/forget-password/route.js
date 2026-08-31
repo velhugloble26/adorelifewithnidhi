@@ -30,8 +30,9 @@ export async function POST(req) {
 
     const service = AuthService;
 
-    const result =
-      await service.generatePasswordResetToken(validation.data.email);
+    const requestOrigin = new URL(req.url).origin;
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || requestOrigin;
+    const result = await service.generatePasswordResetToken(validation.data.email, baseUrl);
 
     return success(
       result.message,

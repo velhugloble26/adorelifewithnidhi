@@ -1,5 +1,7 @@
 "use client";
 
+import { AUTH_ME } from "@/utils/api";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -14,7 +16,7 @@ export default function Navbar() {
     useEffect(() => {
         let active = true;
 
-        fetch("/api/auth/me")
+        fetch(AUTH_ME)
             .then((res) => res.ok ? res.json() : null)
             .then((payload) => {
                 if (!active) return;

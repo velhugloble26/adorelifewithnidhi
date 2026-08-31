@@ -6,6 +6,7 @@ import {
   BOOKING_PACKAGES,
   generateBookingId,
   validateBookingRequest,
+  isSlotUnavailable,
 } from "../../../../services/bookingServices";
 import { Booking } from "../../../../schema/schema";
 
@@ -50,6 +51,10 @@ export async function POST(req) {
     const keyId = process.env.RAZZER_PAY_KEY_ID;
     if (!keyId) {
       return serverError("Razorpay is not configured for this environment.");
+    }
+
+    if (await isSlotUnavailable(body.selectedDate, body.selectedTime, body.sessionType)) {
+      return validationError("This slot is marked as not available. Please select another time.", null, 409);
     }
 
     const packageInfo = BOOKING_PACKAGES.find((item) => item.id === body.packageId) || BOOKING_PACKAGES[0];
