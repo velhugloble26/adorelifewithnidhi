@@ -1,5 +1,5 @@
 const API_URL = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/$/, "");
-const api = (path) => `${API_URL}${path.startsWith("/") ? "" : "/"}${path.replace(/^\/+/, "")}`;
+const api = (path) => `${API_URL}${path.startsWith("/") ? path : `/${path}`}`;
 
 // Authentication
 export const SIGNUP = api("/auth/signup");
