@@ -12,6 +12,14 @@ export default function Navbar() {
     const pathname = usePathname();
     const [mobileOpen, setMobileOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => setIsScrolled(window.scrollY > 12);
+        handleScroll();
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     useEffect(() => {
         let active = true;
@@ -39,7 +47,7 @@ export default function Navbar() {
 
     return (
         <>
-            <header className="glass-nav sticky top-0 z-50 w-full transition-all duration-500 ease-in-out">
+            <header className={`glass-nav sticky top-0 z-50 w-full transition-all duration-300 ease-in-out${isScrolled ? " navbar-scrolled" : ""}`}>
                 <div
                     className="flex justify-between items-center w-full py-5 max-w-[1440px] mx-auto"
                     style={{ paddingLeft: "clamp(1rem, 10vw, 9rem)", paddingRight: "clamp(1rem, 10vw, 9rem)" }}

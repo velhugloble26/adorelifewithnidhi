@@ -1,10 +1,23 @@
 import crypto from "crypto";
 import { Booking, UnavailableSlot } from "../schema/schema";
+import { THERAPY_CONTENT } from "../constants/therapyContent.js";
 
 export const BOOKING_PACKAGES = [
   { id: "regular", name: "Regular Session", price: 2000 },
   { id: "four", name: "4 Sessions", price: 4000 },
   { id: "eight", name: "8 Sessions", price: 12000 },
+  { id: "india-couple-therapy-regular", name: "Couple Therapy · Regular Session", price: 2500 },
+  { id: "india-couple-therapy-4-session", name: "Couple Therapy · 4 Sessions", price: 4500 },
+  { id: "india-couple-therapy-8-session", name: "Couple Therapy · 8 Sessions", price: 12500 },
+  { id: "india-psychologist-psychotherapist-regular", name: "Psychologist & Psychotherapist · Regular Session", price: 2500 },
+  { id: "india-psychologist-psychotherapist-4-session", name: "Psychologist & Psychotherapist · 4 Sessions", price: 4500 },
+  { id: "india-psychologist-psychotherapist-8-session", name: "Psychologist & Psychotherapist · 8 Sessions", price: 12500 },
+  { id: "foreign-couple-therapy-regular", name: "Couple Therapy · Regular Session", price: 5000 },
+  { id: "foreign-couple-therapy-4-session", name: "Couple Therapy · 4 Sessions", price: 10000 },
+  { id: "foreign-couple-therapy-8-session", name: "Couple Therapy · 8 Sessions", price: 18000 },
+  { id: "foreign-psychologist-psychotherapist-regular", name: "Psychologist & Psychotherapist · Regular Session", price: 5000 },
+  { id: "foreign-psychologist-psychotherapist-4-session", name: "Psychologist & Psychotherapist · 4 Sessions", price: 10000 },
+  { id: "foreign-psychologist-psychotherapist-8-session", name: "Psychologist & Psychotherapist · 8 Sessions", price: 18000 },
 ];
 
 export const DEFAULT_TIME_SLOTS = [
@@ -93,9 +106,7 @@ export function validateBookingRequest(data) {
   if (data.therapyGoals?.includes('Other') && !data.therapyGoalsOther?.trim()) errors.therapyGoalsOther = "Please describe your other therapy goal.";
   if (typeof data.currentlyTakingAnyPsychiatricMedication !== 'boolean') errors.currentlyTakingAnyPsychiatricMedication = "Select whether you are taking psychiatric medication.";
   if (data.currentlyTakingAnyPsychiatricMedication && !data.medicationDetails?.trim()) errors.medicationDetails = "Please provide medication details.";
-  if (!data.meetYourTherapist?.trim()) errors.meetYourTherapist = "Therapist information is required.";
-  if (data.informedConsent !== 'I agree') errors.informedConsent = "Consent is required.";
-  if (data.InformedConsentforTherapySessions !== 'I agree') errors.InformedConsentforTherapySessions = "Consent is required.";
+  if ((data.informedConsent || data.InformedConsentforTherapySessions) !== 'I agree') errors.informedConsent = "Consent is required.";
   if (data.conformationOfBooking !== true) errors.conformationOfBooking = "Booking confirmation is required.";
 
   return errors;
@@ -158,7 +169,6 @@ export async function createCashBooking(payload) {
     selectedDate: payload.selectedDate,
     selectedTime: payload.selectedTime,
     sessionType: payload.sessionType,
-    meetYourTherapist: payload.meetYourTherapist,
     bookingStatus: { $ne: "cancelled" },
   });
 
@@ -180,6 +190,8 @@ export async function createCashBooking(payload) {
     selectedDate: payload.selectedDate,
     selectedTime: payload.selectedTime,
     sessionType: payload.sessionType,
+    meetYourTherapist: "Therapy by Nidhi",
+    meetYourTherapistContent: THERAPY_CONTENT.meetYourTherapist,
     firstName: payload.firstName,
     lastName: payload.lastName,
     email: payload.email,
@@ -198,8 +210,9 @@ export async function createCashBooking(payload) {
     therapyGoals: payload.therapyGoals,
     addNotes: payload.addNotes || null,
     therapyGoalsOther: payload.therapyGoalsOther || null,
-    informedConsent: payload.informedConsent,
-    InformedConsentforTherapySessions: payload.InformedConsentforTherapySessions,
+    informedConsent: payload.informedConsent || payload.InformedConsentforTherapySessions,
+    InformedConsentforTherapySessions: payload.InformedConsentforTherapySessions || payload.informedConsent,
+    informedConsentContent: THERAPY_CONTENT.informedConsent,
     conformationOfBooking: payload.conformationOfBooking,
     paymentMethod: "cash",
     paymentStatus: "pending",

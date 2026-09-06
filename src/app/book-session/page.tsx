@@ -5,6 +5,7 @@ import { BOOKING_AVAILABILITY, BOOKING_PACKAGES, CREATE_BOOKING, CREATE_BOOKING_
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { THERAPY_CONTENT } from "@/constants/therapyContent";
 
 const steps = [
   "Select Session",
@@ -205,8 +206,6 @@ export default function BookSessionPage() {
     if (!booking.therapyGoals.length) nextErrors.therapyGoals = "Select at least one therapy goal.";
     if (booking.therapyGoals.includes("Other") && !booking.therapyGoalsOther.trim()) nextErrors.therapyGoalsOther = "Please describe your other goal.";
     if (booking.currentlyTakingAnyPsychiatricMedication && !booking.medicationDetails.trim()) nextErrors.medicationDetails = "Please provide medication details.";
-    if (!booking.meetYourTherapist) nextErrors.meetYourTherapist = "Therapist information is required.";
-    if (booking.informedConsent !== "I agree") nextErrors.informedConsent = "Consent is required.";
     if (booking.InformedConsentforTherapySessions !== "I agree") nextErrors.InformedConsentforTherapySessions = "Consent is required.";
     if (!booking.conformationOfBooking) nextErrors.conformationOfBooking = "Please confirm your booking details.";
 
@@ -638,32 +637,7 @@ export default function BookSessionPage() {
                 <h3 id="therapist-introduction" className="mt-1 text-headline-lg ui-heading">Therapy by Nidhi</h3>
               </div>
 
-              <div className="space-y-4 text-body-md ui-copy">
-                <p>Thank you for being courageous enough to take this step. Therapy can be like a mirror, helping us understand the thoughts, feelings, and behaviors we may not always see clearly. Seeking support is a powerful choice, and I invite you to complete the form below to begin your journey.</p>
-                <div>
-                  <h4 className="mb-2 text-lg font-semibold text-[#003044]">A little about me</h4>
-                  <p>I am Nidhi Roy (she/her), a Cognitive Hypnotic Psychotherapist and Self-Love Coach. I have supported people from diverse backgrounds, from high-achieving professionals to homemakers, each bringing their own experiences and challenges.</p>
-                </div>
-                <p>My approach is grounded in compassion, empathy, and a deep belief in each person&apos;s capacity for healing and growth. Through an eclectic, client-centred approach, I help clients build self-awareness, self-love, and resilience.</p>
-              </div>
-
-              <div className="mt-6 grid gap-5 border-t border-slate-200 pt-5 md:grid-cols-2">
-                <div>
-                  <h4 className="mb-2 text-lg font-semibold text-[#003044]">Session details</h4>
-                  <ul className="list-disc space-y-1 pl-5 text-body-md ui-copy">
-                    <li>Monday to Saturday, 10:00 AM to 7:00 PM IST.</li>
-                    <li>Online sessions: 10:00 AM to 2:00 PM.</li>
-                    <li>Offline clinic sessions: 3:00 PM to 7:00 PM.</li>
-                    <li>All slots are subject to availability.</li>
-                  </ul>
-                </div>
-                <address className="not-italic text-body-md ui-copy">
-                  <h4 className="mb-2 text-lg font-semibold text-[#003044]">Get in touch</h4>
-                  <p>Somani Health Clinic, First Floor, Office 8, Tropical Lagoon, Anand Nagar, GB Road, Thane West - 400615</p>
-                  <p className="mt-2"><a className="font-medium text-[#003044] underline" href="mailto:adorelifewithnidhi@gmail.com">adorelifewithnidhi@gmail.com</a></p>
-                  <p className="mt-1">Call/WhatsApp: <a className="font-medium text-[#003044] underline" href="tel:+917304490951">+91 73044 90951</a></p>
-                </address>
-              </div>
+              <div className="whitespace-pre-line text-body-md ui-copy">{THERAPY_CONTENT.meetYourTherapist}</div>
             </section>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
@@ -765,21 +739,7 @@ export default function BookSessionPage() {
 
               <div className="md:col-span-2 space-y-4 border-t border-slate-200 pt-5">
                 <h3 className="text-headline-md ui-heading">Informed Consent</h3>
-                <div className="whitespace-pre-line text-body-md ui-copy">
-                  {`By participating in therapy sessions, I acknowledge and agree to the following terms:
-
-                    1. Scope of Services
-                    These sessions are part of a structured counseling process. If my concerns require specialized treatment or long-term care, I may be referred to appropriate professionals or services.
-
-                    2. Confidentiality and Its Limits
-                    All information shared during therapy is kept confidential. However, confidentiality may be legally or ethically broken in cases involving harm to self or others, abuse, or as required by law.
-
-                    3. Non-Emergency Nature of Service
-                    These sessions are not designed for emergency or crisis intervention. In urgent situations, I will contact emergency services or a mental health helpline.
-
-                    4. Voluntary Participation
-                    Participation in therapy is entirely voluntary. I may withdraw from sessions at any time. The standard duration of each therapy session is 60 minutes.`}
-                    </div>
+                <div className="whitespace-pre-line text-body-md ui-copy">{THERAPY_CONTENT.informedConsent}</div>
                 <label className="flex items-start gap-2 text-sm ui-copy">
                   <input
                     type="checkbox"
@@ -792,7 +752,6 @@ export default function BookSessionPage() {
                   />
                   <span>I agree to the informed consent for therapy sessions.</span>
                 </label>
-                {errors.informedConsent && <div className="text-sm text-red-600">{errors.informedConsent}</div>}
                 {errors.InformedConsentforTherapySessions && <div className="text-sm text-red-600">{errors.InformedConsentforTherapySessions}</div>}
                 <label className="flex items-start gap-2 text-sm ui-copy">
                   <input

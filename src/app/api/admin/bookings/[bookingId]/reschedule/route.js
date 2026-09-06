@@ -41,6 +41,24 @@ export async function PATCH(req, { params }) {
     booking.selectedDate = body.date;
     booking.selectedTime = body.time;
     booking.sessionType = body.sessionType;
+    booking.sessionMode = body.sessionType;
+    if (booking.sessions?.length) {
+      booking.sessions[0].date = body.date;
+      booking.sessions[0].time = body.time;
+      booking.sessions[0].sessionType = body.sessionType;
+      booking.sessions[0].updatedAt = new Date();
+    } else {
+      booking.sessions = [{
+        sessionNumber: 1,
+        date: body.date,
+        time: body.time,
+        sessionType: body.sessionType,
+        location: booking.location || "",
+        status: booking.bookingStatus === "pending" ? "scheduled" : booking.bookingStatus,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }];
+    }
     await booking.save({ validateModifiedOnly: true });
 
     return success("Booking rescheduled successfully.", { booking });

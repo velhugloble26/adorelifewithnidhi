@@ -38,9 +38,33 @@ export async function PATCH(req, { params }) {
       "firstName", "lastName", "email", "phone", "whatsappNumber", "identifyYourGender", "dob",
       "location", "sessionMode", "occupation", "relationShipStatus", "numberOfChildren",
       "currentlyTakingAnyPsychiatricMedication", "medicationDetails", "whereuknowaboutus", "therapyGoals",
-      "therapyGoalsOther", "addNotes", "InformedConsentforTherapySessions", "conformationOfBooking",
+      "therapyGoalsOther", "addNotes", "meetYourTherapist", "informedConsent", "InformedConsentforTherapySessions", "conformationOfBooking",
     ];
     const updates = Object.fromEntries(editableFields.filter((field) => Object.prototype.hasOwnProperty.call(body, field)).map((field) => [field, body[field]]));
+
+    if (body.sessions !== undefined) {
+      if (!Array.isArray(body.sessions) || body.sessions.length === 0) {
+        return validationError("At least one session is required.", null, 422);
+      }
+      const sessions = body.sessions.map((session, index) => ({
+        sessionNumber: index + 1,
+        date: String(session.date || "").trim(),
+        time: String(session.time || "").trim(),
+        sessionType: session.sessionType,
+        location: String(session.location || "").trim(),
+        status: session.status || "scheduled",
+        ...(booking.sessions?.[index]?.createdAt ? { createdAt: booking.sessions[index].createdAt } : {}),
+        updatedAt: new Date(),
+      }));
+      const invalidSession = sessions.find((session) => (
+        !/^\d{4}-\d{2}-\d{2}$/.test(session.date)
+        || !session.time
+        || !["Online", "Offline"].includes(session.sessionType)
+        || !["scheduled", "confirmed", "completed", "cancelled", "no_show"].includes(session.status)
+      ));
+      if (invalidSession) return validationError("Each session needs a valid date, time, type, and status.", null, 422);
+      updates.sessions = sessions;
+    }
 
     if (Object.keys(updates).length === 0) return validationError("No booking fields were provided.", null, 422);
     if (updates.numberOfChildren !== undefined) {
@@ -52,8 +76,31 @@ export async function PATCH(req, { params }) {
     }
 
     booking.set(updates);
+    if (updates.sessions) {
+      booking.set("sessions", updates.sessions);
+      booking.markModified("sessions");
+      booking.selectedDate = updates.sessions[0].date;
+      booking.selectedTime = updates.sessions[0].time;
+      booking.sessionType = updates.sessions[0].sessionType;
+      booking.sessionMode = updates.sessions[0].sessionType;
+    }
     await booking.save({ validateModifiedOnly: true });
-    return success("Booking details updated successfully.", { booking: booking.toObject() });
+    if (updates.sessions) {
+      await Booking.collection.updateOne(
+        { _id: booking._id },
+        {
+          $set: {
+            sessions: updates.sessions,
+            selectedDate: updates.sessions[0].date,
+            selectedTime: updates.sessions[0].time,
+            sessionType: updates.sessions[0].sessionType,
+            sessionMode: updates.sessions[0].sessionType,
+          },
+        },
+      );
+    }
+    const savedBooking = await Booking.findOne({ bookingId }).lean();
+    return success("Booking details updated successfully.", { booking: savedBooking });
   } catch (error) {
     console.error("PATCH_ADMIN_BOOKING_DETAIL_ERROR:", error);
     if (error.name === "ValidationError") return validationError("Booking details are invalid.", error.errors, 422);

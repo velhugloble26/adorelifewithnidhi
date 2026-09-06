@@ -9,6 +9,7 @@ import {
   isSlotUnavailable,
 } from "../../../../services/bookingServices";
 import { Booking } from "../../../../schema/schema";
+import { THERAPY_CONTENT } from "../../../../constants/therapyContent.js";
 
 function getRazorpayClient() {
   const keyId = process.env.RAZZER_PAY_KEY_ID;
@@ -62,7 +63,6 @@ export async function POST(req) {
       selectedDate: body.selectedDate,
       selectedTime: body.selectedTime,
       sessionType: body.sessionType,
-      meetYourTherapist: body.meetYourTherapist,
       bookingStatus: { $ne: "cancelled" },
     });
 
@@ -81,6 +81,8 @@ export async function POST(req) {
       selectedDate: body.selectedDate,
       selectedTime: body.selectedTime,
       sessionType: body.sessionType,
+      meetYourTherapist: "Therapy by Nidhi",
+      meetYourTherapistContent: THERAPY_CONTENT.meetYourTherapist,
       firstName: body.firstName,
       lastName: body.lastName,
       email: body.email,
@@ -99,8 +101,9 @@ export async function POST(req) {
       therapyGoals: body.therapyGoals,
       addNotes: body.addNotes || null,
       therapyGoalsOther: body.therapyGoalsOther || null,
-      informedConsent: body.informedConsent,
-      InformedConsentforTherapySessions: body.InformedConsentforTherapySessions,
+      informedConsent: body.informedConsent || body.InformedConsentforTherapySessions,
+      InformedConsentforTherapySessions: body.InformedConsentforTherapySessions || body.informedConsent,
+      informedConsentContent: THERAPY_CONTENT.informedConsent,
       conformationOfBooking: body.conformationOfBooking,
       paymentMethod: "online",
       paymentStatus: "pending",

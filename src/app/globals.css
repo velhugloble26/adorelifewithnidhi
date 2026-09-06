@@ -213,6 +213,12 @@ body {
   background-color: color-mix(in srgb, var(--color-surface) 80%, transparent);
 }
 
+.navbar-scrolled {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-outline-variant);
+  box-shadow: 0 4px 16px color-mix(in srgb, black 10%, transparent);
+}
+
 .glass-panel {
   background-color: color-mix(in srgb, var(--color-surface) 80%, transparent);
   backdrop-filter: blur(8px);

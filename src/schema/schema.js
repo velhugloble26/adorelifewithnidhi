@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { THERAPY_CONTENT } from '../constants/therapyContent.js';
 
 const PermissionSchema = new mongoose.Schema(
   {
@@ -228,6 +229,20 @@ ClientSchema.pre('save', function () {
 
 const BookingSchema = new mongoose.Schema(
   {
+    sessions: {
+      type: [{
+        _id: false,
+        sessionNumber: { type: Number, required: true, min: 1 },
+        date: { type: String, required: true, trim: true },
+        time: { type: String, required: true, trim: true },
+        sessionType: { type: String, required: true, enum: ['Online', 'Offline'], trim: true },
+        location: { type: String, default: '', trim: true },
+        status: { type: String, default: 'scheduled', enum: ['scheduled', 'confirmed', 'completed', 'cancelled', 'no_show'], trim: true },
+        createdAt: { type: Date, default: Date.now },
+        updatedAt: { type: Date, default: Date.now },
+      }],
+      default: undefined,
+    },
     bookingId: {
       type: String,
       required: true,
@@ -249,6 +264,7 @@ const BookingSchema = new mongoose.Schema(
       enum: ['Online', 'Offline'],
     },
     meetYourTherapist: { type: String, required: true, trim: true },// all ready filled in the frontend form Meet Your Therapist
+    meetYourTherapistContent: { type: String, required: true, trim: true, default: THERAPY_CONTENT.meetYourTherapist },
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true, lowercase: true },
@@ -293,6 +309,7 @@ const BookingSchema = new mongoose.Schema(
       trim: true
     },
     informedConsent: { type: String, required: true, trim: true }, // already defined in the frontend form Informed Consent
+    informedConsentContent: { type: String, required: true, trim: true, default: THERAPY_CONTENT.informedConsent },
     InformedConsentforTherapySessions: {
       type: String,
       required: true,
@@ -313,7 +330,7 @@ const BookingSchema = new mongoose.Schema(
       type: String,
       default: 'pending',
       trim: true,
-      enum: ['pending', 'paid', 'failed', 'cancelled'],
+      enum: ['pending', 'paid', 'cash_received', 'failed', 'cancelled'],
     },
     bookingStatus: {
       type: String,
