@@ -52,6 +52,8 @@ export async function PATCH(req, { params }) {
         time: String(session.time || "").trim(),
         sessionType: session.sessionType,
         location: String(session.location || "").trim(),
+        amountPaid: Number(session.amountPaid || 0),
+        remarks: String(session.remarks || "").trim(),
         status: session.status || "scheduled",
         ...(booking.sessions?.[index]?.createdAt ? { createdAt: booking.sessions[index].createdAt } : {}),
         updatedAt: new Date(),
@@ -60,6 +62,7 @@ export async function PATCH(req, { params }) {
         !/^\d{4}-\d{2}-\d{2}$/.test(session.date)
         || !session.time
         || !["Online", "Offline"].includes(session.sessionType)
+        || !Number.isFinite(session.amountPaid) || session.amountPaid < 0
         || !["scheduled", "confirmed", "completed", "cancelled", "no_show"].includes(session.status)
       ));
       if (invalidSession) return validationError("Each session needs a valid date, time, type, and status.", null, 422);

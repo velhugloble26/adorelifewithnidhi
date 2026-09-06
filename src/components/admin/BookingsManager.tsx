@@ -8,6 +8,7 @@ import {
   ADMIN_BOOKING_RESCHEDULE,
   ADMIN_BOOKING_STATUS,
   ADMIN_BOOKINGS,
+  CREATE_BOOKING,
 } from "@/utils/api";
 import { THERAPY_CONTENT } from "@/constants/therapyContent";
 
@@ -32,7 +33,7 @@ type Slot = {
   status: "available" | "booked" | "unavailable";
 };
 type AvailabilityDate = { date: string; label: string; slots: Slot[] };
-type BookingSession = { sessionNumber: number; date: string; time: string; sessionType: "Online" | "Offline"; location?: string; status: "scheduled" | "confirmed" | "completed" | "cancelled" | "no_show"; createdAt?: string; updatedAt?: string };
+type BookingSession = { sessionNumber: number; date: string; time: string; sessionType: "Online" | "Offline"; location?: string; amountPaid?: number; remarks?: string; status: "scheduled" | "confirmed" | "completed" | "cancelled" | "no_show"; createdAt?: string; updatedAt?: string };
 type Booking = {
   bookingId: string;
   firstName: string;
@@ -95,7 +96,7 @@ const therapyGoalOptions = [
 
 function getBookingSessions(booking: Booking): BookingSession[] {
   if (booking.sessions?.length) return booking.sessions;
-  return [{ sessionNumber: 1, date: booking.selectedDate, time: booking.selectedTime, sessionType: booking.sessionType as "Online" | "Offline", location: booking.location, status: "scheduled" }];
+  return [{ sessionNumber: 1, date: booking.selectedDate, time: booking.selectedTime, sessionType: booking.sessionType as "Online" | "Offline", location: booking.location, amountPaid: booking.paymentStatus === "paid" || booking.paymentStatus === "cash_received" ? booking.packagePrice : 0, remarks: "", status: "scheduled" }];
 }
 
 export default function BookingsManager() {
@@ -116,6 +117,7 @@ export default function BookingsManager() {
   const [editing, setEditing] = useState<Booking | null>(null);
   const [viewing, setViewing] = useState<Booking | null>(null);
   const [previewing, setPreviewing] = useState<Booking | null>(null);
+  const [creating, setCreating] = useState(false);
   const [acting, setActing] = useState("");
   const load = useCallback(async () => {
     setLoading(true);
@@ -193,6 +195,7 @@ export default function BookingsManager() {
         eyebrow="Sessions"
         title="Bookings"
         description="Search and filter all appointments, then update status, cancel, or reschedule using the dedicated admin booking APIs."
+        action={<button type="button" className="btn-primary" onClick={() => setCreating(true)}>+ Book for Client</button>}
       />
       {success && <Notice kind="success">{success}</Notice>}
       {error && <Notice>{error}</Notice>}
@@ -383,8 +386,67 @@ export default function BookingsManager() {
           }}
         />
       )}
+      {creating && (
+        <AdminCreateBooking
+          onClose={() => setCreating(false)}
+          onSaved={(message) => {
+            setCreating(false);
+            setSuccess(message);
+            load();
+          }}
+        />
+      )}
     </>
   );
+}
+
+type AdminCreateBookingState = {
+  packageId: string;
+  selectedDate: string;
+  selectedTime: string;
+  sessionType: "Online" | "Offline";
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  whatsappNumber: string;
+  identifyYourGender: string;
+  dob: string;
+  location: string;
+  occupation: string;
+  relationShipStatus: string;
+  numberOfChildren: number;
+  whereuknowaboutus: string;
+  therapyGoals: string[];
+  currentlyTakingAnyPsychiatricMedication: boolean;
+  medicationDetails: string;
+  addNotes: string;
+  informedConsent: string;
+  InformedConsentforTherapySessions: string;
+  conformationOfBooking: boolean;
+};
+
+const adminCreateInitial: AdminCreateBookingState = {
+  packageId: "regular", selectedDate: "", selectedTime: "", sessionType: "Offline",
+  firstName: "", lastName: "", email: "", phone: "", whatsappNumber: "", identifyYourGender: "Prefer not to say", dob: "1970-01-01",
+  location: "", occupation: "", relationShipStatus: "Other", numberOfChildren: 0, whereuknowaboutus: "Other", therapyGoals: [therapyGoalOptions[0]],
+  currentlyTakingAnyPsychiatricMedication: false, medicationDetails: "", addNotes: "", informedConsent: "", InformedConsentforTherapySessions: "", conformationOfBooking: false,
+};
+
+function AdminCreateBooking({ onClose, onSaved }: { onClose: () => void; onSaved: (message: string) => void }) {
+  const [form, setForm] = useState(adminCreateInitial);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const update = <K extends keyof AdminCreateBookingState>(field: K, value: AdminCreateBookingState[K]) => setForm((current) => ({ ...current, [field]: value }));
+  async function submit(event: FormEvent) {
+    event.preventDefault(); setBusy(true); setError("");
+    try {
+      const payload = await requestApi(CREATE_BOOKING, { method: "POST", body: JSON.stringify({ ...form, sessionMode: form.sessionType, paymentMethod: "cash" }) });
+      onSaved(payload.message || "Booking created successfully.");
+    } catch (err) { setError(err instanceof Error ? err.message : "Unable to create booking."); }
+    finally { setBusy(false); }
+  }
+  return <Modal title="Book for Client" onClose={() => !busy && onClose()}><form onSubmit={submit} className="max-h-[78vh] space-y-5 overflow-y-auto pr-2">{error && <Notice>{error}</Notice>}<div className="grid gap-4 sm:grid-cols-2"><label className="admin-label">Package<select className={fieldClass} value={form.packageId} onChange={(e) => update("packageId", e.target.value)}><option value="regular">Regular Session</option><option value="four">4 Sessions</option><option value="eight">8 Sessions</option><option value="foreign-couple-therapy-8-session">Foreign Couple Therapy · 8 Sessions</option><option value="foreign-psychologist-psychotherapist-8-session">Foreign Psychologist · 8 Sessions</option></select></label><label className="admin-label">Session type<select className={fieldClass} value={form.sessionType} onChange={(e) => update("sessionType", e.target.value as AdminCreateBookingState["sessionType"])}><option>Online</option><option>Offline</option></select></label><label className="admin-label">Date<input className={fieldClass} type="date" required value={form.selectedDate} onChange={(e) => update("selectedDate", e.target.value)} /></label><label className="admin-label">Time<input className={fieldClass} required placeholder="10:30 AM" value={form.selectedTime} onChange={(e) => update("selectedTime", e.target.value)} /></label><label className="admin-label">First name<input className={fieldClass} required value={form.firstName} onChange={(e) => update("firstName", e.target.value)} /></label><label className="admin-label">Last name<input className={fieldClass} required value={form.lastName} onChange={(e) => update("lastName", e.target.value)} /></label><label className="admin-label">Email<input className={fieldClass} type="email" required value={form.email} onChange={(e) => update("email", e.target.value)} /></label><label className="admin-label">Phone<input className={fieldClass} required value={form.phone} onChange={(e) => update("phone", e.target.value)} /></label><label className="admin-label">WhatsApp number<input className={fieldClass} required value={form.whatsappNumber} onChange={(e) => update("whatsappNumber", e.target.value)} /></label><label className="admin-label">Date of birth<input className={fieldClass} type="date" required value={form.dob} onChange={(e) => update("dob", e.target.value)} /></label><label className="admin-label">Gender<select className={fieldClass} value={form.identifyYourGender} onChange={(e) => update("identifyYourGender", e.target.value)}><option>Prefer not to say</option><option>Male</option><option>Female</option><option>Non-Binary</option><option>Transgender</option><option>Other</option></select></label><label className="admin-label">Location<input className={fieldClass} required value={form.location} onChange={(e) => update("location", e.target.value)} /></label><label className="admin-label">Relationship status<select className={fieldClass} value={form.relationShipStatus} onChange={(e) => update("relationShipStatus", e.target.value)}><option>Other</option><option>Single</option><option>In a relationship</option><option>Married</option><option>Divorced</option><option>Widowed</option></select></label><label className="admin-label">How they heard about us<select className={fieldClass} value={form.whereuknowaboutus} onChange={(e) => update("whereuknowaboutus", e.target.value)}><option>Other</option><option>Social Media</option><option>Friend/Family</option><option>Search Engine</option><option>Advertisement</option></select></label><label className="admin-label">Number of children<input className={fieldClass} type="number" min="0" value={form.numberOfChildren} onChange={(e) => update("numberOfChildren", Number(e.target.value))} /></label></div><label className="admin-label">Occupation<input className={fieldClass} value={form.occupation} onChange={(e) => update("occupation", e.target.value)} /></label><label className="admin-label">Additional notes<textarea className={fieldClass} value={form.addNotes} onChange={(e) => update("addNotes", e.target.value)} /></label><div className="space-y-2 text-sm"><strong>Therapy goal</strong>{therapyGoalOptions.slice(0, 1).map((goal) => <label key={goal} className="flex gap-2"><input type="checkbox" checked={form.therapyGoals.includes(goal)} onChange={(e) => update("therapyGoals", e.target.checked ? [goal] : [])} />{goal}</label>)}</div><label className="flex gap-2 text-sm"><input type="checkbox" checked={form.informedConsent === "I agree"} onChange={(e) => { const value = e.target.checked ? "I agree" : ""; update("informedConsent", value); update("InformedConsentforTherapySessions", value); }} /> Consent given</label><label className="flex gap-2 text-sm"><input type="checkbox" checked={form.conformationOfBooking} onChange={(e) => update("conformationOfBooking", e.target.checked)} /> Booking confirmed by client</label><div className="flex justify-end gap-3"><button type="button" className="admin-button-secondary" onClick={onClose}>Cancel</button><button className="btn-primary" disabled={busy}>{busy ? "Creating…" : "Create Booking"}</button></div></form></Modal>;
 }
 
 function escapeHtml(value: unknown) {
@@ -447,7 +509,7 @@ function BookingPreview({
       ["Payment", `${booking.paymentMethod} · ${booking.paymentStatus}`],
       ["Status", booking.bookingStatus],
     ];
-    const sessionsHtml = sessions.map((session, index) => `<div class="session-card"><h3>Session ${index + 1}</h3><p><strong>Date:</strong> ${escapeHtml(session.date)}</p><p><strong>Time:</strong> ${escapeHtml(session.time)}</p><p><strong>Session Type:</strong> ${escapeHtml(session.sessionType)}</p><p><strong>Location:</strong> ${escapeHtml(session.location || "Not provided")}</p><p><strong>Status:</strong> ${escapeHtml(session.status)}</p></div>`).join("");
+    const sessionsHtml = sessions.map((session, index) => `<div class="session-card"><h3>Session ${index + 1}</h3><p><strong>Date:</strong> ${escapeHtml(session.date)}</p><p><strong>Time:</strong> ${escapeHtml(session.time)}</p><p><strong>Session Type:</strong> ${escapeHtml(session.sessionType)}</p><p><strong>Location:</strong> ${escapeHtml(session.location || "Not provided")}</p><p><strong>Amount Paid:</strong> ₹${escapeHtml(session.amountPaid ?? 0)}</p><p><strong>Remarks:</strong> ${escapeHtml(session.remarks || "")}</p><p><strong>Status:</strong> ${escapeHtml(session.status)}</p></div>`).join("");
     const html = `<!doctype html><html><head><title>Booking ${escapeHtml(booking.bookingId)}</title><style>body{font-family:Arial,sans-serif;color:#172126;max-width:760px;margin:40px auto;padding:0 24px;position:relative}body:before{content:"Adore Life With Nidhi";position:fixed;top:45%;left:8%;z-index:10;pointer-events:none;color:#003044;opacity:.08;font-size:56px;font-weight:700;letter-spacing:4px;transform:rotate(-28deg);white-space:nowrap}h1{color:#003044;border-bottom:2px solid #003044;padding-bottom:12px}.print-section{break-before:page;page-break-before:always;break-inside:auto;page-break-inside:auto}.content{white-space:pre-wrap;line-height:1.55;border:1px solid #d9e0e2;padding:16px;background:rgba(255,255,255,.94)}.content h2{color:#003044;margin:0 0 14px;break-after:avoid;page-break-after:avoid}.content-body{white-space:pre-wrap}.session-card{break-inside:avoid;page-break-inside:avoid;border:1px solid #d9e0e2;padding:14px;margin:12px 0;background:rgba(255,255,255,.94)}.session-card h3{color:#003044;margin:0 0 10px}table{width:100%;border-collapse:collapse;background:rgba(255,255,255,.94)}td{border-bottom:1px solid #d9e0e2;padding:10px 6px;vertical-align:top}td:first-child{font-weight:700;width:30%;color:#506356}@media print{body{margin:0}body:before{position:fixed}}</style></head><body><h1>Booking Details</h1><table>${rows.map(([label, value]) => `<tr><td>${escapeHtml(label)}</td><td>${escapeHtml(value)}</td></tr>`).join("")}</table><section class="print-section"><div class="content"><h2>Therapy Sessions</h2>${sessionsHtml}</div></section><section class="print-section"><div class="content"><h2>Meet your therapist</h2><div class="content-body">${escapeHtml(therapistBody)}</div></div></section><section class="print-section"><div class="content"><h2>Informed Consent</h2><div class="content-body">${escapeHtml(consentBody)}</div></div></section><section class="print-section"><div class="content"><h2>User Agreement</h2><div class="content-body">${escapeHtml(booking.informedConsent || booking.InformedConsentforTherapySessions || "Not provided")}</div></div></section></body></html>`;
     const url = URL.createObjectURL(new Blob([html], { type: "text/html" }));
     const printWindow = window.open(url, "_blank");
@@ -521,6 +583,8 @@ function BookingPreview({
                 {detail("Time", session.time)}
                 {detail("Type", session.sessionType)}
                 {detail("Location", session.location)}
+                {detail("Amount paid", `₹${session.amountPaid ?? 0}`)}
+                {detail("Remarks", session.remarks)}
                 {detail("Status", session.status)}
               </dl>
             </div>
@@ -751,7 +815,7 @@ function BookingDetailsForm({
               className="admin-button-secondary"
               onClick={() => setForm((current) => ({
                 ...current,
-                sessions: [...(current.sessions || []), { sessionNumber: (current.sessions?.length || 0) + 1, date: "", time: "", sessionType: "Online", location: "", status: "scheduled" }],
+                sessions: [...(current.sessions || []), { sessionNumber: (current.sessions?.length || 0) + 1, date: "", time: "", sessionType: "Online", location: "", amountPaid: 0, remarks: "", status: "scheduled" }],
               }))}
             >
               + Add More Session
@@ -769,6 +833,8 @@ function BookingDetailsForm({
                   <label className="admin-label">Time<input className={fieldClass} value={session.time} placeholder="10:30 AM" onChange={(e) => setForm((current) => ({ ...current, sessions: (current.sessions || []).map((item, sessionIndex) => sessionIndex === index ? { ...item, time: e.target.value } : item) }))} /></label>
                   <label className="admin-label">Session type<select className={fieldClass} value={session.sessionType} onChange={(e) => setForm((current) => ({ ...current, sessions: (current.sessions || []).map((item, sessionIndex) => sessionIndex === index ? { ...item, sessionType: e.target.value as BookingSession["sessionType"] } : item) }))}><option>Online</option><option>Offline</option></select></label>
                   <label className="admin-label">Location<input className={fieldClass} value={session.location || ""} onChange={(e) => setForm((current) => ({ ...current, sessions: (current.sessions || []).map((item, sessionIndex) => sessionIndex === index ? { ...item, location: e.target.value } : item) }))} /></label>
+                  <label className="admin-label">Amount paid<input className={fieldClass} type="number" min="0" value={session.amountPaid ?? 0} onChange={(e) => setForm((current) => ({ ...current, sessions: (current.sessions || []).map((item, sessionIndex) => sessionIndex === index ? { ...item, amountPaid: Number(e.target.value) } : item) }))} /></label>
+                  <label className="admin-label">Remarks<input className={fieldClass} value={session.remarks || ""} onChange={(e) => setForm((current) => ({ ...current, sessions: (current.sessions || []).map((item, sessionIndex) => sessionIndex === index ? { ...item, remarks: e.target.value } : item) }))} /></label>
                   <label className="admin-label">Status<select className={fieldClass} value={session.status} onChange={(e) => setForm((current) => ({ ...current, sessions: (current.sessions || []).map((item, sessionIndex) => sessionIndex === index ? { ...item, status: e.target.value as BookingSession["status"] } : item) }))}><option value="scheduled">Scheduled</option><option value="confirmed">Confirmed</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option><option value="no_show">No show</option></select></label>
                 </div>
               </div>

@@ -26,6 +26,16 @@ export async function PATCH(req, { params }) {
       return validationError("Booking not found.", null, 404);
     }
 
+    if (nextPaymentStatus && !nextStatus) {
+      const updatedBooking = await Booking.findOneAndUpdate(
+        { bookingId },
+        { $set: { paymentStatus: nextPaymentStatus, updated_at: new Date() } },
+        { new: true, runValidators: true },
+      ).lean();
+
+      return success("Payment status updated successfully.", { booking: updatedBooking });
+    }
+
     if (nextStatus) booking.bookingStatus = nextStatus;
     if (nextPaymentStatus) booking.paymentStatus = nextPaymentStatus;
     if (nextStatus === "cancelled" || nextPaymentStatus === "cancelled") {

@@ -237,6 +237,8 @@ const BookingSchema = new mongoose.Schema(
         time: { type: String, required: true, trim: true },
         sessionType: { type: String, required: true, enum: ['Online', 'Offline'], trim: true },
         location: { type: String, default: '', trim: true },
+        amountPaid: { type: Number, default: 0, min: 0 },
+        remarks: { type: String, default: '', trim: true },
         status: { type: String, default: 'scheduled', enum: ['scheduled', 'confirmed', 'completed', 'cancelled', 'no_show'], trim: true },
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
