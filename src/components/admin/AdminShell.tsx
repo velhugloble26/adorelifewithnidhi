@@ -10,6 +10,7 @@ const links = [
   ["/admin", "dashboard", "Overview"],
   ["/admin/users", "people", "Users"],
   ["/admin/bookings", "calendar_month", "Bookings"],
+  ["/admin/client-report", "assignment", "Client Report"],
   ["/admin/blogs", "article", "Blogs"],
   ["/admin/gallery", "photo_library", "Gallery"],
   ["/admin/enquiries", "inbox", "Enquiries"],

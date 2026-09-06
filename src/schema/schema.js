@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { THERAPY_CONTENT } from '../constants/therapyContent.js';
 
 const PermissionSchema = new mongoose.Schema(
   {
@@ -228,6 +229,22 @@ ClientSchema.pre('save', function () {
 
 const BookingSchema = new mongoose.Schema(
   {
+    sessions: {
+      type: [{
+        _id: false,
+        sessionNumber: { type: Number, required: true, min: 1 },
+        date: { type: String, required: true, trim: true },
+        time: { type: String, required: true, trim: true },
+        sessionType: { type: String, required: true, enum: ['Online', 'Offline'], trim: true },
+        location: { type: String, default: '', trim: true },
+        amountPaid: { type: Number, default: 0, min: 0 },
+        remarks: { type: String, default: '', trim: true },
+        status: { type: String, default: 'scheduled', enum: ['scheduled', 'confirmed', 'completed', 'cancelled', 'no_show'], trim: true },
+        createdAt: { type: Date, default: Date.now },
+        updatedAt: { type: Date, default: Date.now },
+      }],
+      default: undefined,
+    },
     bookingId: {
       type: String,
       required: true,
@@ -248,11 +265,63 @@ const BookingSchema = new mongoose.Schema(
       trim: true,
       enum: ['Online', 'Offline'],
     },
+    meetYourTherapist: { type: String, required: true, trim: true },// all ready filled in the frontend form Meet Your Therapist
+    meetYourTherapistContent: { type: String, required: true, trim: true, default: THERAPY_CONTENT.meetYourTherapist },
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true, lowercase: true },
     phone: { type: String, required: true, trim: true },
+    identifyYourGender: { type: String, required: true, trim: true, enum: ['Male', 'Female', 'Non-Binary', 'Transgender', 'Prefer not to say', 'Other'] },
+    dob: { type: String, required: true, trim: true },
     whatsappNumber: { type: String, required: true, trim: true },
+    location: { type: String, required: true, trim: true },
+    sessionMode: { type: String, required: true, trim: true, enum: ['Online', 'Offline'] },
+    occupation: { type: String, trim: true, default: '' },
+    relationShipStatus: { type: String, required: true, trim: true, enum: ['Single', 'In a relationship', 'Married', 'Divorced', 'Widowed', 'Other'] },
+    numberOfChildren: { type: Number, default: 0, min: 0 },
+    currentlyTakingAnyPsychiatricMedication: { type: Boolean, default: false },
+    medicationDetails: { type: String, default: null, trim: true },
+    whereuknowaboutus: { type: String, required: true, trim: true, enum: ['Social Media', 'Friend/Family', 'Search Engine', 'Advertisement', 'Other'] },
+
+    therapyGoals: {
+      type: [String],
+      required: true,
+      enum: [
+        'Managing stress, anxiety, or overwhelming emotions',
+        'Healing from past trauma or unresolved emotional pain',
+        'Improving self-confidence and self-esteem',
+        'Navigating relationship challenges (family, partner, friends, etc.)',
+        'Coping with grief or loss',
+        'Developing healthier coping mechanisms and habits',
+        'Enhancing communication and interpersonal skills',
+        'Gaining clarity and direction in life',
+        'Overcoming workplace or career-related challenges',
+        'Achieving emotional balance and inner peace',
+        'Other'
+      ],
+    },
+    addNotes: {
+      type: String,
+      default: null,
+      trim: true
+    },
+    therapyGoalsOther: {
+      type: String,
+      default: null,
+      trim: true
+    },
+    informedConsent: { type: String, required: true, trim: true }, // already defined in the frontend form Informed Consent
+    informedConsentContent: { type: String, required: true, trim: true, default: THERAPY_CONTENT.informedConsent },
+    InformedConsentforTherapySessions: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    conformationOfBooking: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
     paymentMethod: {
       type: String,
       required: true,
@@ -263,7 +332,7 @@ const BookingSchema = new mongoose.Schema(
       type: String,
       default: 'pending',
       trim: true,
-      enum: ['pending', 'paid', 'failed', 'cancelled'],
+      enum: ['pending', 'paid', 'cash_received', 'failed', 'cancelled'],
     },
     bookingStatus: {
       type: String,

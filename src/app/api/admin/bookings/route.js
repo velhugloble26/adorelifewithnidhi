@@ -21,7 +21,8 @@ export async function GET(req) {
     const search = searchParams.get("search");
     if (search) {
       filter.$or = [
-        { name: { $regex: search, $options: "i" } },
+        { firstName: { $regex: search, $options: "i" } },
+        { lastName: { $regex: search, $options: "i" } },
         { email: { $regex: search, $options: "i" } },
         { phone: { $regex: search, $options: "i" } },
         { whatsappNumber: { $regex: search, $options: "i" } },

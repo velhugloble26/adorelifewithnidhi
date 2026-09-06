@@ -4,6 +4,7 @@ import { requireAdmin } from "../../../../../../utils/auth";
 import { Booking } from "../../../../../../schema/schema";
 
 const validStatuses = ["pending", "confirmed", "completed", "cancelled", "no_show"];
+const validPaymentStatuses = ["pending", "paid", "cash_received", "failed", "cancelled"];
 
 export async function PATCH(req, { params }) {
   try {
@@ -14,8 +15,9 @@ export async function PATCH(req, { params }) {
     const { bookingId } = await params;
     const body = await req.json();
     const nextStatus = body.status;
+    const nextPaymentStatus = body.paymentStatus;
 
-    if (!nextStatus || !validStatuses.includes(nextStatus)) {
+    if ((!nextStatus || !validStatuses.includes(nextStatus)) && (!nextPaymentStatus || !validPaymentStatuses.includes(nextPaymentStatus))) {
       return validationError("A valid booking status is required.", null, 422);
     }
 
@@ -24,11 +26,31 @@ export async function PATCH(req, { params }) {
       return validationError("Booking not found.", null, 404);
     }
 
-    booking.bookingStatus = nextStatus;
-    if (nextStatus === "cancelled") {
+    if (nextPaymentStatus && !nextStatus) {
+      const updatedBooking = await Booking.findOneAndUpdate(
+        { bookingId },
+        { $set: { paymentStatus: nextPaymentStatus, updated_at: new Date() } },
+        { new: true, runValidators: true },
+      ).lean();
+
+      return success("Payment status updated successfully.", { booking: updatedBooking });
+    }
+
+    if (nextStatus) booking.bookingStatus = nextStatus;
+    if (nextPaymentStatus) booking.paymentStatus = nextPaymentStatus;
+    if (nextStatus === "cancelled" || nextPaymentStatus === "cancelled") {
       booking.paymentStatus = "cancelled";
     }
-    await booking.save();
+    if (nextStatus && booking.sessions?.length) {
+      const sessionStatus = nextStatus === "pending" ? "scheduled" : nextStatus;
+      if (["scheduled", "confirmed", "completed", "cancelled", "no_show"].includes(sessionStatus)) {
+        booking.sessions.forEach((session) => {
+          session.status = sessionStatus;
+          session.updatedAt = new Date();
+        });
+      }
+    }
+    await booking.save({ validateModifiedOnly: true });
 
     return success("Booking status updated successfully.", { booking });
   } catch (error) {

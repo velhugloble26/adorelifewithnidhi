@@ -34,6 +34,7 @@ export const ADMIN_BOOKING = (bookingId) => api(`/admin/bookings/${encodeURIComp
 export const ADMIN_BOOKING_CANCEL = (bookingId) => api(`/admin/bookings/${encodeURIComponent(bookingId)}/cancel`);
 export const ADMIN_BOOKING_RESCHEDULE = (bookingId) => api(`/admin/bookings/${encodeURIComponent(bookingId)}/reschedule`);
 export const ADMIN_BOOKING_STATUS = (bookingId) => api(`/admin/bookings/${encodeURIComponent(bookingId)}/status`);
+export const ADMIN_CLIENT_REPORT = api("/admin/client-report");
 export const ADMIN_USERS = api("/admin/users");
 export const ADMIN_USER = (userId) => api(`/admin/users/${encodeURIComponent(userId)}`);
 

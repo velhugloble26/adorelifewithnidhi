@@ -5,6 +5,7 @@ import { BOOKING_AVAILABILITY, BOOKING_PACKAGES, CREATE_BOOKING, CREATE_BOOKING_
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { THERAPY_CONTENT } from "@/constants/therapyContent";
 
 const steps = [
   "Select Session",
@@ -13,19 +14,107 @@ const steps = [
   "Payment",
   "Confirmation",
 ];
+const packagess = [
+  {
+    id: "couple-therapy",
+    name: "Couple Therapy",
+    sessions: [
+      {
+        id: "regular",
+        name: "Regular Session",
+        count: 1,
+        indiaPrice: 2500,
+        foreignPrice: 5000,
+      },
+      {
+        id: "4-session",
+        name: "4 Sessions",
+        count: 4,
+        indiaPrice: 4500,
+        foreignPrice: 10000,
+      },
+      {
+        id: "8-session",
+        name: "8 Sessions",
+        count: 8,
+        indiaPrice: 12500,
+        foreignPrice: 18000,
+      },
+    ],
+  },
+  {
+    id: "psychologist-psychotherapist",
+    name: "Psychologist & Psychotherapist",
+    sessions: [
+      {
+        id: "regular",
+        name: "Regular Session",
+        count: 1,
+        indiaPrice: 2500,
+        foreignPrice: 5000,
+      },
+      {
+        id: "4-session",
+        name: "4 Sessions",
+        count: 4,
+        indiaPrice: 4500,
+        foreignPrice: 10000,
+      },
+      {
+        id: "8-session",
+        name: "8 Sessions",
+        count: 8,
+        indiaPrice: 12500,
+        foreignPrice: 18000,
+      },
+    ],
+  },
+];
+
 
 const initialBooking = {
   packageId: "regular",
   selectedDate: "",
   selectedTime: "",
   sessionType: "",
+  meetYourTherapist: "Therapy by Nidhi",
   firstName: "",
   lastName: "",
   email: "",
   phone: "",
+  identifyYourGender: "",
+  dob: "",
   whatsappNumber: "",
+  location: "",
+  sessionMode: "",
+  occupation: "",
+  relationShipStatus: "",
+  numberOfChildren: 0,
+  currentlyTakingAnyPsychiatricMedication: false,
+  medicationDetails: "",
+  whereuknowaboutus: "",
+  therapyGoals: [] as string[],
+  therapyGoalsOther: "",
+  addNotes: "",
+  informedConsent: "",
+  InformedConsentforTherapySessions: "",
+  conformationOfBooking: false,
   paymentMethod: "cash",
 };
+
+const therapyGoalOptions = [
+  "Managing stress, anxiety, or overwhelming emotions",
+  "Healing from past trauma or unresolved emotional pain",
+  "Improving self-confidence and self-esteem",
+  "Navigating relationship challenges (family, partner, friends, etc.)",
+  "Coping with grief or loss",
+  "Developing healthier coping mechanisms and habits",
+  "Enhancing communication and interpersonal skills",
+  "Gaining clarity and direction in life",
+  "Overcoming workplace or career-related challenges",
+  "Achieving emotional balance and inner peace",
+  "Other",
+];
 
 export default function BookSessionPage() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -39,6 +128,8 @@ export default function BookSessionPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [confirmation, setConfirmation] = useState<any>(null);
   const [paymentProcessing, setPaymentProcessing] = useState(false);
+  const [locationTab, setLocationTab] = useState("india");
+
 
   const selectedPackage = useMemo(
     () => packages.find((pkg) => pkg.id === booking.packageId) || packages[0],
@@ -92,7 +183,7 @@ export default function BookSessionPage() {
     load();
   }, []);
 
-  const updateField = (field: string, value: string) => {
+  const updateField = (field: string, value: unknown) => {
     setBooking((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: "" }));
   };
@@ -105,6 +196,18 @@ export default function BookSessionPage() {
     if (!/^\S+@\S+\.\S+$/.test(booking.email)) nextErrors.email = "Enter a valid email address.";
     if (!/^[0-9+\-\s()]{7,15}$/.test(booking.phone)) nextErrors.phone = "Enter a valid phone number.";
     if (!/^[0-9+\-\s()]{7,15}$/.test(booking.whatsappNumber)) nextErrors.whatsappNumber = "Enter a valid WhatsApp number.";
+    if (!booking.identifyYourGender) nextErrors.identifyYourGender = "Select your gender.";
+    if (!booking.dob) nextErrors.dob = "Date of birth is required.";
+    if (!booking.location.trim()) nextErrors.location = "Location is required.";
+    if (!booking.sessionMode) nextErrors.sessionMode = "Select a session mode.";
+    if (!booking.relationShipStatus) nextErrors.relationShipStatus = "Select your relationship status.";
+    if (booking.numberOfChildren < 0 || !Number.isInteger(Number(booking.numberOfChildren))) nextErrors.numberOfChildren = "Enter a valid number.";
+    if (!booking.whereuknowaboutus) nextErrors.whereuknowaboutus = "Select how you heard about us.";
+    if (!booking.therapyGoals.length) nextErrors.therapyGoals = "Select at least one therapy goal.";
+    if (booking.therapyGoals.includes("Other") && !booking.therapyGoalsOther.trim()) nextErrors.therapyGoalsOther = "Please describe your other goal.";
+    if (booking.currentlyTakingAnyPsychiatricMedication && !booking.medicationDetails.trim()) nextErrors.medicationDetails = "Please provide medication details.";
+    if (booking.InformedConsentforTherapySessions !== "I agree") nextErrors.InformedConsentforTherapySessions = "Consent is required.";
+    if (!booking.conformationOfBooking) nextErrors.conformationOfBooking = "Please confirm your booking details.";
 
     setErrors(nextErrors);
     return Object.keys(nextErrors).length === 0;
@@ -273,7 +376,7 @@ export default function BookSessionPage() {
     <>
       <Navbar />
 
-      <main className="section-pad py-10 md:py-16 max-w-6xl mx-auto">
+      <main className="section-pad py-5 md:py-10 max-w-16xl mx-auto">
         <div className="mb-8">
           <p className="text-label-md uppercase tracking-[0.2em] ui-accent">Book your session</p>
           <h1 className="text-display-lg ui-heading mt-2">Book a Session</h1>
@@ -300,6 +403,112 @@ export default function BookSessionPage() {
         </div>
 
         {currentStep === 0 && (
+        <div>
+            {/* Location Tabs */}
+            <div className="mb-8 flex justify-center">
+            <div className="inline-flex rounded-xl bg-slate-100 p-1">
+                <button
+                type="button"
+                onClick={() => setLocationTab("india")}
+                className={`rounded-lg px-6 py-3 text-sm font-semibold transition ${
+                    locationTab === "india"
+                    ? "bg-[#003044] text-white shadow"
+                    : "text-slate-600"
+                }`}
+                >
+                India
+                </button>
+
+                <button
+                type="button"
+                onClick={() => setLocationTab("foreign")}
+                className={`rounded-lg px-6 py-3 text-sm font-semibold transition ${
+                    locationTab === "foreign"
+                    ? "bg-[#003044] text-white shadow"
+                    : "text-slate-600"
+                }`}
+                >
+                Other (Foreign)
+                </button>
+            </div>
+            </div>
+
+            {/* Services */}
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {packagess.map((pkg) => (
+                <div
+                key={pkg.id}
+                className="rounded-2xl border border-slate-200 bg-white p-6"
+                >
+                <div className="mb-5 text-label-md uppercase tracking-[0.1em] text-[#4a4f52]">
+                    {pkg.name}
+                </div>
+
+                <div className="space-y-3">
+                    {pkg.sessions.map((session) => {
+                    const price =
+                        locationTab === "india"
+                        ? session.indiaPrice
+                        : session.foreignPrice;
+
+                    const packageId = `${locationTab}-${pkg.id}-${session.id}`;
+
+                    const selected = booking.packageId === packageId;
+
+                    return (
+                        <div
+                        key={packageId}
+                        className={`flex items-center justify-between rounded-xl border p-4 transition ${
+                            selected
+                            ? "border-[#003044] bg-[#f0f7f9] shadow-md"
+                            : "border-slate-200"
+                        }`}
+                        >
+                        <div>
+                            <div className="font-semibold text-[#003044]">
+                            {session.name}
+                            </div>
+
+                            <div className="mt-1 text-sm text-slate-500">
+                            {session.count === 1
+                                ? "1 Session"
+                                : `${session.count} Sessions`}
+                            </div>
+                        </div>
+
+                        <div className="text-right">
+                            <div className="text-xl font-bold text-[#003044]">
+                            ₹{price.toLocaleString("en-IN")}
+                            </div>
+
+                            <button
+                            type="button"
+                            className="btn-primary mt-2 px-4 py-2"
+                            onClick={() => {
+                                updateField("packageId", packageId);
+                                updateField("locationType", locationTab);
+                                updateField("serviceType", pkg.id);
+                                updateField("sessionType", session.id);
+                                updateField("sessionCount", session.count);
+                                updateField("price", price);
+                                setCurrentStep(1);
+                            }}
+                            >
+                            Book Now
+                            </button>
+                        </div>
+                        </div>
+                    );
+                    })}
+                </div>
+                </div>
+            ))}
+            </div>
+        </div>
+        )}
+
+
+        {/* {currentStep === 0 && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {packages.map((pkg) => {
               const selected = booking.packageId === pkg.id;
@@ -324,7 +533,7 @@ export default function BookSessionPage() {
               );
             })}
           </div>
-        )}
+        )} */}
 
         {currentStep === 1 && (
           <div className="space-y-8">
@@ -395,6 +604,7 @@ export default function BookSessionPage() {
                               updateField("selectedDate", activeDateData.date);
                               updateField("selectedTime", slot.time);
                               updateField("sessionType", slot.sessionType);
+                              updateField("sessionMode", slot.sessionType);
                             }}
                             className={`rounded-xl border p-3 text-left transition ${statusClass}`}
                           >
@@ -421,7 +631,16 @@ export default function BookSessionPage() {
         {currentStep === 2 && (
           <div className="rounded-2xl border border-slate-200 bg-white p-6 md:p-8">
             <h2 className="text-headline-md ui-heading mb-6">Booking Form</h2>
+            <section className="mb-8 rounded-xl border border-slate-200 bg-[#f8fbfb] p-5 md:p-6" aria-labelledby="therapist-introduction">
+              <div className="mb-5">
+                <p className="text-label-md uppercase tracking-[0.12em] text-[#506356]">Meet your therapist</p>
+                <h3 id="therapist-introduction" className="mt-1 text-headline-lg ui-heading">Therapy by Nidhi</h3>
+              </div>
+
+              <div className="whitespace-pre-line text-body-md ui-copy">{THERAPY_CONTENT.meetYourTherapist}</div>
+            </section>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
               <div>
                 <label className="text-label-md ui-copy block mb-2">First Name</label>
                 <input className="ghost-input" value={booking.firstName} onChange={(e) => updateField("firstName", e.target.value)} />
@@ -442,10 +661,107 @@ export default function BookSessionPage() {
                 <input type="tel" className="ghost-input" value={booking.phone} onChange={(e) => updateField("phone", e.target.value)} />
                 {errors.phone && <div className="text-sm text-red-600 mt-1">{errors.phone}</div>}
               </div>
-              <div className="md:col-span-2">
+              <div>
                 <label className="text-label-md ui-copy block mb-2">WhatsApp Number</label>
                 <input type="tel" className="ghost-input" value={booking.whatsappNumber} onChange={(e) => updateField("whatsappNumber", e.target.value)} />
                 {errors.whatsappNumber && <div className="text-sm text-red-600 mt-1">{errors.whatsappNumber}</div>}
+              </div>
+              <div>
+                <label className="text-label-md ui-copy block mb-2">Gender</label>
+                <select className="ghost-input" value={booking.identifyYourGender} onChange={(e) => updateField("identifyYourGender", e.target.value)}>
+                  <option value="">Select gender</option><option>Male</option><option>Female</option><option>Non-Binary</option><option>Transgender</option><option>Prefer not to say</option><option>Other</option>
+                </select>
+                {errors.identifyYourGender && <div className="text-sm text-red-600 mt-1">{errors.identifyYourGender}</div>}
+              </div>
+              <div>
+                <label className="text-label-md ui-copy block mb-2">Date of Birth</label>
+                <input type="date" className="ghost-input" value={booking.dob} onChange={(e) => updateField("dob", e.target.value)} />
+                {errors.dob && <div className="text-sm text-red-600 mt-1">{errors.dob}</div>}
+              </div>
+              <div>
+                <label className="text-label-md ui-copy block mb-2">Location</label>
+                <input className="ghost-input" value={booking.location} onChange={(e) => updateField("location", e.target.value)} />
+                {errors.location && <div className="text-sm text-red-600 mt-1">{errors.location}</div>}
+              </div>
+              <div>
+                <label className="text-label-md ui-copy block mb-2">Session Mode</label>
+                <select className="ghost-input" value={booking.sessionMode} onChange={(e) => updateField("sessionMode", e.target.value)}>
+                  <option value="">Select mode</option><option>Online</option><option>Offline</option>
+                </select>
+                {errors.sessionMode && <div className="text-sm text-red-600 mt-1">{errors.sessionMode}</div>}
+              </div>
+              <div>
+                <label className="text-label-md ui-copy block mb-2">Relationship Status</label>
+                <select className="ghost-input" value={booking.relationShipStatus} onChange={(e) => updateField("relationShipStatus", e.target.value)}>
+                  <option value="">Select status</option><option>Single</option><option>In a relationship</option><option>Married</option><option>Divorced</option><option>Widowed</option><option>Other</option>
+                </select>
+                {errors.relationShipStatus && <div className="text-sm text-red-600 mt-1">{errors.relationShipStatus}</div>}
+              </div>
+              <div>
+                <label className="text-label-md ui-copy block mb-2">Occupation <span className="text-slate-500">(optional)</span></label>
+                <input className="ghost-input" value={booking.occupation} onChange={(e) => updateField("occupation", e.target.value)} />
+              </div>
+              <div>
+                <label className="text-label-md ui-copy block mb-2">Number of Children</label>
+                <input type="number" min="0" className="ghost-input" value={booking.numberOfChildren} onChange={(e) => updateField("numberOfChildren", Number(e.target.value))} />
+                {errors.numberOfChildren && <div className="text-sm text-red-600 mt-1">{errors.numberOfChildren}</div>}
+              </div>
+              <div>
+                <label className="text-label-md ui-copy block mb-2">How did you hear about us?</label>
+                <select className="ghost-input" value={booking.whereuknowaboutus} onChange={(e) => updateField("whereuknowaboutus", e.target.value)}>
+                  <option value="">Select an option</option><option>Social Media</option><option>Friend/Family</option><option>Search Engine</option><option>Advertisement</option><option>Other</option>
+                </select>
+                {errors.whereuknowaboutus && <div className="text-sm text-red-600 mt-1">{errors.whereuknowaboutus}</div>}
+              </div>
+              <div className="md:col-span-2">
+                <label className="text-label-md ui-copy block mb-2">Therapy Goals</label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {therapyGoalOptions.map((goal) => <label key={goal} className="flex items-start gap-2 text-sm ui-copy"><input type="checkbox" checked={booking.therapyGoals.includes(goal)} onChange={(e) => updateField("therapyGoals", e.target.checked ? [...booking.therapyGoals, goal] : booking.therapyGoals.filter((item) => item !== goal))} /> <span>{goal}</span></label>)}
+                </div>
+                {errors.therapyGoals && <div className="text-sm text-red-600 mt-1">{errors.therapyGoals}</div>}
+              </div>
+
+
+
+
+              {booking.therapyGoals.includes("Other") && <div className="md:col-span-2"><label className="text-label-md ui-copy block mb-2">Other Therapy Goal</label><input className="ghost-input" value={booking.therapyGoalsOther} onChange={(e) => updateField("therapyGoalsOther", e.target.value)} />{errors.therapyGoalsOther && <div className="text-sm text-red-600 mt-1">{errors.therapyGoalsOther}</div>}</div>}
+              <div className="md:col-span-2"><label className="flex items-center gap-2 text-sm ui-copy"><input type="checkbox" checked={booking.currentlyTakingAnyPsychiatricMedication} onChange={(e) => updateField("currentlyTakingAnyPsychiatricMedication", e.target.checked)} /> Currently taking psychiatric medication</label></div>
+             
+             
+             
+             
+             
+             
+              {booking.currentlyTakingAnyPsychiatricMedication && <div className="md:col-span-2"><label className="text-label-md ui-copy block mb-2">Medication Details</label><textarea className="ghost-input min-h-24" value={booking.medicationDetails} onChange={(e) => updateField("medicationDetails", e.target.value)} />{errors.medicationDetails && <div className="text-sm text-red-600 mt-1">{errors.medicationDetails}</div>}</div>}
+              <div className="md:col-span-2"><label className="text-label-md ui-copy block mb-2">Additional Notes <span className="text-slate-500">(optional)</span></label><textarea className="ghost-input min-h-24" value={booking.addNotes} onChange={(e) => updateField("addNotes", e.target.value)} /></div>
+
+
+
+              <div className="md:col-span-2 space-y-4 border-t border-slate-200 pt-5">
+                <h3 className="text-headline-md ui-heading">Informed Consent</h3>
+                <div className="whitespace-pre-line text-body-md ui-copy">{THERAPY_CONTENT.informedConsent}</div>
+                <label className="flex items-start gap-2 text-sm ui-copy">
+                  <input
+                    type="checkbox"
+                    checked={booking.informedConsent === "I agree"}
+                    onChange={(e) => {
+                      const value = e.target.checked ? "I agree" : "";
+                      updateField("informedConsent", value);
+                      updateField("InformedConsentforTherapySessions", value);
+                    }}
+                  />
+                  <span>I agree to the informed consent for therapy sessions.</span>
+                </label>
+                {errors.InformedConsentforTherapySessions && <div className="text-sm text-red-600">{errors.InformedConsentforTherapySessions}</div>}
+                <label className="flex items-start gap-2 text-sm ui-copy">
+                  <input
+                    type="checkbox"
+                    checked={booking.conformationOfBooking}
+                    onChange={(e) => updateField("conformationOfBooking", e.target.checked)}
+                  />
+                  <span>I have read and understood the above information and agree to proceed with the therapy.</span>
+                </label>
+                {errors.conformationOfBooking && <div className="text-sm text-red-600">{errors.conformationOfBooking}</div>}
               </div>
             </div>
 
