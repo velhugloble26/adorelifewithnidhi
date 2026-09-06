@@ -39,6 +39,23 @@ export function formatDateLabel(date) {
 
 export function validateBookingRequest(data) {
   const errors = {};
+  const allowedGenders = ['Male', 'Female', 'Non-Binary', 'Transgender', 'Prefer not to say', 'Other'];
+  const allowedSessionModes = ['Online', 'Offline'];
+  const allowedRelationshipStatuses = ['Single', 'In a relationship', 'Married', 'Divorced', 'Widowed', 'Other'];
+  const allowedReferralSources = ['Social Media', 'Friend/Family', 'Search Engine', 'Advertisement', 'Other'];
+  const allowedTherapyGoals = [
+    'Managing stress, anxiety, or overwhelming emotions',
+    'Healing from past trauma or unresolved emotional pain',
+    'Improving self-confidence and self-esteem',
+    'Navigating relationship challenges (family, partner, friends, etc.)',
+    'Coping with grief or loss',
+    'Developing healthier coping mechanisms and habits',
+    'Enhancing communication and interpersonal skills',
+    'Gaining clarity and direction in life',
+    'Overcoming workplace or career-related challenges',
+    'Achieving emotional balance and inner peace',
+    'Other',
+  ];
 
   if (!data.packageId) errors.packageId = "Please select a session package.";
   if (!data.selectedDate) errors.selectedDate = "Please select a date.";
@@ -61,6 +78,25 @@ export function validateBookingRequest(data) {
   if (!data.whatsappNumber || !/^[0-9+\-\s()]{7,15}$/.test(data.whatsappNumber)) {
     errors.whatsappNumber = "Enter a valid WhatsApp number.";
   }
+  if (!allowedGenders.includes(data.identifyYourGender)) errors.identifyYourGender = "Select a valid gender.";
+  if (!data.dob || Number.isNaN(Date.parse(data.dob))) errors.dob = "Enter a valid date of birth.";
+  if (!data.location?.trim()) errors.location = "Location is required.";
+  if (!allowedSessionModes.includes(data.sessionMode)) errors.sessionMode = "Select a valid session mode.";
+  if (!allowedRelationshipStatuses.includes(data.relationShipStatus)) errors.relationShipStatus = "Select a valid relationship status.";
+  if (data.numberOfChildren === undefined || Number(data.numberOfChildren) < 0 || !Number.isInteger(Number(data.numberOfChildren))) {
+    errors.numberOfChildren = "Enter a valid number of children.";
+  }
+  if (!allowedReferralSources.includes(data.whereuknowaboutus)) errors.whereuknowaboutus = "Select how you heard about us.";
+  if (!Array.isArray(data.therapyGoals) || data.therapyGoals.length === 0 || data.therapyGoals.some((goal) => !allowedTherapyGoals.includes(goal))) {
+    errors.therapyGoals = "Select at least one valid therapy goal.";
+  }
+  if (data.therapyGoals?.includes('Other') && !data.therapyGoalsOther?.trim()) errors.therapyGoalsOther = "Please describe your other therapy goal.";
+  if (typeof data.currentlyTakingAnyPsychiatricMedication !== 'boolean') errors.currentlyTakingAnyPsychiatricMedication = "Select whether you are taking psychiatric medication.";
+  if (data.currentlyTakingAnyPsychiatricMedication && !data.medicationDetails?.trim()) errors.medicationDetails = "Please provide medication details.";
+  if (!data.meetYourTherapist?.trim()) errors.meetYourTherapist = "Therapist information is required.";
+  if (data.informedConsent !== 'I agree') errors.informedConsent = "Consent is required.";
+  if (data.InformedConsentforTherapySessions !== 'I agree') errors.InformedConsentforTherapySessions = "Consent is required.";
+  if (data.conformationOfBooking !== true) errors.conformationOfBooking = "Booking confirmation is required.";
 
   return errors;
 }
@@ -122,6 +158,7 @@ export async function createCashBooking(payload) {
     selectedDate: payload.selectedDate,
     selectedTime: payload.selectedTime,
     sessionType: payload.sessionType,
+    meetYourTherapist: payload.meetYourTherapist,
     bookingStatus: { $ne: "cancelled" },
   });
 
@@ -147,7 +184,23 @@ export async function createCashBooking(payload) {
     lastName: payload.lastName,
     email: payload.email,
     phone: payload.phone,
+    identifyYourGender: payload.identifyYourGender,
+    dob: payload.dob,
     whatsappNumber: payload.whatsappNumber,
+    location: payload.location,
+    sessionMode: payload.sessionMode,
+    occupation: payload.occupation,
+    relationShipStatus: payload.relationShipStatus,
+    numberOfChildren: Number(payload.numberOfChildren),
+    currentlyTakingAnyPsychiatricMedication: payload.currentlyTakingAnyPsychiatricMedication,
+    medicationDetails: payload.medicationDetails || null,
+    whereuknowaboutus: payload.whereuknowaboutus,
+    therapyGoals: payload.therapyGoals,
+    addNotes: payload.addNotes || null,
+    therapyGoalsOther: payload.therapyGoalsOther || null,
+    informedConsent: payload.informedConsent,
+    InformedConsentforTherapySessions: payload.InformedConsentforTherapySessions,
+    conformationOfBooking: payload.conformationOfBooking,
     paymentMethod: "cash",
     paymentStatus: "pending",
     bookingStatus: "pending",

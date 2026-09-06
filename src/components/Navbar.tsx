@@ -49,7 +49,7 @@ export default function Navbar() {
                         <img
                             src={LOGO_URL}
                             alt="Adore Life"
-                            className="h-14 w-auto object-contain"
+                            className="h-29 w-auto object-contain"
                             loading="eager"
                         />
                     </Link>

@@ -85,6 +85,19 @@ export default function BookingDetailPage() {
             <div><strong>Email:</strong> {booking.email}</div>
             <div><strong>Phone:</strong> {booking.phone}</div>
             <div><strong>WhatsApp:</strong> {booking.whatsappNumber}</div>
+            <div><strong>Gender:</strong> {booking.identifyYourGender || "Not provided"}</div>
+            <div><strong>Date of birth:</strong> {booking.dob || "Not provided"}</div>
+            <div><strong>Location:</strong> {booking.location || "Not provided"}</div>
+            <div><strong>Session mode:</strong> {booking.sessionMode || "Not provided"}</div>
+            <div><strong>Relationship status:</strong> {booking.relationShipStatus || "Not provided"}</div>
+            <div><strong>Occupation:</strong> {booking.occupation || "Not provided"}</div>
+            <div><strong>Number of children:</strong> {booking.numberOfChildren ?? 0}</div>
+            <div><strong>Psychiatric medication:</strong> {booking.currentlyTakingAnyPsychiatricMedication ? "Yes" : "No"}</div>
+            <div><strong>How they heard about us:</strong> {booking.whereuknowaboutus || "Not provided"}</div>
+            <div className="md:col-span-2"><strong>Therapy goals:</strong> {booking.therapyGoals?.join(", ") || "Not provided"}</div>
+            <div className="md:col-span-2"><strong>Consent:</strong> {booking.InformedConsentforTherapySessions === "I agree" ? "Given" : "Not given"}</div>
+            <div><strong>Booking confirmation:</strong> {booking.conformationOfBooking ? "Confirmed" : "Not confirmed"}</div>
+            {booking.addNotes && <div className="md:col-span-2"><strong>Notes:</strong> {booking.addNotes}</div>}
           </div>
         </div>
       </main>

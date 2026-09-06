@@ -248,11 +248,61 @@ const BookingSchema = new mongoose.Schema(
       trim: true,
       enum: ['Online', 'Offline'],
     },
+    meetYourTherapist: { type: String, required: true, trim: true },// all ready filled in the frontend form Meet Your Therapist
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true, lowercase: true },
     phone: { type: String, required: true, trim: true },
+    identifyYourGender: { type: String, required: true, trim: true, enum: ['Male', 'Female', 'Non-Binary', 'Transgender', 'Prefer not to say', 'Other'] },
+    dob: { type: String, required: true, trim: true },
     whatsappNumber: { type: String, required: true, trim: true },
+    location: { type: String, required: true, trim: true },
+    sessionMode: { type: String, required: true, trim: true, enum: ['Online', 'Offline'] },
+    occupation: { type: String, trim: true, default: '' },
+    relationShipStatus: { type: String, required: true, trim: true, enum: ['Single', 'In a relationship', 'Married', 'Divorced', 'Widowed', 'Other'] },
+    numberOfChildren: { type: Number, default: 0, min: 0 },
+    currentlyTakingAnyPsychiatricMedication: { type: Boolean, default: false },
+    medicationDetails: { type: String, default: null, trim: true },
+    whereuknowaboutus: { type: String, required: true, trim: true, enum: ['Social Media', 'Friend/Family', 'Search Engine', 'Advertisement', 'Other'] },
+
+    therapyGoals: {
+      type: [String],
+      required: true,
+      enum: [
+        'Managing stress, anxiety, or overwhelming emotions',
+        'Healing from past trauma or unresolved emotional pain',
+        'Improving self-confidence and self-esteem',
+        'Navigating relationship challenges (family, partner, friends, etc.)',
+        'Coping with grief or loss',
+        'Developing healthier coping mechanisms and habits',
+        'Enhancing communication and interpersonal skills',
+        'Gaining clarity and direction in life',
+        'Overcoming workplace or career-related challenges',
+        'Achieving emotional balance and inner peace',
+        'Other'
+      ],
+    },
+    addNotes: {
+      type: String,
+      default: null,
+      trim: true
+    },
+    therapyGoalsOther: {
+      type: String,
+      default: null,
+      trim: true
+    },
+    informedConsent: { type: String, required: true, trim: true }, // already defined in the frontend form Informed Consent
+    InformedConsentforTherapySessions: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    conformationOfBooking: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
     paymentMethod: {
       type: String,
       required: true,

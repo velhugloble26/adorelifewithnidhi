@@ -18,7 +18,7 @@ export async function PATCH(req, { params }) {
 
     booking.bookingStatus = "cancelled";
     booking.paymentStatus = booking.paymentStatus === "paid" ? "refunded" : "cancelled";
-    await booking.save();
+    await booking.save({ validateModifiedOnly: true });
 
     return success("Booking cancelled successfully.", { booking });
   } catch (error) {

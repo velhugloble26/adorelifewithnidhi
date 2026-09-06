@@ -41,7 +41,7 @@ export async function PATCH(req, { params }) {
     booking.selectedDate = body.date;
     booking.selectedTime = body.time;
     booking.sessionType = body.sessionType;
-    await booking.save();
+    await booking.save({ validateModifiedOnly: true });
 
     return success("Booking rescheduled successfully.", { booking });
   } catch (error) {
