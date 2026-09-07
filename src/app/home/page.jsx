@@ -1,7 +1,9 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import Image from "next/image";
 import Link from "next/link";
+const NIDHI_IMG = "/therapist-nidhi-roy.png";
 
 
 
@@ -11,8 +13,8 @@ const HERO_BG =
 const HERO_WATERMARK =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCwX80a2m9hE9jpy1RhirYecCpM8wEN_cTmZz094m7eTPeN40pYkZVYOpRBYhytkyPMlFdefyIuqYPFh2yaemBgwgab-H0KTyiLlcq3iNpqeq8ECWXhVnC0gTL_tg0_PntMM2g1hTdVvWuQGTExcabuyYfnGErGT9vJya56J3y1iFtX__R4sFMef8TYH8tCq4_jA2G8DrqfQPGYMZXwgPbbx0lL_Ju0VYaZRn9pNFHXzfu78Fw43V7opLHT-p02zj94hg";
 
-const NIDHI_IMG =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuB8UhDZOpERUsmQpWtTpZg460gu5ptkmQkFLetcjzxRvEVy-VFeyv45F7iaT_sgiIVCt32Q0BRikzitesQZ7zG4oiQdn_9pEmou3GcI7eED8rU7SQTG8gDXocu1imDYc4-kFWKegmgPiJkddvUeYQpyjqx9BrtLixao7v4Mz1271gc7SYvPJzO08YO3gt3CGvHHHF7vPqDnl7Cxg3tUH6npesl24BZlksxcE8xhyhT97eSRMBxiZ8T2";
+// const NIDHI_IMG =
+  // "https://lh3.googleusercontent.com/aida-public/AB6AXuB8UhDZOpERUsmQpWtTpZg460gu5ptkmQkFLetcjzxRvEVy-VFeyv45F7iaT_sgiIVCt32Q0BRikzitesQZ7zG4oiQdn_9pEmou3GcI7eED8rU7SQTG8gDXocu1imDYc4-kFWKegmgPiJkddvUeYQpyjqx9BrtLixao7v4Mz1271gc7SYvPJzO08YO3gt3CGvHHHF7vPqDnl7Cxg3tUH6npesl24BZlksxcE8xhyhT97eSRMBxiZ8T2";
 
 const WATERMARK =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuDG16LXmYpSvjNOurGU5tmQ7q4zLaTv94D6I3BDi6CPai5VatKtP7Ho-bgVdAhR8sovzMMouB_K4GhTdXjzi62SjtelqndNTH4_BUyXH5pLMvKxp3y0JoZ5PGKa9pvyBDySv984YJGweHFtCdbirPRLnvVboKeUFVJIOfgDuc1BJDPf1Ym5dm1w-lGeIaOFXRVUkiNIqtafsSSv_M8zdwBiZMPMhcqUPRit_4OkamDiQTp1W7hblh0Hei2jEYutYryG_Q";
@@ -430,14 +432,18 @@ export default function HomePage() {
             {/* Image */}
             <div className="lg:col-span-5 relative">
               <div
-                className="aspect-[4/5] rounded-xl overflow-hidden shadow-sm relative"
-                style={{ border: "1px solid color-mix(in srgb, white 50%, transparent)" }}
+                className="aspect-[4/5] rounded-xl overflow-hidden shadow-sm relative group"
+                style={{
+                  border: "1px solid color-mix(in srgb, white 50%, transparent)",
+                }}
               >
-                <img
+                <Image
                   src={NIDHI_IMG}
                   alt="Nidhi Roy – therapist at Adore Life"
-                  className="w-full h-full object-cover"
+                  fill
+                  className="z-0 object-cover transition-transform duration-700 ease-out group-hover:scale-[1.15]"
                 />
+
                 <div
                   className="absolute inset-0 flex items-end p-8"
                   style={{
