@@ -106,13 +106,16 @@ export default function TherapyPage() {
                 {/* ── Image break ── */}
                 <section className="section-pad max-w-[1440px] mx-auto mb-16 md:mb-32">
                     <div
-                        className="w-full rounded-xl overflow-hidden"
-                        style={{ backgroundColor: "var(--color-surface-variant)", aspectRatio: "21 / 9" }}
+                        className="w-full rounded-xl overflow-hidden group"
+                        style={{
+                            backgroundColor: "var(--color-surface-variant)",
+                            aspectRatio: "21 / 9",
+                        }}
                     >
                         <img
                             src={THERAPY_IMG}
                             alt="A serene, light-filled therapy space"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.15]"
                         />
                     </div>
                 </section>
@@ -318,13 +321,16 @@ export default function TherapyPage() {
 
                         {/* Illustration */}
                         <div
-                            className="hidden lg:block w-full h-full rounded-xl overflow-hidden"
-                            style={{ backgroundColor: "var(--color-surface-variant)", minHeight: "500px" }}
+                            className="hidden lg:block w-full h-full rounded-xl overflow-hidden group"
+                            style={{
+                                backgroundColor: "var(--color-surface-variant)",
+                                minHeight: "500px",
+                            }}
                         >
                             <img
                                 src={JOURNEY_IMG}
                                 alt="Abstract representation of the healing journey"
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.15]"
                             />
                         </div>
                     </div>

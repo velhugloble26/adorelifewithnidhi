@@ -1,12 +1,13 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import Image from "next/image";
 import Link from "next/link";
+const NIDHI_STORY_IMG = "/beforebecametherapist.png";
 
 
-
-const NIDHI_STORY_IMG =
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuCCOnLdcFrNbe3e983RSqyG9ePacBPhB3At8MKLToJSuUGDQsTceHAS_GyRm2yeuQKeOHtQUrZY94JmWXRR8TsUxVqtIjrXMo3QSN6iZaztCGaFcnVSfFFA7c5wOyzYt43ENBhRKkVbjkTH_YmOLbiQSJGgp6F_fHl2xblmGKEaKTJMcdAvq3rlGqT6E_y9wXol0tFRbiIfeHLL6ZYI7K5pzwL9p2H-RMqcowt_miqi5v40YRdPMiHC";
+// const NIDHI_STORY_IMG =
+//     "https://lh3.googleusercontent.com/aida-public/AB6AXuCCOnLdcFrNbe3e983RSqyG9ePacBPhB3At8MKLToJSuUGDQsTceHAS_GyRm2yeuQKeOHtQUrZY94JmWXRR8TsUxVqtIjrXMo3QSN6iZaztCGaFcnVSfFFA7c5wOyzYt43ENBhRKkVbjkTH_YmOLbiQSJGgp6F_fHl2xblmGKEaKTJMcdAvq3rlGqT6E_y9wXol0tFRbiIfeHLL6ZYI7K5pzwL9p2H-RMqcowt_miqi5v40YRdPMiHC";
 
 const values = [
     {
@@ -85,6 +86,7 @@ export default function StoryPage() {
 
                     {/* Image */}
                     <div className="w-full lg:w-1/2">
+
                         <div
                             className="aspect-[4/5] w-full rounded overflow-hidden relative group surface-sand"
                         >
@@ -97,12 +99,15 @@ export default function StoryPage() {
                                     opacity: 0.5,
                                 }}
                             />
-                            <img
+
+                            <Image
                                 src={NIDHI_STORY_IMG}
                                 alt="Nidhi Roy, therapist at Adore Life"
-                                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                                fill
+                                className="relative z-0 object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.15]"
                             />
                         </div>
+
                     </div>
                 </section>
 

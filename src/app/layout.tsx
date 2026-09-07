@@ -68,7 +68,7 @@ export default function RootLayout({
         }}
       >
         {children}
-        <EnquiryModal />
+        {/* <EnquiryModal /> */}
         <Footer />
 
         <FloatingContactActions />

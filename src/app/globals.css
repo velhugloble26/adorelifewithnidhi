@@ -591,11 +591,14 @@ details > summary::-webkit-details-marker {
 .section-pad {
   padding-left: 1rem;
   padding-right: 1rem;
+  margin-top: -3rem;
+
 }
 
 @media (min-width: 768px) {
   .section-pad {
     padding-left: 10vw;
     padding-right: 10vw;
+    margin-top: -3rem;
   }
 }

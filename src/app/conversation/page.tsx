@@ -280,9 +280,9 @@ export default function ConversationPage() {
                             </h3>
                             <ul className="space-y-6">
                                 {[
-                                    { icon: "call", label: "Phone", value: "+91 98337 63977", href: "tel:+919833763977" },
-                                    { icon: "forum", label: "WhatsApp", value: "+91 98337 63977", href: "https://wa.me/919833763977" },
-                                    { icon: "mail", label: "Email", value: "hello@adorelife.in", href: "mailto:hello@adorelife.in" },
+                                    { icon: "call", label: "Phone", value: "+91 73044 90951", href: "tel:+917304490951" },
+                                    { icon: "forum", label: "WhatsApp", value: "+91 73044 90951", href: "https://wa.me/917304490951" },
+                                    { icon: "mail", label: "Email", value: "adorelifewithnidhi@gmail.com", href: "mailto:adorelifewithnidhi@gmail.com" },
                                 ].map((item) => (
                                     <li key={item.label} className="flex items-start gap-4">
                                         <span className="material-symbols-outlined mt-1 ui-accent">
