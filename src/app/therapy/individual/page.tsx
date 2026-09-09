@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -71,9 +72,11 @@ export default function IndividualTherapyPage() {
                     <div
                         className="aspect-[4/5] rounded-xl overflow-hidden surface-sand"
                     >
-                        <img
+                        <Image
                             src={INDIVIDUAL_IMG}
                             alt="A calm, welcoming individual therapy session"
+                            width={1600}
+                            height={900}
                             className="w-full h-full object-cover"
                         />
                     </div>

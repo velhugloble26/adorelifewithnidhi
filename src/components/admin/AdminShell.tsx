@@ -2,6 +2,7 @@
 
 import { AUTH_ME, LOGOUT } from "@/utils/api";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -68,7 +69,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
       <aside className={`${menuOpen ? "block" : "hidden"} lg:flex fixed lg:sticky inset-x-0 top-[65px] lg:top-0 z-30 h-[calc(100vh-65px)] lg:h-screen flex-col surface-lowest border-r border-surface p-5`}>
         <Link href="/" className="hidden lg:flex items-center gap-3 px-2 py-4" aria-label="Return to website">
-          <img src="/website_logo.png" alt="Adore Life" className="h-12 w-auto" />
+          <Image src="/website_logo.png" alt="Adore Life" width={1080} height={897} className="h-12 w-auto" />
         </Link>
         <div className="hidden lg:block px-3 mb-5 text-label-md uppercase tracking-[0.18em] ui-muted">Admin workspace</div>
         <nav className="space-y-1" aria-label="Admin navigation">

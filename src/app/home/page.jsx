@@ -109,9 +109,11 @@ export default function HomePage() {
         >
           {/* Background image */}
           <div className="absolute inset-0 z-0">
-            <img
+            <Image
               src={HERO_BG}
               alt=""
+              width={1600}
+              height={900}
               className="w-full h-full object-cover"
               style={{ opacity: 0.4 }}
               aria-hidden="true"
@@ -125,9 +127,11 @@ export default function HomePage() {
             />
             {/* Watermark overlay */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-              <img
+              <Image
                 src={HERO_WATERMARK}
                 alt=""
+                width={1600}
+                height={900}
                 aria-hidden="true"
                 className="w-[120%] h-[120%] object-contain rotate-12"
                 style={{
@@ -659,7 +663,7 @@ export default function HomePage() {
 
       {/* Watermark */}
       <div className="page-watermark" aria-hidden="true">
-        <img src={WATERMARK} alt="" />
+        <Image src={WATERMARK} alt="" width={1600} height={900} />
       </div>
     </>
   );

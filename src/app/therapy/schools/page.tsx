@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import Image from "next/image";
 import Link from "next/link";
 import {
     PageHero,
@@ -112,9 +113,11 @@ export default function SchoolsPage() {
                                 className="group relative overflow-hidden rounded-xl"
                                 style={{ aspectRatio: "3/4" }}
                             >
-                                <img
+                                <Image
                                     src={prog.img}
                                     alt={prog.alt}
+                                    width={1600}
+                                    height={900}
                                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
                                 <div

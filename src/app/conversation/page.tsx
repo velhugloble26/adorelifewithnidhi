@@ -2,6 +2,7 @@
 
 import { CREATE_QUOTE_CONTACTS } from "@/utils/api";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
@@ -420,9 +421,11 @@ export default function ConversationPage() {
 
             {/* Watermark */}
             <div className="page-watermark" aria-hidden="true">
-                <img
+                <Image
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTaG1PgzOhgrkF3uAHlyXW1-I5bvkvk7MQIuwTj9leoJ1AL2Cf7EARRgK784WdoEoHRCsNmwVe6drb1Lt-1BjFChyVgUC2GvcMCuq8hohqdUGgZnxaiYtPXNK024rKWbV__I5KC-MtSTBzlkT3BdexnIcX7gK3N7Y_HUkRfeT5cpl7KNUiAG36xdNrImLdblbEk0G-PQuPet7s4TrTxek2S0gATyNt88GND5yktmzFzjzoqznz3-Vjv0EktiCpabIIig"
                     alt=""
+                    width={1600}
+                    height={900}
                 />
             </div>
         </>

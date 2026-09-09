@@ -2,6 +2,7 @@
 
 import { AUTH_ME } from "@/utils/api";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -54,9 +55,11 @@ export default function Navbar() {
                 >
                     {/* Brand */}
                     <Link href="/" aria-label="Adore Life – Home">
-                        <img
+                        <Image
                             src={LOGO_URL}
                             alt="Adore Life"
+                            width={1080}
+                            height={897}
                             className="h-29 w-auto object-contain"
                             loading="eager"
                         />
