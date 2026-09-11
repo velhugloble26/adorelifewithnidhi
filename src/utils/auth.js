@@ -2,6 +2,14 @@ import jwt from "jsonwebtoken";
 import { UserRoles, Users } from "../schema/schema";
 import apiResponse from "./common/apiResponse";
 
+export function durationToSeconds(value, fallbackSeconds) {
+  const match = String(value || "").trim().match(/^(\d+(?:\.\d+)?)([smhd])$/i);
+  if (!match) return fallbackSeconds;
+
+  const units = { s: 1, m: 60, h: 60 * 60, d: 24 * 60 * 60 };
+  return Math.floor(Number(match[1]) * units[match[2].toLowerCase()]);
+}
+
 export async function getAuthenticatedUser(req) {
   const cookieToken = req.cookies?.get("accessToken")?.value;
   const authorization = req.headers.get("authorization") || (cookieToken ? "Bearer " + cookieToken : "");

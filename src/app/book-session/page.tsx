@@ -194,8 +194,8 @@ export default function BookSessionPage() {
     if (!booking.firstName || booking.firstName.trim().length < 2) nextErrors.firstName = "First name is required.";
     if (!booking.lastName || booking.lastName.trim().length < 2) nextErrors.lastName = "Last name is required.";
     if (!/^\S+@\S+\.\S+$/.test(booking.email)) nextErrors.email = "Enter a valid email address.";
-    if (!/^[0-9+\-\s()]{7,15}$/.test(booking.phone)) nextErrors.phone = "Enter a valid phone number.";
-    if (!/^[0-9+\-\s()]{7,15}$/.test(booking.whatsappNumber)) nextErrors.whatsappNumber = "Enter a valid WhatsApp number.";
+    if (!/^\d{10}$/.test(booking.phone)) nextErrors.phone = "Enter a valid 10-digit phone number.";
+    if (!/^\d{10}$/.test(booking.whatsappNumber)) nextErrors.whatsappNumber = "Enter a valid 10-digit WhatsApp number.";
     if (!booking.identifyYourGender) nextErrors.identifyYourGender = "Select your gender.";
     if (!booking.dob) nextErrors.dob = "Date of birth is required.";
     if (!booking.location.trim()) nextErrors.location = "Location is required.";
@@ -658,12 +658,12 @@ export default function BookSessionPage() {
               </div>
               <div>
                 <label className="text-label-md ui-copy block mb-2">Phone Number</label>
-                <input type="tel" className="ghost-input" value={booking.phone} onChange={(e) => updateField("phone", e.target.value)} />
+                <input type="tel" inputMode="numeric" maxLength={10} className="ghost-input" value={booking.phone} onChange={(e) => updateField("phone", e.target.value)} />
                 {errors.phone && <div className="text-sm text-red-600 mt-1">{errors.phone}</div>}
               </div>
               <div>
                 <label className="text-label-md ui-copy block mb-2">WhatsApp Number</label>
-                <input type="tel" className="ghost-input" value={booking.whatsappNumber} onChange={(e) => updateField("whatsappNumber", e.target.value)} />
+                <input type="tel" inputMode="numeric" maxLength={10} className="ghost-input" value={booking.whatsappNumber} onChange={(e) => updateField("whatsappNumber", e.target.value)} />
                 {errors.whatsappNumber && <div className="text-sm text-red-600 mt-1">{errors.whatsappNumber}</div>}
               </div>
               <div>
@@ -733,7 +733,7 @@ export default function BookSessionPage() {
              
              
               {booking.currentlyTakingAnyPsychiatricMedication && <div className="md:col-span-2"><label className="text-label-md ui-copy block mb-2">Medication Details</label><textarea className="ghost-input min-h-24" value={booking.medicationDetails} onChange={(e) => updateField("medicationDetails", e.target.value)} />{errors.medicationDetails && <div className="text-sm text-red-600 mt-1">{errors.medicationDetails}</div>}</div>}
-              <div className="md:col-span-2"><label className="text-label-md ui-copy block mb-2">Additional Notes <span className="text-slate-500">(optional)</span></label><textarea className="ghost-input min-h-24" value={booking.addNotes} onChange={(e) => updateField("addNotes", e.target.value)} /></div>
+              <div className="md:col-span-2"><label className="text-label-md ui-copy block mb-2">Additional Notes <span className="text-slate-500">(optional)</span></label><textarea className="ghost-input min-h-24" value={booking.addNotes} onChange={(e) => updateField("addNotes", e.target.value)} placeholder="Add any additional notes here..." /></div>
 
 
 

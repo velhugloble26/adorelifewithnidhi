@@ -85,11 +85,11 @@ export function validateBookingRequest(data) {
   if (!data.email || !/^\S+@\S+\.\S+$/.test(data.email)) {
     errors.email = "Enter a valid email address.";
   }
-  if (!data.phone || !/^[0-9+\-\s()]{7,15}$/.test(data.phone)) {
-    errors.phone = "Enter a valid phone number.";
+  if (!data.phone || !/^\d{10}$/.test(data.phone)) {
+    errors.phone = "Enter a valid 10-digit phone number.";
   }
-  if (!data.whatsappNumber || !/^[0-9+\-\s()]{7,15}$/.test(data.whatsappNumber)) {
-    errors.whatsappNumber = "Enter a valid WhatsApp number.";
+  if (!data.whatsappNumber || !/^\d{10}$/.test(data.whatsappNumber)) {
+    errors.whatsappNumber = "Enter a valid 10-digit WhatsApp number.";
   }
   if (!allowedGenders.includes(data.identifyYourGender)) errors.identifyYourGender = "Select a valid gender.";
   if (!data.dob || Number.isNaN(Date.parse(data.dob))) errors.dob = "Enter a valid date of birth.";

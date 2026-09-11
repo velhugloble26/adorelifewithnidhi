@@ -47,8 +47,8 @@ export default function EnquiryModal() {
   function validate() {
     const next: FormErrors = {};
     if (form.name.trim().length < 2) next.name = "Please enter your name.";
-    if (!/^[0-9+\-\s()]{7,20}$/.test(form.phone.trim()))
-      next.phone = "Enter a valid phone or WhatsApp number.";
+    if (!/^\d{10}$/.test(form.phone.trim()))
+      next.phone = "Enter a valid 10-digit phone or WhatsApp number.";
     if (!/^\S+@\S+\.\S+$/.test(form.email.trim()))
       next.email = "Enter a valid email address.";
     if (form.message.length > 5000)
@@ -154,6 +154,8 @@ export default function EnquiryModal() {
             <Field label="Phone / WhatsApp" error={errors.phone}>
               <input
                 type="tel"
+                inputMode="numeric"
+                maxLength={10}
                 className="ghost-input"
                 value={form.phone}
                 onChange={(e) => update("phone", e.target.value)}
