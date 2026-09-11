@@ -23,8 +23,7 @@ const createQuickQuoteSchema = z.object({
   phone: z
     .string()
     .trim()
-    .min(7, "Invalid phone number")
-    .max(20, "Invalid phone number")
+    .regex(/^\d{10}$/, "Enter a valid 10-digit phone number")
     .optional()
     .or(z.literal("")),
 

@@ -2,6 +2,7 @@
 
 import { AUTH_ME } from "@/utils/api";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -42,9 +43,11 @@ export default function Footer() {
             >
                 {/* Brand */}
                 <Link href="/" aria-label="Adore Life – Home">
-                    <img
+                    <Image
                         src={LOGO_URL}
                         alt="Adore Life"
+                        width={1080}
+                        height={897}
                         style={{ width: 180, height: "auto" }}
                         loading="lazy"
                     />

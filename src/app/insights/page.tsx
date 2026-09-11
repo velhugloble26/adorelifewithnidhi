@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import Image from "next/image";
 import Link from "next/link";
 
 
@@ -43,10 +44,12 @@ export default function InsightsPage() {
                         }}
                     >
                         <div className="md:w-1/2 relative h-64 md:h-auto">
-                            <img
+                            <Image
                                 className="absolute inset-0 w-full h-full object-cover"
                                 src={FEATURED_IMG}
                                 alt="A serene photograph of a woman thoughtfully writing in a journal by a window."
+                                width={1600}
+                                height={900}
                             />
                         </div>
                         <div className="p-8 md:p-12 md:w-1/2 flex flex-col justify-center">

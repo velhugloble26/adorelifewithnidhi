@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import Image from "next/image";
 import Link from "next/link";
 
 const HERO_IMG =
@@ -110,9 +111,11 @@ export default function WomensWellnessPage() {
                     <div
                         className="md:w-1/2 w-full aspect-[4/3] rounded-xl overflow-hidden surface-container"
                     >
-                        <img
+                        <Image
                             src={HERO_IMG}
                             alt="A woman in a calm, light-filled space — reflecting quiet and safety"
+                            width={1600}
+                            height={900}
                             className="w-full h-full object-cover mix-blend-multiply opacity-90"
                         />
                     </div>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -27,17 +28,19 @@ export default function CommunityPage() {
                         Understanding should be accessible to everyone.
                     </h1>
                     <div className="mb-8 max-w-md mx-auto">
-                        <img src={TITLE_IMG} alt="Because Everyone Deserves To Feel Understood" className="w-full h-auto" />
+                        <Image src={TITLE_IMG} alt="Because Everyone Deserves To Feel Understood" width={1200} height={400} className="w-full h-auto" />
                     </div>
                     <p className="text-body-lg max-w-2xl mx-auto mb-12 ui-copy">
                         We extend our practice beyond the therapy room, collaborating with communities and
                         NGOs to create safe spaces where transformative dialogue can begin.
                     </p>
                     <div className="w-full aspect-[21/9] rounded-lg overflow-hidden relative surface-container">
-                        <img
+                        <Image
                             className="w-full h-full object-cover mix-blend-multiply opacity-90"
                             src={HERO_IMG}
                             alt="A diverse group of women sitting in a loose circle in a supportive conversation."
+                            width={1600}
+                            height={900}
                         />
                     </div>
                 </section>
@@ -75,10 +78,12 @@ export default function CommunityPage() {
                                 className="p-10 rounded-lg flex flex-col gap-6 md:col-span-2 aspect-auto md:aspect-[2/1] justify-end relative overflow-hidden group surface-sand"
                             >
                                 <div className="absolute inset-0 z-0">
-                                    <img
+                                    <Image
                                         className="w-full h-full object-cover opacity-30 transition-opacity duration-700 group-hover:opacity-40"
                                         src={BENTO_IMG}
                                         alt="Collaborative exercise"
+                                        width={1600}
+                                        height={900}
                                     />
                                 </div>
                                 <div className="relative z-10">

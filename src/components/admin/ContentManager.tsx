@@ -3,6 +3,7 @@
 
 import { CREATE_BLOGS, CREATE_GALLERY, DELETE_BLOG_BY_ID, DELETE_GALLERY_BY_ID, GET_ALL_BLOGS, GET_ALL_GALLERY, UPDATE_BLOG_BY_ID, UPDATE_GALLERY_BY_ID, UPLOAD_IMAGE } from "@/utils/api";
 
+import Image from "next/image";
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { EmptyState, fieldClass, LoadingState, Modal, Notice, PageHeader, Pager, Pagination, requestApi, SearchBar } from "./AdminUI";
 
@@ -59,7 +60,7 @@ export default function ContentManager({ kind }: { kind: Kind }) {
     </SearchBar>
     {loading ? <LoadingState label={`Loading ${config.plural.toLowerCase()}…`} /> : items.length === 0 ? <EmptyState icon={kind === "blog" ? "article" : "photo_library"} title={`No ${config.plural.toLowerCase()} found`} body={search || category ? "Try changing your search or filter." : `Create the first ${config.label.toLowerCase()} to get started.`} /> : <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
       {items.map((item) => <article className="admin-card overflow-hidden" key={item._id}>
-        <div className="aspect-[16/9] surface-container"><img src={item.image} alt="" className="w-full h-full object-cover" /></div>
+        <div className="aspect-[16/9] surface-container"><Image src={item.image} alt={item.title} width={1600} height={900} className="w-full h-full object-cover" /></div>
         <div className="p-5"><div className="flex justify-between gap-3"><div className="min-w-0">{item.category && <p className="text-xs uppercase tracking-[0.15em] ui-accent mb-1">{item.category}</p>}<h2 className="text-headline-md ui-heading truncate">{item.title}</h2></div><span className="text-xs ui-muted whitespace-nowrap">{item.created_at ? new Date(item.created_at).toLocaleDateString("en-IN") : ""}</span></div>
         <p className="mt-3 text-sm ui-copy line-clamp-3">{item.excerpt || item.description}</p>
         <div className="mt-5 flex gap-2"><button className="admin-button-secondary flex-1" onClick={() => setEditing(item)}>Edit</button><button className="admin-button-danger" onClick={() => remove(item)}>Delete</button></div></div>
@@ -94,7 +95,7 @@ function ContentForm({ kind, item, onClose, onSaved }: { kind: Kind; item?: Cont
     <label className="admin-label">Title<input className={fieldClass} required maxLength={200} value={form.title} onChange={(e) => autoSlug(e.target.value)} /></label>
     {kind === "blog" && <><div className="grid sm:grid-cols-2 gap-4"><label className="admin-label">Slug<input className={fieldClass} required pattern="[a-z0-9]+(?:-[a-z0-9]+)*" value={form.slug} onChange={(e) => set("slug", e.target.value)} /></label><label className="admin-label">Category<input className={fieldClass} required maxLength={100} value={form.category} onChange={(e) => set("category", e.target.value)} /></label></div><label className="admin-label">Excerpt<textarea className={fieldClass} required maxLength={1000} rows={3} value={form.excerpt} onChange={(e) => set("excerpt", e.target.value)} /></label></>}
     {kind === "gallery" && <label className="admin-label">Description<textarea className={fieldClass} required maxLength={2000} rows={4} value={form.description} onChange={(e) => set("description", e.target.value)} /></label>}
-    <div><label className="admin-label">Image<input type="file" className={fieldClass} accept="image/jpeg,image/png,image/webp,image/gif" onChange={(e) => upload(e.target.files?.[0])} /></label><p className="mt-1 text-xs ui-muted">JPEG, PNG, WebP or GIF · maximum 8 MB</p>{uploading && <p className="mt-2 text-sm ui-accent">Uploading image…</p>}{form.image && <img src={form.image} alt="Preview" className="mt-3 h-32 w-full rounded-lg object-cover" />}<input type="hidden" required value={form.image} /></div>
+    <div><label className="admin-label">Image<input type="file" className={fieldClass} accept="image/jpeg,image/png,image/webp,image/gif" onChange={(e) => upload(e.target.files?.[0])} /></label><p className="mt-1 text-xs ui-muted">JPEG, PNG, WebP or GIF · maximum 8 MB</p>{uploading && <p className="mt-2 text-sm ui-accent">Uploading image…</p>}{form.image && <Image src={form.image} alt="Preview" width={1600} height={900} className="mt-3 h-32 w-full rounded-lg object-cover" />}<input type="hidden" required value={form.image} /></div>
     {kind === "blog" && <label className="admin-label">Content<textarea className={fieldClass} required rows={10} value={form.content} onChange={(e) => set("content", e.target.value)} /></label>}
     <div className="flex justify-end gap-3"><button type="button" className="admin-button-secondary" onClick={onClose}>Cancel</button><button className="btn-primary" disabled={busy || uploading}>{busy ? "Saving…" : "Save"}</button></div>
   </form></Modal>;

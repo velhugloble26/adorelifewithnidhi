@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -112,9 +113,11 @@ export default function TherapyPage() {
                             aspectRatio: "21 / 9",
                         }}
                     >
-                        <img
+                        <Image
                             src={THERAPY_IMG}
                             alt="A serene, light-filled therapy space"
+                            width={1600}
+                            height={900}
                             className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.15]"
                         />
                     </div>
@@ -327,9 +330,11 @@ export default function TherapyPage() {
                                 minHeight: "500px",
                             }}
                         >
-                            <img
+                            <Image
                                 src={JOURNEY_IMG}
                                 alt="Abstract representation of the healing journey"
+                                width={1600}
+                                height={900}
                                 className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.15]"
                             />
                         </div>

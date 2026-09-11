@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import Image from "next/image";
 import Link from "next/link";
 
 
@@ -63,9 +64,11 @@ export default function CorporateWellbeingPage() {
                         <div
                             className="aspect-[4/3] rounded-lg overflow-hidden surface-sand"
                         >
-                            <img
+                            <Image
                                 src={CORPORATE_IMG}
                                 alt="A serene, modern office environment with soft natural light."
+                                width={1600}
+                                height={900}
                                 className="w-full h-full object-cover"
                             />
                         </div>
