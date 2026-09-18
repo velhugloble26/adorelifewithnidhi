@@ -33,7 +33,18 @@ type Slot = {
   status: "available" | "booked" | "unavailable";
 };
 type AvailabilityDate = { date: string; label: string; slots: Slot[] };
-type BookingSession = { sessionNumber: number; date: string; time: string; sessionType: "Online" | "Offline"; location?: string; amountPaid?: number; remarks?: string; status: "scheduled" | "confirmed" | "completed" | "cancelled" | "no_show"; createdAt?: string; updatedAt?: string };
+type BookingSession = {
+  sessionNumber: number;
+  date: string;
+  time: string;
+  sessionType: "Online" | "Offline";
+  location?: string;
+  amountPaid?: number;
+  remarks?: string;
+  status: "scheduled" | "confirmed" | "completed" | "cancelled" | "no_show";
+  createdAt?: string;
+  updatedAt?: string;
+};
 type Booking = {
   bookingId: string;
   firstName: string;
@@ -96,7 +107,22 @@ const therapyGoalOptions = [
 
 function getBookingSessions(booking: Booking): BookingSession[] {
   if (booking.sessions?.length) return booking.sessions;
-  return [{ sessionNumber: 1, date: booking.selectedDate, time: booking.selectedTime, sessionType: booking.sessionType as "Online" | "Offline", location: booking.location, amountPaid: booking.paymentStatus === "paid" || booking.paymentStatus === "cash_received" ? booking.packagePrice : 0, remarks: "", status: "scheduled" }];
+  return [
+    {
+      sessionNumber: 1,
+      date: booking.selectedDate,
+      time: booking.selectedTime,
+      sessionType: booking.sessionType as "Online" | "Offline",
+      location: booking.location,
+      amountPaid:
+        booking.paymentStatus === "paid" ||
+        booking.paymentStatus === "cash_received"
+          ? booking.packagePrice
+          : 0,
+      remarks: "",
+      status: "scheduled",
+    },
+  ];
 }
 
 export default function BookingsManager() {
@@ -195,7 +221,15 @@ export default function BookingsManager() {
         eyebrow="Sessions"
         title="Bookings"
         description="Search and filter all appointments, then update status, cancel, or reschedule using the dedicated admin booking APIs."
-        action={<button type="button" className="btn-primary" onClick={() => setCreating(true)}>+ Book for Client</button>}
+        action={
+          <button
+            type="button"
+            className="btn-primary"
+            onClick={() => setCreating(true)}
+          >
+            + Book for Client
+          </button>
+        }
       />
       {success && <Notice kind="success">{success}</Notice>}
       {error && <Notice>{error}</Notice>}
@@ -427,26 +461,317 @@ type AdminCreateBookingState = {
 };
 
 const adminCreateInitial: AdminCreateBookingState = {
-  packageId: "regular", selectedDate: "", selectedTime: "", sessionType: "Offline",
-  firstName: "", lastName: "", email: "", phone: "", whatsappNumber: "", identifyYourGender: "Prefer not to say", dob: "1970-01-01",
-  location: "", occupation: "", relationShipStatus: "Other", numberOfChildren: 0, whereuknowaboutus: "Other", therapyGoals: [therapyGoalOptions[0]],
-  currentlyTakingAnyPsychiatricMedication: false, medicationDetails: "", addNotes: "", informedConsent: "", InformedConsentforTherapySessions: "", conformationOfBooking: false,
+  packageId: "regular",
+  selectedDate: "",
+  selectedTime: "",
+  sessionType: "Offline",
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  whatsappNumber: "",
+  identifyYourGender: "Prefer not to say",
+  dob: "1970-01-01",
+  location: "",
+  occupation: "",
+  relationShipStatus: "Other",
+  numberOfChildren: 0,
+  whereuknowaboutus: "Other",
+  therapyGoals: [therapyGoalOptions[0]],
+  currentlyTakingAnyPsychiatricMedication: false,
+  medicationDetails: "",
+  addNotes: "",
+  informedConsent: "",
+  InformedConsentforTherapySessions: "",
+  conformationOfBooking: false,
 };
 
-function AdminCreateBooking({ onClose, onSaved }: { onClose: () => void; onSaved: (message: string) => void }) {
+function AdminCreateBooking({
+  onClose,
+  onSaved,
+}: {
+  onClose: () => void;
+  onSaved: (message: string) => void;
+}) {
   const [form, setForm] = useState(adminCreateInitial);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const update = <K extends keyof AdminCreateBookingState>(field: K, value: AdminCreateBookingState[K]) => setForm((current) => ({ ...current, [field]: value }));
+  const update = <K extends keyof AdminCreateBookingState>(
+    field: K,
+    value: AdminCreateBookingState[K],
+  ) => setForm((current) => ({ ...current, [field]: value }));
   async function submit(event: FormEvent) {
-    event.preventDefault(); setBusy(true); setError("");
+    event.preventDefault();
+    setBusy(true);
+    setError("");
     try {
-      const payload = await requestApi(CREATE_BOOKING, { method: "POST", body: JSON.stringify({ ...form, sessionMode: form.sessionType, paymentMethod: "cash" }) });
+      const payload = await requestApi(CREATE_BOOKING, {
+        method: "POST",
+        body: JSON.stringify({
+          ...form,
+          sessionMode: form.sessionType,
+          paymentMethod: "cash",
+        }),
+      });
       onSaved(payload.message || "Booking created successfully.");
-    } catch (err) { setError(err instanceof Error ? err.message : "Unable to create booking."); }
-    finally { setBusy(false); }
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Unable to create booking.",
+      );
+    } finally {
+      setBusy(false);
+    }
   }
-  return <Modal title="Book for Client" onClose={() => !busy && onClose()}><form onSubmit={submit} className="max-h-[78vh] space-y-5 overflow-y-auto pr-2">{error && <Notice>{error}</Notice>}<div className="grid gap-4 sm:grid-cols-2"><label className="admin-label">Package<select className={fieldClass} value={form.packageId} onChange={(e) => update("packageId", e.target.value)}><option value="regular">Regular Session</option><option value="four">4 Sessions</option><option value="eight">8 Sessions</option><option value="foreign-couple-therapy-8-session">Foreign Couple Therapy · 8 Sessions</option><option value="foreign-psychologist-psychotherapist-8-session">Foreign Psychologist · 8 Sessions</option></select></label><label className="admin-label">Session type<select className={fieldClass} value={form.sessionType} onChange={(e) => update("sessionType", e.target.value as AdminCreateBookingState["sessionType"])}><option>Online</option><option>Offline</option></select></label><label className="admin-label">Date<input className={fieldClass} type="date" required value={form.selectedDate} onChange={(e) => update("selectedDate", e.target.value)} /></label><label className="admin-label">Time<input className={fieldClass} required placeholder="10:30 AM" value={form.selectedTime} onChange={(e) => update("selectedTime", e.target.value)} /></label><label className="admin-label">First name<input className={fieldClass} required value={form.firstName} onChange={(e) => update("firstName", e.target.value)} /></label><label className="admin-label">Last name<input className={fieldClass} required value={form.lastName} onChange={(e) => update("lastName", e.target.value)} /></label><label className="admin-label">Email<input className={fieldClass} type="email" required value={form.email} onChange={(e) => update("email", e.target.value)} /></label><label className="admin-label">Phone<input className={fieldClass} required value={form.phone} onChange={(e) => update("phone", e.target.value)} /></label><label className="admin-label">WhatsApp number<input className={fieldClass} required value={form.whatsappNumber} onChange={(e) => update("whatsappNumber", e.target.value)} /></label><label className="admin-label">Date of birth<input className={fieldClass} type="date" required value={form.dob} onChange={(e) => update("dob", e.target.value)} /></label><label className="admin-label">Gender<select className={fieldClass} value={form.identifyYourGender} onChange={(e) => update("identifyYourGender", e.target.value)}><option>Prefer not to say</option><option>Male</option><option>Female</option><option>Non-Binary</option><option>Transgender</option><option>Other</option></select></label><label className="admin-label">Location<input className={fieldClass} required value={form.location} onChange={(e) => update("location", e.target.value)} /></label><label className="admin-label">Relationship status<select className={fieldClass} value={form.relationShipStatus} onChange={(e) => update("relationShipStatus", e.target.value)}><option>Other</option><option>Single</option><option>In a relationship</option><option>Married</option><option>Divorced</option><option>Widowed</option></select></label><label className="admin-label">How they heard about us<select className={fieldClass} value={form.whereuknowaboutus} onChange={(e) => update("whereuknowaboutus", e.target.value)}><option>Other</option><option>Social Media</option><option>Friend/Family</option><option>Search Engine</option><option>Advertisement</option></select></label><label className="admin-label">Number of children<input className={fieldClass} type="number" min="0" value={form.numberOfChildren} onChange={(e) => update("numberOfChildren", Number(e.target.value))} /></label></div><label className="admin-label">Occupation<input className={fieldClass} value={form.occupation} onChange={(e) => update("occupation", e.target.value)} /></label><label className="admin-label">Additional notes<textarea className={fieldClass} value={form.addNotes} onChange={(e) => update("addNotes", e.target.value)} /></label><div className="space-y-2 text-sm"><strong>Therapy goal</strong>{therapyGoalOptions.slice(0, 1).map((goal) => <label key={goal} className="flex gap-2"><input type="checkbox" checked={form.therapyGoals.includes(goal)} onChange={(e) => update("therapyGoals", e.target.checked ? [goal] : [])} />{goal}</label>)}</div><label className="flex gap-2 text-sm"><input type="checkbox" checked={form.informedConsent === "I agree"} onChange={(e) => { const value = e.target.checked ? "I agree" : ""; update("informedConsent", value); update("InformedConsentforTherapySessions", value); }} /> Consent given</label><label className="flex gap-2 text-sm"><input type="checkbox" checked={form.conformationOfBooking} onChange={(e) => update("conformationOfBooking", e.target.checked)} /> Booking confirmed by client</label><div className="flex justify-end gap-3"><button type="button" className="admin-button-secondary" onClick={onClose}>Cancel</button><button className="btn-primary" disabled={busy}>{busy ? "Creating…" : "Create Booking"}</button></div></form></Modal>;
+  return (
+    <Modal title="Book for Client" onClose={() => !busy && onClose()}>
+      <form
+        onSubmit={submit}
+        className="max-h-[78vh] space-y-5 overflow-y-auto pr-2"
+      >
+        {error && <Notice>{error}</Notice>}
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="admin-label">
+            Package
+            <select
+              className={fieldClass}
+              value={form.packageId}
+              onChange={(e) => update("packageId", e.target.value)}
+            >
+              <option value="regular">Regular Session</option>
+              <option value="four">4 Sessions</option>
+              <option value="eight">8 Sessions</option>
+              <option value="foreign-couple-therapy-8-session">
+                Foreign Couple Therapy · 8 Sessions
+              </option>
+              <option value="foreign-psychologist-psychotherapist-8-session">
+                Foreign Psychologist · 8 Sessions
+              </option>
+            </select>
+          </label>
+          <label className="admin-label">
+            Session type
+            <select
+              className={fieldClass}
+              value={form.sessionType}
+              onChange={(e) =>
+                update(
+                  "sessionType",
+                  e.target.value as AdminCreateBookingState["sessionType"],
+                )
+              }
+            >
+              <option>Online</option>
+              <option>Offline</option>
+            </select>
+          </label>
+          <label className="admin-label">
+            Date
+            <input
+              className={fieldClass}
+              type="date"
+              required
+              value={form.selectedDate}
+              onChange={(e) => update("selectedDate", e.target.value)}
+            />
+          </label>
+          <label className="admin-label">
+            Time
+            <input
+              className={fieldClass}
+              required
+              placeholder="10:30 AM"
+              value={form.selectedTime}
+              onChange={(e) => update("selectedTime", e.target.value)}
+            />
+          </label>
+          <label className="admin-label">
+            First name
+            <input
+              className={fieldClass}
+              required
+              value={form.firstName}
+              onChange={(e) => update("firstName", e.target.value)}
+            />
+          </label>
+          <label className="admin-label">
+            Last name
+            <input
+              className={fieldClass}
+              required
+              value={form.lastName}
+              onChange={(e) => update("lastName", e.target.value)}
+            />
+          </label>
+          <label className="admin-label">
+            Email
+            <input
+              className={fieldClass}
+              type="email"
+              required
+              value={form.email}
+              onChange={(e) => update("email", e.target.value)}
+            />
+          </label>
+          <label className="admin-label">
+            Phone
+            <input
+              className={fieldClass}
+              required
+              value={form.phone}
+              onChange={(e) => update("phone", e.target.value)}
+            />
+          </label>
+          <label className="admin-label">
+            WhatsApp number
+            <input
+              className={fieldClass}
+              required
+              value={form.whatsappNumber}
+              onChange={(e) => update("whatsappNumber", e.target.value)}
+            />
+          </label>
+          <label className="admin-label">
+            Date of birth
+            <input
+              className={fieldClass}
+              type="date"
+              required
+              value={form.dob}
+              onChange={(e) => update("dob", e.target.value)}
+            />
+          </label>
+          <label className="admin-label">
+            Gender
+            <select
+              className={fieldClass}
+              value={form.identifyYourGender}
+              onChange={(e) => update("identifyYourGender", e.target.value)}
+            >
+              <option>Prefer not to say</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Non-Binary</option>
+              <option>Transgender</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label className="admin-label">
+            Location
+            <input
+              className={fieldClass}
+              required
+              value={form.location}
+              onChange={(e) => update("location", e.target.value)}
+            />
+          </label>
+          <label className="admin-label">
+            Relationship status
+            <select
+              className={fieldClass}
+              value={form.relationShipStatus}
+              onChange={(e) => update("relationShipStatus", e.target.value)}
+            >
+              <option>Other</option>
+              <option>Single</option>
+              <option>In a relationship</option>
+              <option>Married</option>
+              <option>Divorced</option>
+              <option>Widowed</option>
+            </select>
+          </label>
+          <label className="admin-label">
+            How they heard about us
+            <select
+              className={fieldClass}
+              value={form.whereuknowaboutus}
+              onChange={(e) => update("whereuknowaboutus", e.target.value)}
+            >
+              <option>Other</option>
+              <option>Social Media</option>
+              <option>Friend/Family</option>
+              <option>Search Engine</option>
+              <option>Advertisement</option>
+            </select>
+          </label>
+          <label className="admin-label">
+            Number of children
+            <input
+              className={fieldClass}
+              type="number"
+              min="0"
+              value={form.numberOfChildren}
+              onChange={(e) =>
+                update("numberOfChildren", Number(e.target.value))
+              }
+            />
+          </label>
+        </div>
+        <label className="admin-label">
+          Occupation
+          <input
+            className={fieldClass}
+            value={form.occupation}
+            onChange={(e) => update("occupation", e.target.value)}
+          />
+        </label>
+        <label className="admin-label">
+          Additional notes
+          <textarea
+            className={fieldClass}
+            value={form.addNotes}
+            onChange={(e) => update("addNotes", e.target.value)}
+          />
+        </label>
+        <div className="space-y-2 text-sm">
+          <strong>Therapy goal</strong>
+          {therapyGoalOptions.slice(0, 1).map((goal) => (
+            <label key={goal} className="flex gap-2">
+              <input
+                type="checkbox"
+                checked={form.therapyGoals.includes(goal)}
+                onChange={(e) =>
+                  update("therapyGoals", e.target.checked ? [goal] : [])
+                }
+              />
+              {goal}
+            </label>
+          ))}
+        </div>
+        <label className="flex gap-2 text-sm">
+          <input
+            type="checkbox"
+            checked={form.informedConsent === "I agree"}
+            onChange={(e) => {
+              const value = e.target.checked ? "I agree" : "";
+              update("informedConsent", value);
+              update("InformedConsentforTherapySessions", value);
+            }}
+          />{" "}
+          Consent given
+        </label>
+        <label className="flex gap-2 text-sm">
+          <input
+            type="checkbox"
+            checked={form.conformationOfBooking}
+            onChange={(e) => update("conformationOfBooking", e.target.checked)}
+          />{" "}
+          Booking confirmed by client
+        </label>
+        <div className="flex justify-end gap-3">
+          <button
+            type="button"
+            className="admin-button-secondary"
+            onClick={onClose}
+          >
+            Cancel
+          </button>
+          <button className="btn-primary" disabled={busy}>
+            {busy ? "Creating…" : "Create Booking"}
+          </button>
+        </div>
+      </form>
+    </Modal>
+  );
 }
 
 function escapeHtml(value: unknown) {
@@ -509,9 +834,46 @@ function BookingPreview({
       ["Payment", `${booking.paymentMethod} · ${booking.paymentStatus}`],
       ["Status", booking.bookingStatus],
     ];
-    const sessionsHtml = sessions.map((session, index) => `<div class="session-card"><h3>Session ${index + 1}</h3><p><strong>Date:</strong> ${escapeHtml(session.date)}</p><p><strong>Time:</strong> ${escapeHtml(session.time)}</p><p><strong>Session Type:</strong> ${escapeHtml(session.sessionType)}</p><p><strong>Location:</strong> ${escapeHtml(session.location || "Not provided")}</p><p><strong>Amount Paid:</strong> ₹${escapeHtml(session.amountPaid ?? 0)}</p><p><strong>Remarks:</strong> ${escapeHtml(session.remarks || "")}</p><p><strong>Status:</strong> ${escapeHtml(session.status)}</p></div>`).join("");
-    const html = `<!doctype html><html><head><meta charset="utf-8"><title>Booking ${escapeHtml(booking.bookingId)}</title><style>body{font-family:Arial,sans-serif;color:#172126;max-width:760px;margin:40px auto;padding:0 24px;position:relative}body:before{content:"Adore Life With Nidhi";position:fixed;top:45%;left:8%;z-index:10;pointer-events:none;color:#003044;opacity:.08;font-size:56px;font-weight:700;letter-spacing:4px;transform:rotate(-28deg);white-space:nowrap}h1{color:#003044;border-bottom:2px solid #003044;padding-bottom:12px}.print-section{break-before:page;page-break-before:always;break-inside:auto;page-break-inside:auto}.content{white-space:pre-wrap;line-height:1.55;border:1px solid #d9e0e2;padding:16px;background:rgba(255,255,255,.94)}.content h2{color:#003044;margin:0 0 14px;break-after:avoid;page-break-after:avoid}.content-body{white-space:pre-wrap}.session-card{break-inside:avoid;page-break-inside:avoid;border:1px solid #d9e0e2;padding:14px;margin:12px 0;background:rgba(255,255,255,.94)}.session-card h3{color:#003044;margin:0 0 10px}table{width:100%;border-collapse:collapse;background:rgba(255,255,255,.94)}td{border-bottom:1px solid #d9e0e2;padding:10px 6px;vertical-align:top}td:first-child{font-weight:700;width:30%;color:#506356}@media print{body{margin:0}body:before{position:fixed}}</style></head><body><h1>Booking Details</h1><table>${rows.map(([label, value]) => `<tr><td>${escapeHtml(label)}</td><td>${escapeHtml(value)}</td></tr>`).join("")}</table><section class="print-section"><div class="content"><h2>Therapy Sessions</h2>${sessionsHtml}</div></section><section class="print-section"><div class="content"><h2>Meet your therapist</h2><div class="content-body">${escapeHtml(therapistBody)}</div></div></section><section class="print-section"><div class="content"><h2>Informed Consent</h2><div class="content-body">${escapeHtml(consentBody)}</div></div></section><section class="print-section"><div class="content"><h2>User Agreement</h2><div class="content-body">${escapeHtml(booking.informedConsent || booking.InformedConsentforTherapySessions || "Not provided")}</div></div></section></body></html>`;
-    const url = URL.createObjectURL(new Blob([html], { type: "text/html;charset=utf-8" }));
+    const sessionsHtml = sessions
+      .map(
+        (session, index) =>
+          `<div class="session-card"><h3>Session ${index + 1}</h3><p><strong>Date:</strong> ${escapeHtml(session.date)}</p><p><strong>Time:</strong> ${escapeHtml(session.time)}</p><p><strong>Session Type:</strong> ${escapeHtml(session.sessionType)}</p><p><strong>Location:</strong> ${escapeHtml(session.location || "Not provided")}</p><p><strong>Amount Paid:</strong> ₹${escapeHtml(session.amountPaid ?? 0)}</p><p><strong>Remarks:</strong> ${escapeHtml(session.remarks || "")}</p><p><strong>Status:</strong> ${escapeHtml(session.status)}</p></div>`,
+      )
+      .join("");
+    const clientDetailsHtml = Array.from(
+      { length: Math.ceil(rows.length / 2) },
+      (_, rowIndex) => rows.slice(rowIndex * 2, rowIndex * 2 + 2),
+    )
+      .map(
+        (row) =>
+          `<tr>${row
+            .map(
+              ([label, value]) =>
+                `<th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td>`,
+            )
+            .join("")}${row.length === 1 ? '<th class="empty"></th><td class="empty"></td>' : ""}</tr>`,
+      )
+      .join("");
+    const logoUrl = `${window.location.origin}/website_logo.png`;
+    const headerUrl = `${window.location.origin}/${encodeURIComponent("Screenshot from 2026-09-18 22-44-39.png")}`;
+    const html = `<!doctype html><html><head><meta charset="utf-8"><title>Booking ${escapeHtml(booking.bookingId)}</title><style>:root{--sand:#f7f3ee;--sand-deep:#e9dcc6;--sage:#59766c;--sage-soft:#a9b9af;--ink:#2d2d2d;--line:#d9d1c1}*{box-sizing:border-box}body{font-family:Arial,sans-serif;color:var(--ink);max-width:820px;margin:0 auto;padding:14px 0 40px;background:#f3f1ee;position:relative}body:before{content:"";position:fixed;inset:10px 0 auto 0;height:154px;background:radial-gradient(circle at 15% 35%, rgba(232,205,175,.82), rgba(232,205,175,0) 28%), radial-gradient(circle at 78% 44%, rgba(168,178,170,.45), rgba(168,178,170,0) 28%), linear-gradient(90deg, rgba(255,255,255,.35), rgba(255,255,255,.2));pointer-events:none;z-index:0}.brand-header{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:180px;padding:28px 26px 22px;background:var(--sand);border:1px solid var(--line);border-bottom:4px solid #d8c4a8;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04)}.brand-header:before,.brand-header:after{content:"";position:absolute;border-radius:50%;pointer-events:none}.brand-header:before{width:500px;height:240px;left:-120px;top:-40px;background:rgba(225,200,160,.23)}.brand-header:after{width:420px;height:220px;right:-70px;bottom:-60px;background:rgba(150,170,160,.22)}.brand-left,.brand-right{position:relative;z-index:1}.brand-left{display:flex;align-items:center;justify-content:center}.brand-logo{max-width:260px;height:auto;display:block}.brand-right{display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:0 18px}.brand-right:before{content:"";position:absolute;left:-18px;top:18px;bottom:18px;width:1px;background:rgba(88,97,89,.55)}.brand-wordmark{font-family:Georgia,'Times New Roman',serif;font-size:92px;line-height:.92;letter-spacing:-4px;color:#2e2e2d;font-weight:500;margin:0}.brand-right .brand-title{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:58px;line-height:1.1;color:var(--sage);font-weight:500;margin:0 0 8px}.brand-subtitle{font-size:18px;line-height:1.4;color:#4d4d4d;font-weight:500;letter-spacing:.02em;white-space:nowrap}.brand-tagline{font-size:18px;line-height:1.25;color:var(--sage);letter-spacing:.22em;text-transform:uppercase;font-weight:700;margin-top:8px}.print-section{break-before:page;page-break-before:always;break-inside:auto;page-break-inside:auto}.content{white-space:pre-wrap;line-height:1.55;border:1px solid #d9e0e2;padding:16px;background:rgba(255,255,255,.94)}.content h2{color:#003044;margin:0 0 14px;break-after:avoid;page-break-after:avoid}.content-body{white-space:pre-wrap}.session-card{break-inside:avoid;page-break-inside:avoid;border:1px solid #d9e0e2;padding:14px;margin:12px 0;background:rgba(255,255,255,.94)}.session-card h3{color:#003044;margin:0 0 10px}table{width:100%;border-collapse:collapse;background:rgba(255,255,255,.94)}td{border-bottom:1px solid #d9e0e2;padding:10px 6px;vertical-align:top}td:first-child{font-weight:700;width:30%;color:#506356}@media print{body{margin:0;padding:20px 0 24px}body:before{opacity:.9}.brand-header{margin:0 20px 20px}}@media (max-width:760px){body{padding:16px 0 30px}.brand-header{grid-template-columns:1fr;gap:12px;padding:24px 18px}.brand-right:before{display:none}.brand-wordmark{font-size:60px}.brand-right .brand-title{font-size:42px}.brand-subtitle,.brand-tagline{white-space:normal;letter-spacing:.1em;text-align:center}}</style></head><body><header class="brand-header"><div class="brand-left"><img class="brand-logo" src="${logoUrl}" alt="Adore Life" /></div><div class="brand-right"><div class="brand-title">Client Details</div><div class="brand-tagline">Therapy • Healing • Growth</div></div></header><table>${rows.map(([label, value]) => `<tr><td>${escapeHtml(label)}</td><td>${escapeHtml(value)}</td></tr>`).join("")}</table><section class="print-section"><div class="content"><h2>Therapy Sessions</h2>${sessionsHtml}</div></section><section class="print-section"><div class="content"><h2>Meet your therapist</h2><div class="content-body">${escapeHtml(therapistBody)}</div></div></section><section class="print-section"><div class="content"><h2>Informed Consent</h2><div class="content-body">${escapeHtml(consentBody)}</div></div></section><section class="print-section"><div class="content"><h2>User Agreement</h2><div class="content-body">${escapeHtml(booking.informedConsent || booking.InformedConsentforTherapySessions || "Not provided")}</div></div></section></body></html>`;
+    const printableHtml = html
+      .replace(
+        "</style>",
+        `.brand-header{display:block;width:100%;min-height:0;padding:0;aspect-ratio:1264/383;overflow:hidden;background:#f7f4ee;border:0;border-bottom:1px solid #7d8a72;box-shadow:none}.brand-header:before,.brand-header:after{display:none}.brand-header img{display:block;width:100%;max-width:none;height:auto}.client-details,.print-section{position:relative;z-index:1}.content,.content-body,.session-card,.session-card p,.session-card strong{color:var(--ink);opacity:1}.client-details{table-layout:fixed;border:1px solid #aeb7ad}.client-details th,.client-details td{border:1px solid #cbd1ca;padding:10px 12px;text-align:left;vertical-align:top}.client-details th{width:18%;background:#f1f3ef;color:#506356;font-size:12px;text-transform:uppercase;letter-spacing:.04em}.client-details td{width:32%;overflow-wrap:anywhere}.client-details .empty{background:#fafafa}@media print{@page{margin:12mm}.brand-header{margin:0 0 20px}.client-details th,.client-details td{padding:8px 10px}}</style>`,
+      )
+      .replace(
+        /<header class="brand-header">.*?<\/header>/,
+        `<header class="brand-header"><img src="${headerUrl}" alt="Adore Life — Client Details" /></header>`,
+      )
+      .replace(
+        /<table>.*?<\/table>/,
+        `<table class="client-details">${clientDetailsHtml}</table>`,
+      );
+
+    const url = URL.createObjectURL(
+      new Blob([printableHtml], { type: "text/html;charset=utf-8" }),
+    );
     const printWindow = window.open(url, "_blank");
     if (!printWindow) {
       URL.revokeObjectURL(url);
@@ -574,9 +936,14 @@ function BookingPreview({
           {detail("Status", booking.bookingStatus)}
         </div>
         <section className="space-y-3">
-          <h3 className="text-lg font-semibold text-[#003044]">Therapy Sessions</h3>
+          <h3 className="text-lg font-semibold text-[#003044]">
+            Therapy Sessions
+          </h3>
           {sessions.map((session, index) => (
-            <div key={`${session.sessionNumber}-${index}`} className="rounded-lg border border-slate-200 p-4">
+            <div
+              key={`${session.sessionNumber}-${index}`}
+              className="rounded-lg border border-slate-200 p-4"
+            >
               <strong>Session {index + 1}</strong>
               <dl className="mt-2 grid gap-2 text-sm sm:grid-cols-2">
                 {detail("Date", session.date)}
@@ -650,7 +1017,12 @@ function BookingDetailsForm({
       const payload = await requestApi(ADMIN_BOOKING(booking.bookingId), {
         method: "PATCH",
         body: JSON.stringify({
-          ...Object.fromEntries(Object.entries(formValues).filter(([, value]) => value !== undefined && value !== "" && value !== "sessions")),
+          ...Object.fromEntries(
+            Object.entries(formValues).filter(
+              ([, value]) =>
+                value !== undefined && value !== "" && value !== "sessions",
+            ),
+          ),
           sessions: form.sessions,
         }),
       });
@@ -813,29 +1185,207 @@ function BookingDetailsForm({
             <button
               type="button"
               className="admin-button-secondary"
-              onClick={() => setForm((current) => ({
-                ...current,
-                sessions: [...(current.sessions || []), { sessionNumber: (current.sessions?.length || 0) + 1, date: "", time: "", sessionType: "Online", location: "", amountPaid: 0, remarks: "", status: "scheduled" }],
-              }))}
+              onClick={() =>
+                setForm((current) => ({
+                  ...current,
+                  sessions: [
+                    ...(current.sessions || []),
+                    {
+                      sessionNumber: (current.sessions?.length || 0) + 1,
+                      date: "",
+                      time: "",
+                      sessionType: "Online",
+                      location: "",
+                      amountPaid: 0,
+                      remarks: "",
+                      status: "scheduled",
+                    },
+                  ],
+                }))
+              }
             >
               + Add More Session
             </button>
           </div>
           <div className="space-y-4">
             {(form.sessions || []).map((session, index) => (
-              <div key={`${session.sessionNumber}-${index}`} className="rounded-lg border border-slate-200 p-4">
+              <div
+                key={`${session.sessionNumber}-${index}`}
+                className="rounded-lg border border-slate-200 p-4"
+              >
                 <div className="mb-3 flex items-center justify-between">
                   <strong className="text-sm">Session {index + 1}</strong>
-                  {index > 0 && <button type="button" className="admin-button-quiet" onClick={() => setForm((current) => ({ ...current, sessions: (current.sessions || []).filter((_, sessionIndex) => sessionIndex !== index).map((item, sessionIndex) => ({ ...item, sessionNumber: sessionIndex + 1 })) }))}>Remove</button>}
+                  {index > 0 && (
+                    <button
+                      type="button"
+                      className="admin-button-quiet"
+                      onClick={() =>
+                        setForm((current) => ({
+                          ...current,
+                          sessions: (current.sessions || [])
+                            .filter((_, sessionIndex) => sessionIndex !== index)
+                            .map((item, sessionIndex) => ({
+                              ...item,
+                              sessionNumber: sessionIndex + 1,
+                            })),
+                        }))
+                      }
+                    >
+                      Remove
+                    </button>
+                  )}
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <label className="admin-label">Date<input className={fieldClass} type="date" value={session.date} onChange={(e) => setForm((current) => ({ ...current, sessions: (current.sessions || []).map((item, sessionIndex) => sessionIndex === index ? { ...item, date: e.target.value } : item) }))} /></label>
-                  <label className="admin-label">Time<input className={fieldClass} value={session.time} placeholder="10:30 AM" onChange={(e) => setForm((current) => ({ ...current, sessions: (current.sessions || []).map((item, sessionIndex) => sessionIndex === index ? { ...item, time: e.target.value } : item) }))} /></label>
-                  <label className="admin-label">Session type<select className={fieldClass} value={session.sessionType} onChange={(e) => setForm((current) => ({ ...current, sessions: (current.sessions || []).map((item, sessionIndex) => sessionIndex === index ? { ...item, sessionType: e.target.value as BookingSession["sessionType"] } : item) }))}><option>Online</option><option>Offline</option></select></label>
-                  <label className="admin-label">Location<input className={fieldClass} value={session.location || ""} onChange={(e) => setForm((current) => ({ ...current, sessions: (current.sessions || []).map((item, sessionIndex) => sessionIndex === index ? { ...item, location: e.target.value } : item) }))} /></label>
-                  <label className="admin-label">Amount paid<input className={fieldClass} type="number" min="0" value={session.amountPaid ?? 0} onChange={(e) => setForm((current) => ({ ...current, sessions: (current.sessions || []).map((item, sessionIndex) => sessionIndex === index ? { ...item, amountPaid: Number(e.target.value) } : item) }))} /></label>
-                  <label className="admin-label">Remarks<input className={fieldClass} value={session.remarks || ""} onChange={(e) => setForm((current) => ({ ...current, sessions: (current.sessions || []).map((item, sessionIndex) => sessionIndex === index ? { ...item, remarks: e.target.value } : item) }))} /></label>
-                  <label className="admin-label">Status<select className={fieldClass} value={session.status} onChange={(e) => setForm((current) => ({ ...current, sessions: (current.sessions || []).map((item, sessionIndex) => sessionIndex === index ? { ...item, status: e.target.value as BookingSession["status"] } : item) }))}><option value="scheduled">Scheduled</option><option value="confirmed">Confirmed</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option><option value="no_show">No show</option></select></label>
+                  <label className="admin-label">
+                    Date
+                    <input
+                      className={fieldClass}
+                      type="date"
+                      value={session.date}
+                      onChange={(e) =>
+                        setForm((current) => ({
+                          ...current,
+                          sessions: (current.sessions || []).map(
+                            (item, sessionIndex) =>
+                              sessionIndex === index
+                                ? { ...item, date: e.target.value }
+                                : item,
+                          ),
+                        }))
+                      }
+                    />
+                  </label>
+                  <label className="admin-label">
+                    Time
+                    <input
+                      className={fieldClass}
+                      value={session.time}
+                      placeholder="10:30 AM"
+                      onChange={(e) =>
+                        setForm((current) => ({
+                          ...current,
+                          sessions: (current.sessions || []).map(
+                            (item, sessionIndex) =>
+                              sessionIndex === index
+                                ? { ...item, time: e.target.value }
+                                : item,
+                          ),
+                        }))
+                      }
+                    />
+                  </label>
+                  <label className="admin-label">
+                    Session type
+                    <select
+                      className={fieldClass}
+                      value={session.sessionType}
+                      onChange={(e) =>
+                        setForm((current) => ({
+                          ...current,
+                          sessions: (current.sessions || []).map(
+                            (item, sessionIndex) =>
+                              sessionIndex === index
+                                ? {
+                                    ...item,
+                                    sessionType: e.target
+                                      .value as BookingSession["sessionType"],
+                                  }
+                                : item,
+                          ),
+                        }))
+                      }
+                    >
+                      <option>Online</option>
+                      <option>Offline</option>
+                    </select>
+                  </label>
+                  <label className="admin-label">
+                    Location
+                    <input
+                      className={fieldClass}
+                      value={session.location || ""}
+                      onChange={(e) =>
+                        setForm((current) => ({
+                          ...current,
+                          sessions: (current.sessions || []).map(
+                            (item, sessionIndex) =>
+                              sessionIndex === index
+                                ? { ...item, location: e.target.value }
+                                : item,
+                          ),
+                        }))
+                      }
+                    />
+                  </label>
+                  <label className="admin-label">
+                    Amount paid
+                    <input
+                      className={fieldClass}
+                      type="number"
+                      min="0"
+                      value={session.amountPaid ?? 0}
+                      onChange={(e) =>
+                        setForm((current) => ({
+                          ...current,
+                          sessions: (current.sessions || []).map(
+                            (item, sessionIndex) =>
+                              sessionIndex === index
+                                ? {
+                                    ...item,
+                                    amountPaid: Number(e.target.value),
+                                  }
+                                : item,
+                          ),
+                        }))
+                      }
+                    />
+                  </label>
+                  <label className="admin-label">
+                    Remarks
+                    <input
+                      className={fieldClass}
+                      value={session.remarks || ""}
+                      onChange={(e) =>
+                        setForm((current) => ({
+                          ...current,
+                          sessions: (current.sessions || []).map(
+                            (item, sessionIndex) =>
+                              sessionIndex === index
+                                ? { ...item, remarks: e.target.value }
+                                : item,
+                          ),
+                        }))
+                      }
+                    />
+                  </label>
+                  <label className="admin-label">
+                    Status
+                    <select
+                      className={fieldClass}
+                      value={session.status}
+                      onChange={(e) =>
+                        setForm((current) => ({
+                          ...current,
+                          sessions: (current.sessions || []).map(
+                            (item, sessionIndex) =>
+                              sessionIndex === index
+                                ? {
+                                    ...item,
+                                    status: e.target
+                                      .value as BookingSession["status"],
+                                  }
+                                : item,
+                          ),
+                        }))
+                      }
+                    >
+                      <option value="scheduled">Scheduled</option>
+                      <option value="confirmed">Confirmed</option>
+                      <option value="completed">Completed</option>
+                      <option value="cancelled">Cancelled</option>
+                      <option value="no_show">No show</option>
+                    </select>
+                  </label>
                 </div>
               </div>
             ))}

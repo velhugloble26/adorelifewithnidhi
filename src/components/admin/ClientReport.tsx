@@ -290,7 +290,7 @@ export default function ClientReport() {
               <tr>
                 <th>Date</th>
                 <th>Name of the Client</th>
-                {/* <th>Session No</th> */}
+                <th>Session No</th>
                 <th>Amount Paid</th>
                 <th>Online/Offline</th>
                 <th>Remarks</th>
@@ -308,7 +308,7 @@ export default function ClientReport() {
                     <strong>{row.clientName}</strong>
                     <span>{row.bookingId}</span>
                   </td>
-                  <td>
+                  <td> 
                     {/* Session {row.sessionNumber} */}
                     <span>{row.status}</span>
                   </td>

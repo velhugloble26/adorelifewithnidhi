@@ -2,20 +2,34 @@
 
 import { AUTH_ME, LOGOUT } from "@/utils/api";
 
+import {
+  CalendarDays,
+  ClipboardList,
+  FileText,
+  House,
+  ImageIcon,
+  Inbox,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  ShieldCheck,
+  Users,
+  X,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const links = [
-  ["/admin", "dashboard", "Overview"],
-  ["/admin/users", "people", "Users"],
-  ["/admin/bookings", "calendar_month", "Bookings"],
-  ["/admin/client-report", "assignment", "Client Report"],
-  ["/admin/blogs", "article", "Blogs"],
-  ["/admin/gallery", "photo_library", "Gallery"],
-  ["/admin/enquiries", "inbox", "Enquiries"],
-  ["/admin/access", "admin_panel_settings", "Access control"],
+  { href: "/admin", icon: LayoutDashboard, label: "Overview" },
+  { href: "/admin/users", icon: Users, label: "Users" },
+  { href: "/admin/bookings", icon: CalendarDays, label: "Bookings" },
+  { href: "/admin/client-report", icon: ClipboardList, label: "Client Report" },
+  { href: "/admin/blogs", icon: FileText, label: "Blogs" },
+  { href: "/admin/gallery", icon: ImageIcon, label: "Gallery" },
+  { href: "/admin/enquiries", icon: Inbox, label: "Enquiries" },
+  { href: "/admin/access", icon: ShieldCheck, label: "Access control" },
 ] as const;
 
 type User = { name?: string; email?: string; role?: string };
@@ -63,21 +77,23 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       <header className="lg:hidden sticky top-0 z-40 glass-nav border-b border-surface px-4 py-3 flex items-center justify-between">
         <Link href="/admin" className="text-headline-md ui-heading">Adore Life Admin</Link>
         <button className="admin-icon-button" onClick={() => setMenuOpen((value) => !value)} aria-label="Toggle admin navigation">
-          <span className="material-symbols-outlined">{menuOpen ? "close" : "menu"}</span>
+          {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </header>
 
       <aside className={`${menuOpen ? "block" : "hidden"} lg:flex fixed lg:sticky inset-x-0 top-[65px] lg:top-0 z-30 h-[calc(100vh-65px)] lg:h-screen flex-col surface-lowest border-r border-surface p-5`}>
         <Link href="/" className="hidden lg:flex items-center gap-3 px-2 py-4" aria-label="Return to website">
+          <House className="h-5 w-5" />
           <Image src="/website_logo.png" alt="Adore Life" width={1080} height={897} className="h-12 w-auto" />
         </Link>
         <div className="hidden lg:block px-3 mb-5 text-label-md uppercase tracking-[0.18em] ui-muted">Admin workspace</div>
         <nav className="space-y-1" aria-label="Admin navigation">
-          {links.map(([href, icon, label]) => {
+          {links.map(({ href, icon: Icon, label }) => {
             const active = href === "/admin" ? pathname === href : pathname.startsWith(href);
             return (
               <Link key={href} href={href} onClick={() => setMenuOpen(false)} className={`admin-nav-link ${active ? "admin-nav-link-active" : ""}`}>
-                <span className="material-symbols-outlined">{icon}</span><span>{label}</span>
+                <Icon size={18} />
+                <span>{label}</span>
               </Link>
             );
           })}
@@ -87,7 +103,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           <p className="text-sm ui-muted truncate">{user?.email}</p>
           <div className="mt-4 flex gap-3">
             <Link href="/" className="admin-button-secondary flex-1">View site</Link>
-            <button onClick={logout} className="admin-icon-button" title="Sign out"><span className="material-symbols-outlined">logout</span></button>
+            <button onClick={logout} className="admin-icon-button" title="Sign out"><LogOut size={18} /></button>
           </div>
         </div>
       </aside>
