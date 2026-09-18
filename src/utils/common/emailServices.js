@@ -30,13 +30,25 @@ class EmailService {
       throw new Error("Recipient email is required");
     }
 
+    const configuredFrom =
+      process.env.SMTP_FROM ||
+      process.env.SMTP_VERIFY_EMAIL ||
+      process.env.SMTP_USER;
+    const from = configuredFrom?.includes("<")
+      ? configuredFrom
+      : `"Adore Life with Nidhi" <${configuredFrom}>`;
+
     const info = await transporter.sendMail({
-      from: `"Adore Life with Nidhi" <${process.env.SMTP_VERIFY_EMAIL}>`,
+      from,
       to,
       subject,
       text,
       html,
     });
+
+    if (info.rejected?.length) {
+      throw new Error(`SMTP rejected recipient: ${info.rejected.join(", ")}`);
+    }
 
     return {
       messageId: info.messageId,
