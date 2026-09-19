@@ -4,6 +4,7 @@ import { AUTH_ME } from "@/utils/api";
 
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const LOGO_URL = "/website_logo.png";
@@ -31,10 +32,14 @@ export default function Footer() {
 
     return (
         <footer
-            className="w-full"
+            className="w-full relative overflow-hidden"
             style={{ backgroundColor: "var(--color-surface-container-low)" }}
         >
-            <div
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="flex flex-col md:flex-row justify-between items-center gap-8 py-16 max-w-[1440px] mx-auto"
                 style={{
                     paddingLeft: "clamp(1rem, 10vw, 9rem)",
@@ -48,6 +53,7 @@ export default function Footer() {
                         alt="Adore Life"
                         width={1080}
                         height={897}
+                        className="transition-transform duration-500 hover:scale-105 hover:opacity-80"
                         style={{ width: 180, height: "auto" }}
                         loading="lazy"
                     />
@@ -62,16 +68,16 @@ export default function Footer() {
                 </p>
 
                 {/* Footer action */}
-                <div className="flex items-center justify-center">
+                <motion.div whileHover={{ y: -2 }} className="flex items-center justify-center">
                     <Link
                         href={bookingHref}
-                        className="btn-primary"
+                        className="btn-primary hover:shadow-lg transition-shadow duration-300"
                         style={{ paddingTop: "0.7rem", paddingBottom: "0.7rem" }}
                     >
                         My Bookings
                     </Link>
-                </div>
-            </div>
+                </motion.div>
+            </motion.div>
         </footer>
     );
 }

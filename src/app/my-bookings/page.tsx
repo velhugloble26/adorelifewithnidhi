@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
+import { MotionReveal } from "@/components/ui/Motion";
 
 function MyBookingsContent() {
   const router = useRouter();
@@ -47,7 +48,7 @@ function MyBookingsContent() {
   return (
     <>
       <Navbar />
-      <main className="section-pad py-12 md:py-16 max-w-6xl mx-auto">
+      <main className="section-pad py-12 md:py-16 max-w-6xl mx-auto"><MotionReveal>
         <div className="mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
             <p className="text-label-md uppercase tracking-[0.2em] ui-accent">Account</p>
@@ -94,7 +95,7 @@ function MyBookingsContent() {
             ))}
           </div>
         )}
-      </main>
+      </MotionReveal></main>
     </>
   );
 }

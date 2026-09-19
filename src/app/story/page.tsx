@@ -3,6 +3,7 @@
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
+import { MotionSection, MotionReveal, MotionText, MotionStagger, MotionItem } from "@/components/ui/Motion";
 const NIDHI_STORY_IMG = "/beforebecametherapist.png";
 
 
@@ -60,28 +61,31 @@ export default function StoryPage() {
 
             <main>
                 {/* ── Hero ── */}
-                <section
+                <MotionSection
                     className="section-pad py-16 md:py-32 max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center gap-6 lg:gap-16"
                 >
                     {/* Text */}
                     <div className="w-full lg:w-1/2 flex flex-col items-start">
-                        <h1
-                            className="text-display-lg mb-6 max-w-2xl ui-heading"
-                        >
-                            "Before I became a therapist, I was always curious about people."
-                        </h1>
-                        <div
+                        <MotionText>
+                            <h1
+                                className="text-display-lg mb-6 max-w-2xl ui-heading"
+                            >
+                                "Before I became a therapist, I was always curious about people."
+                            </h1>
+                        </MotionText>
+                        <MotionStagger
+                            amount={0.2}
                             className="space-y-4 max-w-lg text-body-lg ui-copy"
                         >
-                            <p>What makes us think the way we do?</p>
-                            <p>Why do some experiences stay with us long after they have passed?</p>
-                            <p>Why do we sometimes repeat patterns we consciously want to change?</p>
-                            <p>And why can two people experience the same situation so differently?</p>
-                            <p className="pt-4">
+                            <MotionItem><p>What makes us think the way we do?</p></MotionItem>
+                            <MotionItem><p>Why do some experiences stay with us long after they have passed?</p></MotionItem>
+                            <MotionItem><p>Why do we sometimes repeat patterns we consciously want to change?</p></MotionItem>
+                            <MotionItem><p>And why can two people experience the same situation so differently?</p></MotionItem>
+                            <MotionItem><p className="pt-4">
                                 These questions gradually became more than a curiosity for me. They became
                                 the foundation of my work.
-                            </p>
-                        </div>
+                            </p></MotionItem>
+                        </MotionStagger>
                     </div>
 
                     {/* Image */}
@@ -109,10 +113,10 @@ export default function StoryPage() {
                         </div>
 
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Why Adore Life Exists ── */}
-                <section
+                <MotionSection
                     className="section-pad py-16 md:py-32 surface-sand"
                 >
                     <div className="max-w-[800px] mx-auto flex flex-col items-center text-center">
@@ -152,10 +156,10 @@ export default function StoryPage() {
                             </blockquote>
                         </div>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── The Belief ── */}
-                <section
+                <MotionSection
                     className="section-pad py-32 md:py-48 flex items-center justify-center relative overflow-hidden surface-ivory"
                 >
                     <div
@@ -198,10 +202,10 @@ export default function StoryPage() {
                             </p>
                         </div>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Philosophy & Approach ── */}
-                <section
+                <MotionSection
                     className="section-pad py-16 md:py-32 surface-container"
                 >
                     <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-16 items-center">
@@ -257,10 +261,10 @@ export default function StoryPage() {
                             </p>
                         </div>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Values ── */}
-                <section
+                <MotionSection
                     className="section-pad py-16 md:py-32 surface-ivory"
                 >
                     <div className="max-w-[1440px] mx-auto">
@@ -280,19 +284,11 @@ export default function StoryPage() {
                             {values.map((v) => (
                                 <div
                                     key={v.num}
-                                    className={`p-8 md:p-10 border flex flex-col justify-between group transition-colors duration-300${v.wide ? " lg:col-span-2" : ""}`}
+                                    className={`p-8 md:p-10 border flex flex-col justify-between group transition-colors duration-300 hover:border-[var(--color-soft-teal)]${v.wide ? " lg:col-span-2" : ""}`}
                                     style={{
                                         backgroundColor: "var(--color-surface)",
                                         borderColor: "var(--color-surface-dim)",
                                     }}
-                                    onMouseEnter={(e) =>
-                                    ((e.currentTarget as HTMLDivElement).style.borderColor =
-                                        "var(--color-soft-teal)")
-                                    }
-                                    onMouseLeave={(e) =>
-                                    ((e.currentTarget as HTMLDivElement).style.borderColor =
-                                        "var(--color-surface-dim)")
-                                    }
                                 >
                                     <span
                                         className="text-label-md mb-6 block opacity-50 group-hover:opacity-100 transition-opacity ui-muted"
@@ -323,10 +319,10 @@ export default function StoryPage() {
                             ))}
                         </div>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Qualifications ── */}
-                <section
+                <MotionSection
                     className="section-pad py-16 border-t"
                     style={{
                         backgroundColor: "var(--color-surface-container-low)",
@@ -385,10 +381,10 @@ export default function StoryPage() {
                             ))}
                         </div>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Closing CTA ── */}
-                <section
+                <MotionSection
                     className="section-pad py-32 text-center flex flex-col items-center"
                     style={{
                         background: `linear-gradient(180deg, var(--color-warm-ivory) 0%, var(--color-muted-sand) 100%)`,
@@ -412,14 +408,15 @@ export default function StoryPage() {
                     >
                         Begin a Conversation
                     </Link>
-                    <p
-                        className="text-body-md italic mt-6 ui-muted"
-                    >
-                        Whenever you're ready, we'll begin wherever you are.
-                    </p>
-                </section>
+                    <MotionReveal delay={0.4}>
+                        <p
+                            className="text-body-md italic mt-6 ui-muted"
+                        >
+                            Whenever you're ready, we'll begin wherever you are.
+                        </p>
+                    </MotionReveal>
+                </MotionSection>
             </main>
-
         </>
     );
 }

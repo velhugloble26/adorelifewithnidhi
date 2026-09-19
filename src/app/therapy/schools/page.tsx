@@ -10,6 +10,7 @@ import {
     CtaSection,
     PullQuote,
 } from "@/components/ui";
+import { MotionSection, MotionStagger, MotionItem, MotionReveal } from "@/components/ui/Motion";
 
 const pressures = [
     {
@@ -81,7 +82,7 @@ export default function SchoolsPage() {
                 </PageHero>
 
                 {/* ── Pressures ── */}
-                <section
+                <MotionSection
                     className="w-full py-16 md:py-24 surface-lowest"
                 >
                     <div className="section-pad w-full max-w-[1440px] mx-auto">
@@ -89,51 +90,53 @@ export default function SchoolsPage() {
                             title="The World Young People Are Navigating"
                             body="Growing up has never been simple, but today's youth face an unprecedented landscape of emotional, social, and digital pressures."
                         />
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <MotionStagger amount={0.2} className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {pressures.map((p) => (
-                                <IconCard
-                                    key={p.title}
-                                    icon={p.icon}
-                                    iconColor={p.iconColor}
-                                    title={p.title}
-                                    body={p.body}
-                                />
+                                <MotionItem key={p.title}>
+                                    <IconCard
+                                        icon={p.icon}
+                                        iconColor={p.iconColor}
+                                        title={p.title}
+                                        body={p.body}
+                                    />
+                                </MotionItem>
                             ))}
-                        </div>
+                        </MotionStagger>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Programmes Bento Grid ── */}
-                <section className="section-pad w-full max-w-[1440px] mx-auto py-16 md:py-28">
+                <MotionSection className="section-pad w-full max-w-[1440px] mx-auto py-16 md:py-28">
                     <SectionHeading title="Our Programmes" centered />
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <MotionStagger amount={0.2} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         {programmes.map((prog) => (
-                            <div
-                                key={prog.title}
-                                className="group relative overflow-hidden rounded-xl"
-                                style={{ aspectRatio: "3/4" }}
-                            >
-                                <Image
-                                    src={prog.img}
-                                    alt={prog.alt}
-                                    width={1600}
-                                    height={900}
-                                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                />
+                            <MotionItem key={prog.title}>
                                 <div
-                                    className="absolute inset-0"
-                                    style={{ background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 50%, transparent 100%)" }}
-                                />
-                                <div className="absolute bottom-0 left-0 p-6 w-full">
-                                    <h3 className="text-headline-sm text-white mb-1">{prog.title}</h3>
-                                    <p className="text-body-sm text-white/80 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                                        {prog.subtitle}
-                                    </p>
+                                    className="group relative overflow-hidden rounded-xl h-full transition-transform duration-500 hover:shadow-lg hover:-translate-y-1 block"
+                                    style={{ aspectRatio: "3/4" }}
+                                >
+                                    <Image
+                                        src={prog.img}
+                                        alt={prog.alt}
+                                        width={1600}
+                                        height={900}
+                                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    />
+                                    <div
+                                        className="absolute inset-0"
+                                        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 50%, transparent 100%)" }}
+                                    />
+                                    <div className="absolute bottom-0 left-0 p-6 w-full">
+                                        <h3 className="text-headline-sm text-white mb-1 transition-colors group-hover:text-[var(--color-soft-teal)]">{prog.title}</h3>
+                                        <p className="text-body-sm text-white/80 opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                                            {prog.subtitle}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
+                            </MotionItem>
                         ))}
-                    </div>
-                </section>
+                    </MotionStagger>
+                </MotionSection>
 
                 {/* ── Pull Quote ── */}
                 <PullQuote quote="&ldquo;Emotional literacy is part of learning how to live.&rdquo;" />

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
+import { MotionSection } from "@/components/ui/Motion";
 
 const initialForm = {
     name: "",
@@ -71,7 +72,7 @@ export default function ConversationPage() {
 
             <main className="flex-grow flex flex-col items-center w-full max-w-[1440px] mx-auto mt-[-40px]">
                 {/* ── Hero ── */}
-                <section className="section-pad pt-16 md:pt-32 pb-16 flex flex-col text-center max-w-4xl mx-auto w-full">
+                <MotionSection className="section-pad pt-16 md:pt-32 pb-16 flex flex-col text-center max-w-4xl mx-auto w-full">
                     <h1 className="text-display-lg mb-8 ui-heading">
                         You don't have to know where to begin.
                     </h1>
@@ -80,10 +81,10 @@ export default function ConversationPage() {
                         <p>You may know exactly what you want help with. Or you may simply know that something doesn't feel right anymore.</p>
                         <p>You don't need to have all the answers before reaching out. We can begin by understanding where you are.</p>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Form + Details ── */}
-                <section className="section-pad pb-16 md:pb-32 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start w-full">
+                <MotionSection className="section-pad pb-16 md:pb-32 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start w-full">
                     {/* Form card */}
                     <div
                         className="col-span-1 lg:col-span-7 rounded-xl p-6 md:p-12 relative overflow-hidden group surface-base"
@@ -395,10 +396,10 @@ export default function ConversationPage() {
                             </div>
                         </div>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Closing ── */}
-                <section className="section-pad py-16 md:py-32 flex flex-col items-center text-center w-full">
+                <MotionSection className="section-pad py-16 md:py-32 flex flex-col items-center text-center w-full">
                     <h2
                         className="text-headline-lg mb-6 max-w-2xl ui-heading"
                     >
@@ -415,7 +416,7 @@ export default function ConversationPage() {
                             "We'll begin wherever you are."
                         </p>
                     </div>
-                </section>
+                </MotionSection>
             </main>
 
 

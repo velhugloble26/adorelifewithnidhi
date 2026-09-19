@@ -1,3 +1,5 @@
+import { MotionLift } from "./Motion";
+
 interface IconCardProps {
     icon: string;
     title: string;
@@ -16,7 +18,7 @@ export default function IconCard({
     const isIconPill = variant === "icon-pill";
 
     return (
-        <div
+        <MotionLift
             className="p-8 rounded-xl flex flex-col gap-4 border transition-colors duration-300"
             style={{
                 backgroundColor: "var(--color-surface-container-low)",
@@ -58,6 +60,6 @@ export default function IconCard({
                     {body}
                 </p>
             )}
-        </div>
+        </MotionLift>
     );
 }

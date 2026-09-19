@@ -5,6 +5,8 @@ import { BOOKING_AVAILABILITY, BOOKING_PACKAGES, CREATE_BOOKING, CREATE_BOOKING_
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { MotionReveal } from "@/components/ui/Motion";
+import { MotionSection } from "@/components/ui/Motion";
 import { THERAPY_CONTENT } from "@/constants/therapyContent";
 
 const steps = [
@@ -365,9 +367,9 @@ export default function BookSessionPage() {
     return (
       <>
         <Navbar />
-        <main className="section-pad py-20 text-center">
+        <main className="section-pad py-20 text-center"><MotionReveal>
           <p className="text-body-lg ui-copy">Loading your booking options…</p>
-        </main>
+        </MotionReveal></main>
       </>
     );
   }
@@ -376,7 +378,7 @@ export default function BookSessionPage() {
     <>
       <Navbar />
 
-      <main className="section-pad py-5 md:py-10 max-w-16xl mx-auto">
+      <main className="section-pad py-5 md:py-10 max-w-16xl mx-auto"><MotionReveal>
         <div className="mb-8">
           <p className="text-label-md uppercase tracking-[0.2em] ui-accent">Book your session</p>
           <h1 className="text-display-lg ui-heading mt-2">Book a Session</h1>
@@ -631,14 +633,14 @@ export default function BookSessionPage() {
         {currentStep === 2 && (
           <div className="rounded-2xl border border-slate-200 bg-white p-6 md:p-8">
             <h2 className="text-headline-md ui-heading mb-6">Booking Form</h2>
-            <section className="mb-8 rounded-xl border border-slate-200 bg-[#f8fbfb] p-5 md:p-6" aria-labelledby="therapist-introduction">
+            <MotionSection className="mb-8 rounded-xl border border-slate-200 bg-[#f8fbfb] p-5 md:p-6" aria-labelledby="therapist-introduction">
               <div className="mb-5">
                 <p className="text-label-md uppercase tracking-[0.12em] text-[#506356]">Meet your therapist</p>
                 <h3 id="therapist-introduction" className="mt-1 text-headline-lg ui-heading">Therapy by Nidhi</h3>
               </div>
 
               <div className="whitespace-pre-line text-body-md ui-copy">{THERAPY_CONTENT.meetYourTherapist}</div>
-            </section>
+            </MotionSection>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
               <div>
@@ -839,7 +841,7 @@ export default function BookSessionPage() {
             </div>
           </div>
         )}
-      </main>
+      </MotionReveal></main>
     </>
   );
 }

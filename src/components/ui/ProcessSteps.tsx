@@ -1,3 +1,5 @@
+import { MotionItem, MotionStagger } from "./Motion";
+
 interface NumberedStep {
     label: string;
     body: string;
@@ -9,9 +11,9 @@ interface ProcessStepsProps {
 
 export default function ProcessSteps({ steps }: ProcessStepsProps) {
     return (
-        <div className="flex flex-col gap-0">
+        <MotionStagger className="flex flex-col gap-0">
             {steps.map((step, i) => (
-                <div
+                <MotionItem
                     key={step.label}
                     className="flex flex-col md:flex-row gap-6 md:gap-12 items-start py-8 border-t"
                     style={{
@@ -39,8 +41,8 @@ export default function ProcessSteps({ steps }: ProcessStepsProps) {
                             {step.body}
                         </p>
                     </div>
-                </div>
+                </MotionItem>
             ))}
-        </div>
+        </MotionStagger>
     );
 }
