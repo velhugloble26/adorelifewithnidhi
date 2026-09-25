@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import LandingNavbarRevealLink from "@/components/LandingNavbarRevealLink";
 import { MotionSection, MotionText, MotionReveal, MotionStagger, MotionItem } from "@/components/ui/Motion";
 
 export const metadata: Metadata = {
@@ -29,9 +27,14 @@ const progression = [
 export default function Page() {
   return (
     <>
-      <Navbar />
       <main>
-        <MotionSection className="section-pad mx-auto flex min-h-screen max-w-[1200px] flex-col items-center justify-center mt-[-40px] py-12 text-center">
+        <MotionSection
+          className="section-pad flex min-h-screen w-full flex-col items-center justify-center bg-cover bg-center bg-no-repeat py-12 text-center"
+          style={{
+            backgroundImage:
+              `linear-gradient(rgba(250, 246, 238, 0.78), rgba(250, 246, 238, 0.78)), url("/heroSection.png")`,
+          }}
+        >
           <MotionText>
             <h1 className="text-display-lg mb-8 max-w-2xl text-primary">Everyone deserves to be understood.</h1>
           </MotionText>
@@ -47,7 +50,7 @@ export default function Page() {
             <MotionItem><p>Because understanding isn&apos;t the end of healing. It is where healing begins.</p></MotionItem>
           </MotionStagger>
           <MotionReveal delay={0.6} direction="up" className="flex w-full  items-center gap-6 md:w-auto">
-            <LandingNavbarRevealLink href="/conversation" className="btn-primary w-full md:w-auto hover:-translate-y-1 hover:shadow-lg transition-all duration-300">Begin To Adore Life</LandingNavbarRevealLink>
+            <Link href="/conversation" className="btn-primary w-full md:w-auto hover:-translate-y-1 hover:shadow-lg transition-all duration-300">Begin To Adore Life</Link>
             <Link href="/home"  className="text-label-md w-full sm:w-auto text-center pb-0.5 border-b border-[var(--color-primary)] text-[var(--color-primary)] hover:text-[var(--color-soft-teal)] hover:border-[var(--color-soft-teal)] transition-colors duration-300 px-8 py-4">I&apos;m just explor More</Link>
             {/* <Link href="#recognition" className="text-label-md group inline-flex items-center uppercase tracking-widest text-stone-grey transition-colors hover:text-soft-teal">
               I&apos;m just exploring

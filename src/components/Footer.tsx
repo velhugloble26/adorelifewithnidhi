@@ -59,13 +59,16 @@ export default function Footer() {
                     />
                 </Link>
 
-                {/* Copyright */}
-                <p
-                    className="text-body-md text-center md:text-right"
-                    style={{ color: "var(--color-on-surface)" }}
-                >
-                    © Adore Life. Because everyone deserves to be understood.
-                </p>
+                {/* Footer navigation */}
+                <div className="flex flex-col items-center gap-4 text-center">
+                    <nav className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3" aria-label="Footer navigation">
+                        <Link className="nav-link" href="/blog">Blog</Link>
+                        <Link className="nav-link" href="/gallery">Gallery</Link>
+                    </nav>
+                    <p className="text-body-md" style={{ color: "var(--color-on-surface)" }}>
+                        © Adore Life. Because everyone deserves to be understood.
+                    </p>
+                </div>
 
                 {/* Footer action */}
                 <motion.div whileHover={{ y: -2 }} className="flex items-center justify-center">
