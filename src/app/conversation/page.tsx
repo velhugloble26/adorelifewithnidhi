@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
-import { MotionSection } from "@/components/ui/Motion";
+import { MotionSection, MotionText, MotionReveal, MotionStagger, MotionItem } from "@/components/ui/Motion";
 
 const initialForm = {
     name: "",
@@ -73,20 +73,20 @@ export default function ConversationPage() {
             <main className="flex-grow flex flex-col items-center w-full max-w-[1440px] mx-auto mt-[-40px]">
                 {/* ── Hero ── */}
                 <MotionSection className="section-pad pt-16 md:pt-32 pb-16 flex flex-col text-center max-w-4xl mx-auto w-full">
-                    <h1 className="text-display-lg mb-8 ui-heading">
+                    <MotionText><h1 className="text-display-lg mb-8 ui-heading">
                         You don't have to know where to begin.
-                    </h1>
-                    <div className="space-y-4 text-body-lg ui-copy">
-                        <p>You may have spent days, months or even years trying to understand what you're experiencing.</p>
-                        <p>You may know exactly what you want help with. Or you may simply know that something doesn't feel right anymore.</p>
-                        <p>You don't need to have all the answers before reaching out. We can begin by understanding where you are.</p>
-                    </div>
+                    </h1></MotionText>
+                    <MotionStagger amount={0.2} className="space-y-4 text-body-lg ui-copy">
+                        <MotionItem><p>You may have spent days, months or even years trying to understand what you're experiencing.</p></MotionItem>
+                        <MotionItem><p>You may know exactly what you want help with. Or you may simply know that something doesn't feel right anymore.</p></MotionItem>
+                        <MotionItem><p>You don't need to have all the answers before reaching out. We can begin by understanding where you are.</p></MotionItem>
+                    </MotionStagger>
                 </MotionSection>
 
                 {/* ── Form + Details ── */}
                 <MotionSection className="section-pad pb-16 md:pb-32 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start w-full">
                     {/* Form card */}
-                    <div
+                    <MotionReveal direction="right"
                         className="col-span-1 lg:col-span-7 rounded-xl p-6 md:p-12 relative overflow-hidden group surface-base"
                     >
                         {/* Decorative blob */}
@@ -95,19 +95,21 @@ export default function ConversationPage() {
                             style={{ backgroundColor: "color-mix(in srgb, var(--color-soft-teal) 5%, transparent)" }}
                         />
 
-                        <div className="mb-10 relative z-10">
-                            <h2 className="text-headline-lg mb-3 ui-heading">
+                        <MotionStagger className="mb-10 relative z-10">
+                            <MotionItem><h2 className="text-headline-lg mb-3 ui-heading">
                                 Tell us a little about yourself.
-                            </h2>
-                            <p className="text-body-md ui-copy">
+                            </h2></MotionItem>
+                            <MotionItem><p className="text-body-md ui-copy">
                                 You don't need to tell us your entire story here. Just share enough for us to understand how we can begin.
-                            </p>
-                        </div>
+                            </p></MotionItem>
+                        </MotionStagger>
 
-                        <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
+                        <form onSubmit={handleSubmit} className="relative z-10">
+                            <MotionStagger className="space-y-8">
                             {error && <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
                             {success && <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{success}</div>}
 
+                            <MotionItem>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {/* Name */}
                                 <div className="flex flex-col relative group/field">
@@ -148,8 +150,10 @@ export default function ConversationPage() {
                                     />
                                 </div>
                             </div>
+                            </MotionItem>
 
                             {/* Email */}
+                            <MotionItem>
                             <div className="flex flex-col relative group/field">
                                 <label
                                     htmlFor="email"
@@ -168,7 +172,9 @@ export default function ConversationPage() {
                                     className="ghost-input"
                                 />
                             </div>
+                            </MotionItem>
 
+                            <MotionItem>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {/* Session type */}
                                 <div className="flex flex-col relative group/field">
@@ -227,8 +233,10 @@ export default function ConversationPage() {
                                     </div>
                                 </div>
                             </div>
+                            </MotionItem>
 
                             {/* Message */}
+                            <MotionItem>
                             <div className="flex flex-col relative group/field pt-4">
                                 <label
                                     htmlFor="message"
@@ -251,7 +259,9 @@ export default function ConversationPage() {
                                     className="ghost-input resize-none"
                                 />
                             </div>
+                            </MotionItem>
 
+                            <MotionItem>
                             <div className="pt-6">
                                 <button
                                     type="submit"
@@ -268,25 +278,29 @@ export default function ConversationPage() {
                                     {loading ? "Sending..." : "Request a Session"}
                                 </button>
                             </div>
+                            </MotionItem>
+                            </MotionStagger>
                         </form>
-                    </div>
+                    </MotionReveal>
 
                     {/* Right column */}
-                    <div className="col-span-1 lg:col-span-5 flex flex-col gap-6">
+                    <MotionReveal direction="left" delay={0.15} className="col-span-1 lg:col-span-5 flex flex-col gap-6">
                         {/* Contact card */}
                         <div
                             className="rounded-xl p-8 lg:p-10 surface-sand"
                         >
-                            <h3 className="text-headline-md mb-6 ui-heading">
+                            <MotionStagger>
+                            <MotionItem><h3 className="text-headline-md mb-6 ui-heading">
                                 Contact
-                            </h3>
+                            </h3></MotionItem>
                             <ul className="space-y-6">
                                 {[
                                     { icon: "call", label: "Phone", value: "+91 73044 90951", href: "tel:+917304490951" },
                                     { icon: "forum", label: "WhatsApp", value: "+91 73044 90951", href: "https://wa.me/917304490951" },
                                     { icon: "mail", label: "Email", value: "adorelifewithnidhi@gmail.com", href: "mailto:adorelifewithnidhi@gmail.com" },
                                 ].map((item) => (
-                                    <li key={item.label} className="flex items-start gap-4">
+                                    <li key={item.label}>
+                                        <MotionItem className="flex items-start gap-4">
                                         <span className="material-symbols-outlined mt-1 ui-accent">
                                             {item.icon}
                                         </span>
@@ -309,19 +323,22 @@ export default function ConversationPage() {
                                                 {item.value}
                                             </a>
                                         </div>
+                                        </MotionItem>
                                     </li>
                                 ))}
                             </ul>
+                            </MotionStagger>
                         </div>
 
                         {/* Clinic card */}
                         <div
                             className="rounded-xl p-8 lg:p-10 surface-sand"
                         >
-                            <h3 className="text-headline-md mb-6 ui-heading">
+                            <MotionStagger>
+                            <MotionItem><h3 className="text-headline-md mb-6 ui-heading">
                                 Visit
-                            </h3>
-                            <div className="flex items-start gap-4">
+                            </h3></MotionItem>
+                            <MotionItem className="flex items-start gap-4">
                                 <span className="material-symbols-outlined mt-1 ui-accent">
                                     location_on
                                 </span>
@@ -349,9 +366,9 @@ export default function ConversationPage() {
                                         <span className="material-symbols-outlined text-sm">arrow_forward</span>
                                     </a>
                                 </div>
-                            </div>
+                            </MotionItem>
 
-                            <div className="mt-6 overflow-hidden rounded-xl border border-white/60 bg-white/40">
+                            <MotionItem className="mt-6 overflow-hidden rounded-xl border border-white/60 bg-white/40">
                                 <iframe
                                     title="Somani Health Clinic location map"
                                     src="https://www.google.com/maps?q=Somani%20Health%20Clinic%20Anand%20Nagar%20Ghodbunder%20Road%20Thane%20West%20400615&output=embed"
@@ -360,10 +377,12 @@ export default function ConversationPage() {
                                     allowFullScreen
                                     referrerPolicy="no-referrer-when-downgrade"
                                 />
-                            </div>
+                            </MotionItem>
+                            </MotionStagger>
                         </div>
 
                         {/* Emergency note */}
+                        <MotionReveal delay={0.3}>
                         <div
                             className="rounded-xl p-6 border flex items-start gap-4"
                             style={{
@@ -395,26 +414,25 @@ export default function ConversationPage() {
                                 </p>
                             </div>
                         </div>
-                    </div>
+                        </MotionReveal>
+                    </MotionReveal>
                 </MotionSection>
 
                 {/* ── Closing ── */}
                 <MotionSection className="section-pad py-16 md:py-32 flex flex-col items-center text-center w-full">
-                    <h2
+                    <MotionText><h2
                         className="text-headline-lg mb-6 max-w-2xl ui-heading"
                     >
                         You don't have to know exactly what to say.
-                    </h2>
-                    <div
-                        className="text-body-lg max-w-xl mx-auto space-y-4 ui-copy"
-                    >
-                        <p>Sometimes the first message is as simple as: "I think I need some help."</p>
-                        <p>That's enough. We'll begin from there.</p>
-                        <p
-                            className="pt-4 text-quote-intense italic ui-heading"
-                        >
-                            "We'll begin wherever you are."
-                        </p>
+                    </h2></MotionText>
+                    <div className="text-body-lg max-w-xl mx-auto space-y-4 ui-copy">
+                        <MotionStagger amount={0.25} className="space-y-4">
+                            <MotionItem><p>Sometimes the first message is as simple as: "I think I need some help."</p></MotionItem>
+                            <MotionItem><p>That's enough. We'll begin from there.</p></MotionItem>
+                        </MotionStagger>
+                        <MotionReveal delay={0.3}>
+                            <p className="pt-4 text-quote-intense italic ui-heading">"We'll begin wherever you are."</p>
+                        </MotionReveal>
                     </div>
                 </MotionSection>
             </main>

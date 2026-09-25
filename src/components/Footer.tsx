@@ -42,8 +42,8 @@ export default function Footer() {
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="flex flex-col md:flex-row justify-between items-center gap-8 py-16 max-w-[1440px] mx-auto"
                 style={{
-                    paddingLeft: "clamp(1rem, 10vw, 9rem)",
-                    paddingRight: "clamp(1rem, 10vw, 9rem)",
+                    paddingLeft: "clamp(1rem, 4vw, 4rem)",
+                    paddingRight: "clamp(1rem, 4vw, 4rem)",
                 }}
             >
                 {/* Brand */}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import LandingNavbarRevealLink from "@/components/LandingNavbarRevealLink";
 import { MotionSection, MotionText, MotionReveal, MotionStagger, MotionItem } from "@/components/ui/Motion";
 
 export const metadata: Metadata = {
@@ -45,12 +46,13 @@ export default function Page() {
             <MotionItem><p>Sometimes, we simply need a space where our story can be heard without judgement, where what we&apos;re feeling makes sense, and where we can begin to understand ourselves a little better.</p></MotionItem>
             <MotionItem><p>Because understanding isn&apos;t the end of healing. It is where healing begins.</p></MotionItem>
           </MotionStagger>
-          <MotionReveal delay={0.6} direction="up" className="flex w-full flex-col items-center gap-6 md:w-auto">
-            <Link href="/conversation" className="btn-primary w-full md:w-auto hover:-translate-y-1 hover:shadow-lg transition-all duration-300">Begin To Adore Life</Link>
-            <Link href="#recognition" className="text-label-md group inline-flex items-center uppercase tracking-widest text-stone-grey transition-colors hover:text-soft-teal">
+          <MotionReveal delay={0.6} direction="up" className="flex w-full  items-center gap-6 md:w-auto">
+            <LandingNavbarRevealLink href="/conversation" className="btn-primary w-full md:w-auto hover:-translate-y-1 hover:shadow-lg transition-all duration-300">Begin To Adore Life</LandingNavbarRevealLink>
+            <Link href="/home"  className="text-label-md w-full sm:w-auto text-center pb-0.5 border-b border-[var(--color-primary)] text-[var(--color-primary)] hover:text-[var(--color-soft-teal)] hover:border-[var(--color-soft-teal)] transition-colors duration-300 px-8 py-4">I&apos;m just explor More</Link>
+            {/* <Link href="#recognition" className="text-label-md group inline-flex items-center uppercase tracking-widest text-stone-grey transition-colors hover:text-soft-teal">
               I&apos;m just exploring
               <span className="material-symbols-outlined ml-2 transition-transform group-hover:translate-y-1">arrow_downward</span>
-            </Link>
+            </Link> */}
           </MotionReveal>
         </MotionSection>
 
@@ -137,7 +139,7 @@ export default function Page() {
           </MotionReveal>
         </MotionSection>
 
-        <MotionSection className="section-pad flex min-h-[1200px] flex-col items-center justify-center bg-surface-dim py-32 text-center">
+        <MotionSection className="section-pad flex min-h-[200px] flex-col items-center justify-center bg-surface-dim py-12 text-center">
           <MotionText>
             <h2 className="text-display-lg mb-6 text-primary">You don&apos;t have to know where to begin.</h2>
           </MotionText>
@@ -145,6 +147,7 @@ export default function Page() {
             <p className="text-body-lg mb-12 text-on-surface-variant">You only need to take the first step.</p>
           </MotionReveal>
           <MotionReveal delay={0.4} direction="up">
+            <Link href="/home"  className="text-label-md w-full sm:w-auto text-center mr-5 pb-0.5 border-b border-[var(--color-primary)] text-[var(--color-primary)] hover:text-[var(--color-soft-teal)] hover:border-[var(--color-soft-teal)] transition-colors duration-300 px-8 py-4">I&apos;m just explor More</Link>
             <Link href="/conversation" className="btn-primary mb-4 px-10 py-5 hover:-translate-y-1 hover:shadow-xl transition-all duration-300">Begin To Adore Life</Link>
           </MotionReveal>
           <MotionReveal delay={0.6}>

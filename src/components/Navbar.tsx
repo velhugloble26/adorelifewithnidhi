@@ -6,15 +6,39 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { NAVBAR_REVEAL_EVENT, NAVBAR_REVEAL_STORAGE_KEY } from "@/components/LandingNavbarRevealLink";
 
 const LOGO_URL = "/website_logo.png";
 
 export default function Navbar() {
     const pathname = usePathname();
+    const prefersReducedMotion = useReducedMotion();
+    const isLandingPage = pathname === "/";
+    const [landingNavRevealed, setLandingNavRevealed] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const navLinksVisible = !isLandingPage || landingNavRevealed;
+
+    useEffect(() => {
+        if (!isLandingPage) return;
+
+        const revealNavbar = () => setLandingNavRevealed(true);
+        let storedAsRevealed = false;
+        try {
+            storedAsRevealed = window.sessionStorage.getItem(NAVBAR_REVEAL_STORAGE_KEY) === "true";
+        } catch {
+            // Session storage can be unavailable in strict privacy modes.
+        }
+        const frame = storedAsRevealed ? window.requestAnimationFrame(revealNavbar) : null;
+
+        window.addEventListener(NAVBAR_REVEAL_EVENT, revealNavbar);
+        return () => {
+            if (frame !== null) window.cancelAnimationFrame(frame);
+            window.removeEventListener(NAVBAR_REVEAL_EVENT, revealNavbar);
+        };
+    }, [isLandingPage]);
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 12);
@@ -72,7 +96,16 @@ export default function Navbar() {
                     </Link>
 
                     {/* Desktop nav */}
-                    <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
+                    <motion.nav
+                        initial={false}
+                        animate={{ opacity: navLinksVisible ? 1 : 0, y: navLinksVisible ? 0 : -10 }}
+                        transition={{ duration: prefersReducedMotion ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] }}
+                        className="hidden md:flex items-center gap-8"
+                        aria-label="Main navigation"
+                        aria-hidden={!navLinksVisible}
+                        inert={!navLinksVisible ? true : undefined}
+                        style={{ pointerEvents: navLinksVisible ? "auto" : "none" }}
+                    >
                         {navLinks.map(({ href, label }) => {
                             const active =
                                 href === "/home"
@@ -97,7 +130,7 @@ export default function Navbar() {
                                 </Link>
                             );
                         })}
-                    </nav>
+                    </motion.nav>
 
                     {/* CTA + mobile toggle */}
                     <div className="flex items-center gap-4">
@@ -108,8 +141,17 @@ export default function Navbar() {
                         >
                             Begin
                         </Link>
+                        <motion.div
+                            className="md:hidden"
+                            initial={false}
+                            animate={{ opacity: navLinksVisible ? 1 : 0, scale: navLinksVisible ? 1 : 0.92 }}
+                            transition={{ duration: prefersReducedMotion ? 0 : 0.35 }}
+                            style={{ pointerEvents: navLinksVisible ? "auto" : "none" }}
+                            aria-hidden={!navLinksVisible}
+                            inert={!navLinksVisible ? true : undefined}
+                        >
                         <button
-                            className="md:hidden transition-transform duration-300 hover:scale-110 active:scale-95"
+                            className="transition-transform duration-300 hover:scale-110 active:scale-95"
                             aria-label="Open menu"
                             onClick={() => setMobileOpen((o) => !o)}
                             style={{ color: "var(--color-primary)" }}
@@ -118,12 +160,13 @@ export default function Navbar() {
                                 {mobileOpen ? "close" : "menu"}
                             </span>
                         </button>
+                        </motion.div>
                     </div>
                 </div>
 
                 {/* Mobile drawer */}
                 <AnimatePresence>
-                    {mobileOpen && (
+                    {mobileOpen && navLinksVisible && (
                         <motion.nav
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
