@@ -4,6 +4,7 @@ import { RESET_PASSWORD } from "@/utils/api";
 
 import Link from "next/link";
 import { FormEvent, Suspense, useState } from "react";
+import { MotionReveal } from "@/components/ui/Motion";
 import { useSearchParams } from "next/navigation";
 
 function ResetPasswordForm() {
@@ -41,7 +42,7 @@ function ResetPasswordForm() {
     finally { setLoading(false); }
   }
 
-  return <main className="auth-page"><div className="auth-card">
+  return <main className="auth-page"><MotionReveal className="auth-card">
     <h1 className="auth-title">Create new password</h1>
     <p className="auth-subtitle">Choose a secure password with at least 8 characters.</p>
     {!success && <form onSubmit={submit} className="auth-form" noValidate>
@@ -53,7 +54,7 @@ function ResetPasswordForm() {
     {success && <div role="status" className="auth-inline-message success">{success}</div>}
     {!token && !success && <div role="alert" className="auth-inline-message">This reset link is missing its security token. Request a new link.</div>}
     <div className="auth-footer"><Link href={success ? "/login" : "/forgot-password"} className="auth-link">{success ? "Continue to login" : "Request a new link"}</Link></div>
-  </div></main>;
+  </MotionReveal></main>;
 }
 
 export default function ResetPasswordPage() {

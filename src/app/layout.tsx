@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import EnquiryModal from "@/components/EnquiryModal";
 import FloatingContactActions from "@/components/FloatingContactActions";
+import SmoothScrollProvider from "@/components/ui/SmoothScrollProvider";
 
 const ebGaramond = EB_Garamond({
   subsets: ["latin"],
@@ -67,11 +68,12 @@ export default function RootLayout({
           color: "var(--color-on-background)",
         }}
       >
-        {children}
-        {/* <EnquiryModal /> */}
-        <Footer />
-
-        <FloatingContactActions />
+        <SmoothScrollProvider>
+          {children}
+          {/* <EnquiryModal /> */}
+          <Footer />
+          <FloatingContactActions />
+        </SmoothScrollProvider>
       </body>
     </html>
   );

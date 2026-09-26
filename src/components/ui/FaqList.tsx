@@ -1,3 +1,5 @@
+import { MotionItem, MotionStagger } from "./Motion";
+
 interface FaqItem {
     q: string;
     a: string;
@@ -9,9 +11,9 @@ interface FaqListProps {
 
 export default function FaqList({ items }: FaqListProps) {
     return (
-        <div className="max-w-3xl mx-auto space-y-6">
+        <MotionStagger className="max-w-3xl mx-auto space-y-6">
             {items.map((item) => (
-                <div
+                <MotionItem
                     key={item.q}
                     className="pb-4 border-b"
                     style={{
@@ -31,8 +33,8 @@ export default function FaqList({ items }: FaqListProps) {
                     >
                         {item.a}
                     </p>
-                </div>
+                </MotionItem>
             ))}
-        </div>
+        </MotionStagger>
     );
 }

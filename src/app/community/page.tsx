@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import { MotionSection } from "@/components/ui/Motion";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -23,7 +24,7 @@ export default function CommunityPage() {
 
             <main className="flex-grow flex flex-col items-center w-full">
                 {/* ── Hero Section ── */}
-                <section className="section-pad w-full max-w-[1440px] pt-16 md:pt-32 pb-16 flex flex-col items-center text-center">
+                <MotionSection className="section-pad w-full max-w-[1440px] pt-16 md:pt-32 pb-16 flex flex-col items-center text-center">
                     <h1 className="text-display-lg max-w-4xl mx-auto leading-tight mb-8 ui-heading">
                         Understanding should be accessible to everyone.
                     </h1>
@@ -43,10 +44,10 @@ export default function CommunityPage() {
                             height={900}
                         />
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Why Community Matters ── */}
-                <section className="section-pad w-full max-w-[1440px] py-16 md:py-32 flex flex-col md:flex-row gap-16 items-start">
+                <MotionSection className="section-pad w-full max-w-[1440px] py-16 md:py-32 flex flex-col md:flex-row gap-16 items-start">
                     <div className="md:w-1/3 md:sticky md:top-32">
                         <h2 className="text-headline-lg mb-4 ui-heading">Why Community Matters</h2>
                         <div className="w-12 h-px mb-6 divider-muted"></div>
@@ -64,10 +65,10 @@ export default function CommunityPage() {
                             self-inquiry within the safety of a shared experience.
                         </p>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Programme Themes (Bento Grid) ── */}
-                <section className="w-full py-16 md:py-32 surface-ivory">
+                <MotionSection className="w-full py-16 md:py-32 surface-ivory">
                     <div className="section-pad max-w-[1440px] mx-auto">
                         <h2 className="text-headline-lg text-center mb-16 ui-heading">
                             Our Programme Themes
@@ -143,10 +144,10 @@ export default function CommunityPage() {
                             </div>
                         </div>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Who We Work With ── */}
-                <section className="section-pad w-full max-w-[1440px] mx-auto py-16 md:py-32 flex flex-col items-center">
+                <MotionSection className="section-pad w-full max-w-[1440px] mx-auto py-16 md:py-32 flex flex-col items-center">
                     <h2 className="text-headline-lg mb-12 ui-heading">Who We Work With</h2>
                     <div className="flex flex-wrap justify-center gap-4 max-w-3xl">
                         {[
@@ -169,10 +170,10 @@ export default function CommunityPage() {
                             </div>
                         ))}
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Partnership CTA ── */}
-                <section
+                <MotionSection
                     className="section-pad w-full py-16 md:py-32 flex flex-col items-center text-center surface-secondary"
                 >
                     <div className="max-w-2xl">
@@ -193,7 +194,7 @@ export default function CommunityPage() {
                             Explore a Partnership
                         </Link>
                     </div>
-                </section>
+                </MotionSection>
             </main>
 
         </>

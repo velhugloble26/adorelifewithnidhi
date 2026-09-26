@@ -4,6 +4,7 @@ import { FORGET_PASSWORD } from "@/utils/api";
 
 import Link from "next/link";
 import { FormEvent, useState } from "react";
+import { MotionReveal } from "@/components/ui/Motion";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -40,7 +41,7 @@ export default function ForgotPasswordPage() {
     } finally { setLoading(false); }
   }
 
-  return <main className="auth-page"><div className="auth-card">
+  return <main className="auth-page"><MotionReveal className="auth-card">
     <h1 className="auth-title">Forgot password?</h1>
     <p className="auth-subtitle">Enter your account email and we’ll send you a secure link to choose a new password.</p>
     <form onSubmit={submit} className="auth-form" noValidate>
@@ -49,5 +50,5 @@ export default function ForgotPasswordPage() {
       <button type="submit" className="auth-button" disabled={loading || Boolean(success)}>{loading ? "Sending reset link…" : success ? "Reset link sent" : "Send reset link"}</button>
     </form>
     <div className="auth-footer"><Link href="/login" className="auth-link">Back to login</Link></div>
-  </div></main>;
+  </MotionReveal></main>;
 }

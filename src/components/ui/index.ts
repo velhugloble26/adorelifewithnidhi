@@ -5,3 +5,4 @@ export { default as CtaSection } from "./CtaSection";
 export { default as ProcessSteps } from "./ProcessSteps";
 export { default as FaqList } from "./FaqList";
 export { default as PullQuote } from "./PullQuote";
+export { MotionItem, MotionLift, MotionReveal, MotionSection, MotionStagger, MotionText } from "./Motion";

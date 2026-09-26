@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { MotionItem, MotionStagger } from "./Motion";
 
 interface PageHeroProps {
     eyebrow?: string;
@@ -16,37 +17,45 @@ export default function PageHero({
     centered = false,
 }: PageHeroProps) {
     return (
-        <section
+        <MotionStagger
             className={`section-pad w-full max-w-[1440px] mx-auto py-20 md:py-32 flex flex-col gap-6 ${centered ? "items-center text-center" : "items-start"
                 }`}
         >
             {eyebrow && (
+                <MotionItem>
                 <p
                     className="text-label-md uppercase tracking-widest"
                     style={{ color: "var(--color-soft-teal)" }}
                 >
                     {eyebrow}
                 </p>
+                </MotionItem>
             )}
+            <MotionItem>
             <h1
                 className="text-display-lg leading-tight max-w-4xl"
                 style={{ color: "var(--color-primary)" }}
             >
                 {headline}
             </h1>
+            </MotionItem>
             {body && (
+                <MotionItem>
                 <p
                     className="text-body-lg max-w-2xl"
                     style={{ color: "var(--color-on-surface-variant)" }}
                 >
                     {body}
                 </p>
+                </MotionItem>
             )}
             {children && (
+                <MotionItem>
                 <div className={`flex gap-4 flex-wrap mt-2 ${centered ? "justify-center" : ""}`}>
                     {children}
                 </div>
+                </MotionItem>
             )}
-        </section>
+        </MotionStagger>
     );
 }

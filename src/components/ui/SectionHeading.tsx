@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { MotionItem, MotionStagger } from "./Motion";
 
 interface SectionHeadingProps {
     title: string;
@@ -16,22 +17,26 @@ export default function SectionHeading({
     children,
 }: SectionHeadingProps) {
     return (
-        <div className={`mb-12 ${centered ? "text-center" : "text-left"}`}>
+        <MotionStagger className={`mb-12 ${centered ? "text-center" : "text-left"}`}>
+            <MotionItem>
             <h2
                 className="text-headline-lg mb-3"
                 style={{ color }}
             >
                 {title}
             </h2>
+            </MotionItem>
             {body && (
+                <MotionItem>
                 <p
                     className={`text-body-md max-w-2xl ${centered ? "mx-auto" : ""}`}
                     style={{ color: "var(--color-on-surface-variant)" }}
                 >
                     {body}
                 </p>
+                </MotionItem>
             )}
-            {children}
-        </div>
+            {children && <MotionItem>{children}</MotionItem>}
+        </MotionStagger>
     );
 }

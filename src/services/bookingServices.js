@@ -6,18 +6,18 @@ export const BOOKING_PACKAGES = [
   { id: "regular", name: "Regular Session", price: 2000 },
   { id: "four", name: "4 Sessions", price: 4000 },
   { id: "eight", name: "8 Sessions", price: 12000 },
+  { id: "india-psychologist-psychotherapist-regular", name: "Individual Therapy · Regular Session", price: 2500 },
+  { id: "india-psychologist-psychotherapist-4-session", name: "Individual Therapy · 4 Sessions", price: 4500 },
+  { id: "india-psychologist-psychotherapist-8-session", name: "Individual Therapy · 8 Sessions", price: 12500 },
   { id: "india-couple-therapy-regular", name: "Couple Therapy · Regular Session", price: 2500 },
   { id: "india-couple-therapy-4-session", name: "Couple Therapy · 4 Sessions", price: 4500 },
   { id: "india-couple-therapy-8-session", name: "Couple Therapy · 8 Sessions", price: 12500 },
-  { id: "india-psychologist-psychotherapist-regular", name: "Psychologist & Psychotherapist · Regular Session", price: 2500 },
-  { id: "india-psychologist-psychotherapist-4-session", name: "Psychologist & Psychotherapist · 4 Sessions", price: 4500 },
-  { id: "india-psychologist-psychotherapist-8-session", name: "Psychologist & Psychotherapist · 8 Sessions", price: 12500 },
+  { id: "foreign-psychologist-psychotherapist-regular", name: "Individual Therapy · Regular Session", price: 5000 },
+  { id: "foreign-psychologist-psychotherapist-4-session", name: "Individual Therapy · 4 Sessions", price: 10000 },
+  { id: "foreign-psychologist-psychotherapist-8-session", name: "Individual Therapy · 8 Sessions", price: 18000 },
   { id: "foreign-couple-therapy-regular", name: "Couple Therapy · Regular Session", price: 5000 },
   { id: "foreign-couple-therapy-4-session", name: "Couple Therapy · 4 Sessions", price: 10000 },
   { id: "foreign-couple-therapy-8-session", name: "Couple Therapy · 8 Sessions", price: 18000 },
-  { id: "foreign-psychologist-psychotherapist-regular", name: "Psychologist & Psychotherapist · Regular Session", price: 5000 },
-  { id: "foreign-psychologist-psychotherapist-4-session", name: "Psychologist & Psychotherapist · 4 Sessions", price: 10000 },
-  { id: "foreign-psychologist-psychotherapist-8-session", name: "Psychologist & Psychotherapist · 8 Sessions", price: 18000 },
 ];
 
 export const DEFAULT_TIME_SLOTS = [
@@ -55,7 +55,7 @@ export function validateBookingRequest(data) {
   const allowedGenders = ['Male', 'Female', 'Non-Binary', 'Transgender', 'Prefer not to say', 'Other'];
   const allowedSessionModes = ['Online', 'Offline'];
   const allowedRelationshipStatuses = ['Single', 'In a relationship', 'Married', 'Divorced', 'Widowed', 'Other'];
-  const allowedReferralSources = ['Social Media', 'Friend/Family', 'Search Engine', 'Advertisement', 'Other'];
+  const allowedReferralSources = ['Social Media', 'Instagram', 'Facebook', 'YouTube', 'Twitter/X', 'LinkedIn', 'Friend/Family', 'Doctor/Therapist Referral', 'Existing Client', 'Search Engine', 'Google Search', 'Website/Blog', 'Workshop/Event', 'Advertisement', 'Other'];
   const allowedTherapyGoals = [
     'Managing stress, anxiety, or overwhelming emotions',
     'Healing from past trauma or unresolved emotional pain',

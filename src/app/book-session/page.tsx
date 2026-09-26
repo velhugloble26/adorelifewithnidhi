@@ -5,6 +5,8 @@ import { BOOKING_AVAILABILITY, BOOKING_PACKAGES, CREATE_BOOKING, CREATE_BOOKING_
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { MotionReveal } from "@/components/ui/Motion";
+import { MotionSection } from "@/components/ui/Motion";
 import { THERAPY_CONTENT } from "@/constants/therapyContent";
 
 const steps = [
@@ -16,8 +18,8 @@ const steps = [
 ];
 const packagess = [
   {
-    id: "couple-therapy",
-    name: "Couple Therapy",
+    id: "psychologist-psychotherapist",
+    name: "Individual Therapy",
     sessions: [
       {
         id: "regular",
@@ -43,8 +45,8 @@ const packagess = [
     ],
   },
   {
-    id: "psychologist-psychotherapist",
-    name: "Psychologist & Psychotherapist",
+    id: "couple-therapy",
+    name: "Couple Therapy",
     sessions: [
       {
         id: "regular",
@@ -184,6 +186,13 @@ export default function BookSessionPage() {
   }, []);
 
   const updateField = (field: string, value: unknown) => {
+    if (field === "phone") {
+      const contactValue = String(value);
+      setBooking((current) => ({ ...current, phone: contactValue, whatsappNumber: contactValue }));
+      setErrors((current) => ({ ...current, phone: "", whatsappNumber: "" }));
+      return;
+    }
+
     setBooking((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: "" }));
   };
@@ -195,7 +204,6 @@ export default function BookSessionPage() {
     if (!booking.lastName || booking.lastName.trim().length < 2) nextErrors.lastName = "Last name is required.";
     if (!/^\S+@\S+\.\S+$/.test(booking.email)) nextErrors.email = "Enter a valid email address.";
     if (!/^\d{10}$/.test(booking.phone)) nextErrors.phone = "Enter a valid 10-digit phone number.";
-    if (!/^\d{10}$/.test(booking.whatsappNumber)) nextErrors.whatsappNumber = "Enter a valid 10-digit WhatsApp number.";
     if (!booking.identifyYourGender) nextErrors.identifyYourGender = "Select your gender.";
     if (!booking.dob) nextErrors.dob = "Date of birth is required.";
     if (!booking.location.trim()) nextErrors.location = "Location is required.";
@@ -365,9 +373,9 @@ export default function BookSessionPage() {
     return (
       <>
         <Navbar />
-        <main className="section-pad py-20 text-center">
+        <main className="section-pad py-20 text-center"><MotionReveal>
           <p className="text-body-lg ui-copy">Loading your booking options…</p>
-        </main>
+        </MotionReveal></main>
       </>
     );
   }
@@ -376,10 +384,10 @@ export default function BookSessionPage() {
     <>
       <Navbar />
 
-      <main className="section-pad py-5 md:py-10 max-w-16xl mx-auto">
+      <main className="section-pad py-5 md:py-10 max-w-16xl mx-auto mt-5"><MotionReveal>
         <div className="mb-8">
           <p className="text-label-md uppercase tracking-[0.2em] ui-accent">Book your session</p>
-          <h1 className="text-display-lg ui-heading mt-2">Book a Session</h1>
+          <h1 className="text-display-lg ui-heading mt-4">Book a Session</h1>
         </div>
 
         <div className="mb-10 overflow-hidden rounded-xl border border-slate-200 bg-white/70">
@@ -631,14 +639,14 @@ export default function BookSessionPage() {
         {currentStep === 2 && (
           <div className="rounded-2xl border border-slate-200 bg-white p-6 md:p-8">
             <h2 className="text-headline-md ui-heading mb-6">Booking Form</h2>
-            <section className="mb-8 rounded-xl border border-slate-200 bg-[#f8fbfb] p-5 md:p-6" aria-labelledby="therapist-introduction">
+            <MotionSection className="mb-8 rounded-xl border border-slate-200 bg-[#f8fbfb] p-5 md:p-6" aria-labelledby="therapist-introduction">
               <div className="mb-5">
                 <p className="text-label-md uppercase tracking-[0.12em] text-[#506356]">Meet your therapist</p>
                 <h3 id="therapist-introduction" className="mt-1 text-headline-lg ui-heading">Therapy by Nidhi</h3>
               </div>
 
               <div className="whitespace-pre-line text-body-md ui-copy">{THERAPY_CONTENT.meetYourTherapist}</div>
-            </section>
+            </MotionSection>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
               <div>
@@ -657,14 +665,9 @@ export default function BookSessionPage() {
                 {errors.email && <div className="text-sm text-red-600 mt-1">{errors.email}</div>}
               </div>
               <div>
-                <label className="text-label-md ui-copy block mb-2">Phone Number</label>
+                <label className="text-label-md ui-copy block mb-2">Phone/WhatsApp Number</label>
                 <input type="tel" inputMode="numeric" maxLength={10} className="ghost-input" value={booking.phone} onChange={(e) => updateField("phone", e.target.value)} />
                 {errors.phone && <div className="text-sm text-red-600 mt-1">{errors.phone}</div>}
-              </div>
-              <div>
-                <label className="text-label-md ui-copy block mb-2">WhatsApp Number</label>
-                <input type="tel" inputMode="numeric" maxLength={10} className="ghost-input" value={booking.whatsappNumber} onChange={(e) => updateField("whatsappNumber", e.target.value)} />
-                {errors.whatsappNumber && <div className="text-sm text-red-600 mt-1">{errors.whatsappNumber}</div>}
               </div>
               <div>
                 <label className="text-label-md ui-copy block mb-2">Gender</label>
@@ -709,7 +712,22 @@ export default function BookSessionPage() {
               <div>
                 <label className="text-label-md ui-copy block mb-2">How did you hear about us?</label>
                 <select className="ghost-input" value={booking.whereuknowaboutus} onChange={(e) => updateField("whereuknowaboutus", e.target.value)}>
-                  <option value="">Select an option</option><option>Social Media</option><option>Friend/Family</option><option>Search Engine</option><option>Advertisement</option><option>Other</option>
+                  <option value="">Select an option</option>
+                  <option>Social Media</option>
+                  <option>Instagram</option>
+                  <option>Facebook</option>
+                  <option>YouTube</option>
+                  <option>Twitter/X</option>
+                  <option>LinkedIn</option>
+                  <option>Friend/Family</option>
+                  <option>Doctor/Therapist Referral</option>
+                  <option>Existing Client</option>
+                  <option>Search Engine</option>
+                  <option>Google Search</option>
+                  <option>Website/Blog</option>
+                  <option>Workshop/Event</option>
+                  <option>Advertisement</option>
+                  <option>Other</option>
                 </select>
                 {errors.whereuknowaboutus && <div className="text-sm text-red-600 mt-1">{errors.whereuknowaboutus}</div>}
               </div>
@@ -839,7 +857,7 @@ export default function BookSessionPage() {
             </div>
           </div>
         )}
-      </main>
+      </MotionReveal></main>
     </>
   );
 }

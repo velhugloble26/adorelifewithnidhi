@@ -3,6 +3,7 @@
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
+import { MotionSection, MotionText, MotionReveal, MotionStagger, MotionItem } from "@/components/ui/Motion";
 const NIDHI_IMG = "/therapist-nidhi-roy.png";
 
 
@@ -14,7 +15,7 @@ const HERO_WATERMARK =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCwX80a2m9hE9jpy1RhirYecCpM8wEN_cTmZz094m7eTPeN40pYkZVYOpRBYhytkyPMlFdefyIuqYPFh2yaemBgwgab-H0KTyiLlcq3iNpqeq8ECWXhVnC0gTL_tg0_PntMM2g1hTdVvWuQGTExcabuyYfnGErGT9vJya56J3y1iFtX__R4sFMef8TYH8tCq4_jA2G8DrqfQPGYMZXwgPbbx0lL_Ju0VYaZRn9pNFHXzfu78Fw43V7opLHT-p02zj94hg";
 
 // const NIDHI_IMG =
-  // "https://lh3.googleusercontent.com/aida-public/AB6AXuB8UhDZOpERUsmQpWtTpZg460gu5ptkmQkFLetcjzxRvEVy-VFeyv45F7iaT_sgiIVCt32Q0BRikzitesQZ7zG4oiQdn_9pEmou3GcI7eED8rU7SQTG8gDXocu1imDYc4-kFWKegmgPiJkddvUeYQpyjqx9BrtLixao7v4Mz1271gc7SYvPJzO08YO3gt3CGvHHHF7vPqDnl7Cxg3tUH6npesl24BZlksxcE8xhyhT97eSRMBxiZ8T2";
+// "https://lh3.googleusercontent.com/aida-public/AB6AXuB8UhDZOpERUsmQpWtTpZg460gu5ptkmQkFLetcjzxRvEVy-VFeyv45F7iaT_sgiIVCt32Q0BRikzitesQZ7zG4oiQdn_9pEmou3GcI7eED8rU7SQTG8gDXocu1imDYc4-kFWKegmgPiJkddvUeYQpyjqx9BrtLixao7v4Mz1271gc7SYvPJzO08YO3gt3CGvHHHF7vPqDnl7Cxg3tUH6npesl24BZlksxcE8xhyhT97eSRMBxiZ8T2";
 
 const WATERMARK =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuDG16LXmYpSvjNOurGU5tmQ7q4zLaTv94D6I3BDi6CPai5VatKtP7Ho-bgVdAhR8sovzMMouB_K4GhTdXjzi62SjtelqndNTH4_BUyXH5pLMvKxp3y0JoZ5PGKa9pvyBDySv984YJGweHFtCdbirPRLnvVboKeUFVJIOfgDuc1BJDPf1Ym5dm1w-lGeIaOFXRVUkiNIqtafsSSv_M8zdwBiZMPMhcqUPRit_4OkamDiQTp1W7hblh0Hei2jEYutYryG_Q";
@@ -103,7 +104,7 @@ export default function HomePage() {
 
       <main>
         {/* ── Hero ── */}
-        <section
+        <MotionSection
           className="relative flex items-center pt-16 pb-32 overflow-hidden"
           style={{ minHeight: "calc(100svh - 80px)" }}
         >
@@ -144,108 +145,91 @@ export default function HomePage() {
 
           {/* Hero content */}
           <div className="relative z-10 max-w-[1500px] mx-auto text-center flex flex-col items-center section-pad w-full">
-            <div
-              className="mb-4 tracking-[0.3em] uppercase text-label-md"
-              style={{ color: "var(--color-primary)", opacity: 0.6 }}
-            >
-              adore life
-            </div>
-            <h1 className="text-display-lg mb-8 ui-heading">
-              Because everyone deserves to be understood.
-            </h1>
-            <p className="text-body-lg mb-12 max-w-[600px] ui-copy">
-              There are times when life feels heavier than it should. You may be
-              overthinking, feeling emotionally exhausted, struggling in a relationship,
-              questioning yourself, or simply wondering why you keep responding to life in
-              the same ways.
-              <br />
-              <br />
-              You don't always need another piece of advice. Sometimes, you need someone who
-              can truly understand what you're carrying.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full">
+            <MotionReveal delay={0.1}>
+              <div
+                className="mb-4 tracking-[0.3em] uppercase text-label-md"
+                style={{ color: "var(--color-primary)", opacity: 0.6 }}
+              >
+                adore life
+              </div>
+            </MotionReveal>
+            <MotionText delay={0.2}>
+              <h1 className="text-display-lg mb-8 ui-heading">
+                Because everyone deserves to be understood.
+              </h1>
+            </MotionText>
+            <MotionReveal delay={0.4} amount={0.5}>
+              <p className="text-body-lg mb-12 max-w-[600px] ui-copy">
+                There are times when life feels heavier than it should. You may be
+                overthinking, feeling emotionally exhausted, struggling in a relationship,
+                questioning yourself, or simply wondering why you keep responding to life in
+                the same ways.
+                <br />
+                <br />
+                You don't always need another piece of advice. Sometimes, you need someone who
+                can truly understand what you're carrying.
+              </p>
+            </MotionReveal>
+            <MotionReveal delay={0.6} direction="up" className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full">
               <Link
                 href="/conversation"
-                className="btn-primary w-full sm:w-auto btn-lg"
+                className="btn-primary w-full sm:w-auto btn-lg hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
               >
                 Begin to Adore Life
               </Link>
               <Link
                 href="/therapy"
-                className="text-label-md transition-colors w-full sm:w-auto text-center pb-0.5"
-                style={{
-                  color: "var(--color-primary)",
-                  borderBottom: "1px solid var(--color-primary)",
-                  paddingTop: "1rem",
-                  paddingBottom: "1rem",
-                  paddingLeft: "2rem",
-                  paddingRight: "2rem",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color =
-                    "var(--color-soft-teal)";
-                  e.currentTarget.style.borderBottomColor =
-                    "var(--color-soft-teal)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color =
-                    "var(--color-primary)";
-                  e.currentTarget.style.borderBottomColor =
-                    "var(--color-primary)";
-                }}
+                className="text-label-md w-full sm:w-auto text-center pb-0.5 border-b border-[var(--color-primary)] text-[var(--color-primary)] hover:text-[var(--color-soft-teal)] hover:border-[var(--color-soft-teal)] transition-colors duration-300 px-8 py-4"
               >
                 Explore How Therapy Can Help
               </Link>
-            </div>
+            </MotionReveal>
           </div>
-        </section>
+        </MotionSection>
+
 
         {/* ── Recognition ── */}
-        <section
+        <MotionSection
           className="py-32 section-pad surface-low"
         >
-          <div className="max-w-[1200px] mx-auto">
+          <div className="max-w-[1440px] mx-auto">
             <div className="max-w-[800px] mx-auto text-center mb-16">
-              <h2 className="text-headline-lg mb-6 ui-heading">
-                Perhaps you've been carrying this for longer than you realise.
-              </h2>
-              <p className="text-body-lg ui-copy">
-                You may be managing life on the outside while quietly struggling on the
-                inside. Maybe you…
-              </p>
+              <MotionText>
+                <h2 className="text-headline-lg mb-6 ui-heading">
+                  Perhaps you've been carrying this for longer than you realise.
+                </h2>
+              </MotionText>
+              <MotionReveal delay={0.2}>
+                <p className="text-body-lg ui-copy">
+                  You may be managing life on the outside while quietly struggling on the
+                  inside. Maybe you…
+                </p>
+              </MotionReveal>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <MotionStagger amount={0.2} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {recognitionCards.map((card, i) => (
-                <div
-                  key={i}
-                  className="glass-panel rounded-xl p-8 flex flex-col"
-                  style={{ transition: "transform 0.3s ease" }}
-                  onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform =
-                    "translateY(-4px)")
-                  }
-                  onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform =
-                    "translateY(0)")
-                  }
-                >
-                  <span
-                    className="material-symbols-outlined text-3xl mb-4 ui-accent"
+                <MotionItem key={i}>
+                  <div
+                    className="glass-panel rounded-xl p-8 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-md h-full"
                   >
-                    {card.icon}
-                  </span>
-                  <h3 className="text-headline-md mb-3 ui-heading">
-                    {card.title}
-                  </h3>
-                  <p className="text-body-md ui-copy">
-                    {card.body}
-                  </p>
-                </div>
+                    <span
+                      className="material-symbols-outlined text-3xl mb-4 ui-accent group-hover:scale-110 transition-transform"
+                    >
+                      {card.icon}
+                    </span>
+                    <h3 className="text-headline-md mb-3 ui-heading">
+                      {card.title}
+                    </h3>
+                    <p className="text-body-md ui-copy">
+                      {card.body}
+                    </p>
+                  </div>
+                </MotionItem>
               ))}
-            </div>
+            </MotionStagger>
 
-            <div className="mt-16 text-center">
+            <MotionReveal direction="up" delay={0.4} className="mt-16 text-center">
               <p
                 className="text-body-lg italic mb-8 ui-copy"
               >
@@ -254,107 +238,104 @@ export default function HomePage() {
               </p>
               <Link
                 href="/conversation"
-                className="btn-primary inline-flex"
-                style={{
-                  paddingTop: "1rem",
-                  paddingBottom: "1rem",
-                  paddingLeft: "2rem",
-                  paddingRight: "2rem",
-                  backgroundColor: "var(--color-sage-green)",
-                }}
-                onMouseEnter={(e) =>
-                (e.currentTarget.style.backgroundColor =
-                  "var(--color-secondary)")
-                }
-                onMouseLeave={(e) =>
-                (e.currentTarget.style.backgroundColor =
-                  "var(--color-sage-green)")
-                }
+                className="btn-primary inline-flex px-8 py-4 bg-sage-green hover:bg-secondary text-white transition-colors duration-300 hover:-translate-y-1 hover:shadow-md"
               >
                 Let's Understand What's Really Going On
               </Link>
-            </div>
+            </MotionReveal>
           </div>
-        </section>
+        </MotionSection>
 
         {/* ── Brand Truth ── */}
-        <section
+        <MotionSection
           className="py-32 section-pad surface-ivory"
         >
           <div className="max-w-[800px] mx-auto">
-            <h2
-              className="text-display-lg mb-8 text-center ui-heading"
-            >
-              Knowing what to do isn't always enough.
-            </h2>
-            <div
+            <MotionText>
+              <h2
+                className="text-display-lg mb-8 text-center ui-heading"
+              >
+                Knowing what to do isn't always enough.
+              </h2>
+            </MotionText>
+            <MotionStagger
+              amount={0.2}
               className="text-body-lg space-y-6 ui-copy"
             >
-              <p>Most of us know, at least intellectually, what we should do.</p>
+              <MotionItem><p>Most of us know, at least intellectually, what we should do.</p></MotionItem>
               <ul className="space-y-3 pl-8">
                 {["Set boundaries.", "Stop overthinking.", "Trust ourselves.", "Let go of the past."].map(
                   (item) => (
-                    <li key={item} className="flex items-center gap-3">
+                    <MotionItem key={item} className="flex items-center gap-3">
                       <span
                         className="w-1.5 h-1.5 rounded-full shrink-0 divider-muted"
                       />
                       {item}
-                    </li>
+                    </MotionItem>
                   )
                 )}
               </ul>
-              <p>
-                But knowing isn't the same as being able to change. Because the way we
-                think, feel and respond is shaped by much more than what we consciously
-                know.
-              </p>
-              <p>
-                When we begin to understand those deeper patterns, change becomes more than
-                an effort to behave differently. It becomes a process of seeing ourselves
-                differently.
-              </p>
-            </div>
-            <blockquote
-              className="mt-12 p-8 rounded-r-xl shadow-sm"
-              style={{
-                borderLeft: "2px solid var(--color-soft-teal)",
-                backgroundColor: "var(--color-surface-container-lowest)",
-              }}
-            >
-              <p
-                className="text-quote-intense italic ui-heading"
+              <MotionItem>
+                <p>
+                  But knowing isn't the same as being able to change. Because the way we
+                  think, feel and respond is shaped by much more than what we consciously
+                  know.
+                </p>
+              </MotionItem>
+              <MotionItem>
+                <p>
+                  When we begin to understand those deeper patterns, change becomes more than
+                  an effort to behave differently. It becomes a process of seeing ourselves
+                  differently.
+                </p>
+              </MotionItem>
+            </MotionStagger>
+            <MotionReveal delay={0.4}>
+              <blockquote
+                className="mt-12 p-8 rounded-r-xl shadow-sm"
+                style={{
+                  borderLeft: "2px solid var(--color-soft-teal)",
+                  backgroundColor: "var(--color-surface-container-lowest)",
+                }}
               >
-                "You are not broken. There is a story behind what you feel, think and do."
-              </p>
-            </blockquote>
+                <p
+                  className="text-quote-intense italic ui-heading"
+                >
+                  "You are not broken. There is a story behind what you feel, think and do."
+                </p>
+              </blockquote>
+            </MotionReveal>
           </div>
-        </section>
+        </MotionSection>
 
         {/* ── Progression ── */}
-        <section
+        <MotionSection
           className="py-32 section-pad surface-base"
         >
           <div className="max-w-[1000px] mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-headline-lg mb-6 ui-heading">
-                Healing doesn't begin with answers. It begins with understanding.
-              </h2>
-              <p
-                className="text-body-lg max-w-[700px] mx-auto ui-copy"
-              >
-                When you feel genuinely understood, something changes. You don't have to
-                defend yourself. You can become curious about yourself instead of critical of
-                yourself.
-              </p>
+              <MotionText>
+                <h2 className="text-headline-lg mb-6 ui-heading">
+                  Healing doesn't begin with answers. It begins with understanding.
+                </h2>
+              </MotionText>
+              <MotionReveal delay={0.2}>
+                <p
+                  className="text-body-lg max-w-[700px] mx-auto ui-copy"
+                >
+                  When you feel genuinely understood, something changes. You don't have to
+                  defend yourself. You can become curious about yourself instead of critical of
+                  yourself.
+                </p>
+              </MotionReveal>
             </div>
 
             {/* Steps row 1 */}
-            <div className="flex flex-col md:flex-row items-center justify-between w-full gap-6">
+            <MotionStagger amount={0.3} className="flex flex-col md:flex-row items-center justify-between w-full gap-6">
               {progressionSteps.map((step, i) => (
-                <>
+                <MotionItem key={step.num} className="flex-1 w-full">
                   <div
-                    key={step.num}
-                    className="flex-1 flex flex-col items-center text-center p-6 rounded-xl border w-full"
+                    className="flex flex-col items-center text-center p-6 rounded-xl border w-full transition-transform duration-300 hover:-translate-y-1 hover:shadow-sm"
                     style={{
                       backgroundColor: "var(--color-surface-bright)",
                       borderColor: "color-mix(in srgb, var(--color-surface-variant) 50%, transparent)",
@@ -370,24 +351,22 @@ export default function HomePage() {
                     </span>
                   </div>
                   {i < progressionSteps.length - 1 && (
-                    <span
-                      key={`arrow-${i}`}
-                      className="material-symbols-outlined rotate-90 md:rotate-0 ui-muted"
-                    >
-                      arrow_forward
-                    </span>
+                    <div className="absolute right-[-1.5rem] top-1/2 -translate-y-1/2 z-10 hidden md:block">
+                      <span className="material-symbols-outlined rotate-90 md:rotate-0 ui-muted">
+                        arrow_forward
+                      </span>
+                    </div>
                   )}
-                </>
+                </MotionItem>
               ))}
-            </div>
+            </MotionStagger>
 
             {/* Steps row 2 */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-4 w-full">
+            <MotionStagger amount={0.4} className="flex flex-col md:flex-row items-center justify-center gap-6 mt-6 w-full">
               {progressionSteps2.map((step, i) => (
-                <>
+                <MotionItem key={step.num} className="flex-1 max-w-[300px] w-full">
                   <div
-                    key={step.num}
-                    className="flex-1 max-w-[300px] flex flex-col items-center text-center p-6 rounded-xl border w-full"
+                    className="flex flex-col items-center text-center p-6 rounded-xl border w-full transition-transform duration-300 hover:-translate-y-1 hover:shadow-sm"
                     style={{
                       backgroundColor: "var(--color-surface-bright)",
                       borderColor: step.highlight
@@ -408,31 +387,23 @@ export default function HomePage() {
                       {step.label}
                     </span>
                   </div>
-                  {i < progressionSteps2.length - 1 && (
-                    <span
-                      key={`arrow2-${i}`}
-                      className="material-symbols-outlined rotate-90 md:rotate-0 hidden md:block ui-muted"
-                    >
-                      arrow_forward
-                    </span>
-                  )}
-                </>
+                </MotionItem>
               ))}
-            </div>
+            </MotionStagger>
 
-            <div className="mt-16 text-center">
+            <MotionReveal delay={0.6} className="mt-16 text-center">
               <p className="text-body-md ui-muted">
                 This is the belief at the heart of Adore Life.
               </p>
-            </div>
+            </MotionReveal>
           </div>
-        </section>
+        </MotionSection>
 
         {/* ── Meet Nidhi ── */}
-        <section
+        < section
           className="py-32 section-pad surface-low"
         >
-          <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Image */}
             <div className="lg:col-span-5 relative">
               <div
@@ -551,114 +522,100 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-        </section>
+        </section >
 
         {/* ── Help Areas ── */}
-        <section
+        <MotionSection
           className="py-32 section-pad surface-base"
         >
-          <div className="max-w-[1200px] mx-auto">
+          <div className="max-w-[1440px] mx-auto">
             <div className="text-center mb-16 max-w-[800px] mx-auto">
-              <h2
-                className="text-display-lg mb-6 ui-heading"
-              >
-                Whatever you're carrying, you don't have to carry it alone.
-              </h2>
-              <p className="text-body-lg ui-copy">
-                Adore Life offers support across different aspects of emotional wellbeing and
-                relationships.
-              </p>
+              <MotionText>
+                <h2
+                  className="text-display-lg mb-6 ui-heading"
+                >
+                  Whatever you're carrying, you don't have to carry it alone.
+                </h2>
+              </MotionText>
+              <MotionReveal delay={0.2}>
+                <p className="text-body-lg ui-copy">
+                  Adore Life offers support across different aspects of emotional wellbeing and
+                  relationships.
+                </p>
+              </MotionReveal>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <MotionStagger amount={0.2} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {helpAreas.map((area) => (
-                <Link
-                  key={area.title}
-                  href={area.href}
-                  className="group block p-8 rounded-xl border transition-all duration-300"
-                  style={{
-                    backgroundColor: "var(--color-surface-container-lowest)",
-                    borderColor: "var(--color-surface-variant)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor =
-                      "var(--color-soft-teal)";
-                    e.currentTarget.style.boxShadow =
-                      "0 1px 6px rgba(0,0,0,0.08)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor =
-                      "var(--color-surface-variant)";
-                    e.currentTarget.style.boxShadow = "none";
-                  }}
-                >
-                  <h3
-                    className="text-headline-md mb-4 transition-colors group-hover:text-[var(--color-soft-teal)] ui-heading"
+                <MotionItem key={area.title}>
+                  <Link
+                    href={area.href}
+                    className="group block p-8 rounded-xl border transition-all duration-300 hover:border-soft-teal hover:shadow-md h-full"
+                    style={{
+                      backgroundColor: "var(--color-surface-container-lowest)",
+                      borderColor: "var(--color-surface-variant)",
+                    }}
                   >
-                    {area.title}
-                  </h3>
-                  <p className="text-body-md mb-6 ui-copy">
-                    {area.body}
-                  </p>
-                  <span
-                    className="text-label-md flex items-center ui-accent"
-                  >
-                    Explore{" "}
-                    <span className="material-symbols-outlined ml-1 text-sm">arrow_outward</span>
-                  </span>
-                </Link>
+                    <h3
+                      className="text-headline-md mb-4 transition-colors group-hover:text-[var(--color-soft-teal)] ui-heading"
+                    >
+                      {area.title}
+                    </h3>
+                    <p className="text-body-md mb-6 ui-copy">
+                      {area.body}
+                    </p>
+                    <span
+                      className="text-label-md flex items-center ui-accent transition-transform group-hover:translate-x-1"
+                    >
+                      Explore{" "}
+                      <span className="material-symbols-outlined ml-1 text-sm">arrow_outward</span>
+                    </span>
+                  </Link>
+                </MotionItem>
               ))}
-            </div>
+            </MotionStagger>
           </div>
-        </section>
+        </MotionSection>
 
         {/* ── Closing CTA ── */}
-        <section
+        <MotionSection
           className="py-32 section-pad surface-sand"
         >
           <div className="max-w-[800px] mx-auto text-center">
-            <h2
-              className="text-display-lg mb-6 ui-heading"
-            >
-              You don't have to have everything figured out.
-            </h2>
-            <div
+            <MotionText>
+              <h2
+                className="text-display-lg mb-6 ui-heading"
+              >
+                You don't have to have everything figured out.
+              </h2>
+            </MotionText>
+            <MotionStagger
+              amount={0.2}
               className="text-body-lg space-y-4 mb-10 ui-copy"
             >
-              <p>You don't need the perfect words.</p>
-              <p>You don't need to know exactly what's wrong.</p>
-              <p>You don't even need to know whether therapy is right for you yet.</p>
-              <p>You can simply begin with a conversation.</p>
-            </div>
-            <Link
-              href="/conversation"
-              className="btn-primary inline-flex mb-4"
-              style={{
-                paddingTop: "1rem",
-                paddingBottom: "1rem",
-                paddingLeft: "2rem",
-                paddingRight: "2rem",
-                backgroundColor: "var(--color-primary)",
-              }}
-              onMouseEnter={(e) =>
-              (e.currentTarget.style.backgroundColor =
-                "var(--color-soft-teal)")
-              }
-              onMouseLeave={(e) =>
-              (e.currentTarget.style.backgroundColor =
-                "var(--color-primary)")
-              }
-            >
-              Begin a Conversation
-            </Link>
-            <p
-              className="text-body-md italic mt-4 ui-muted"
-            >
-              Whenever you're ready, we'll begin wherever you are.
-            </p>
+              <MotionItem><p>You don't need the perfect words.</p></MotionItem>
+              <MotionItem><p>You don't need to know exactly what's wrong.</p></MotionItem>
+              <MotionItem><p>You don't even need to know whether therapy is right for you yet.</p></MotionItem>
+              <MotionItem><p>You can simply begin with a conversation.</p></MotionItem>
+            </MotionStagger>
+            <MotionReveal delay={0.4}>
+              <Link
+                href="/conversation"
+                className="btn-primary inline-flex mb-4 px-8 py-4 bg-primary text-white hover:bg-soft-teal transition-colors duration-300 hover:-translate-y-1 hover:shadow-md"
+              >
+                Begin a Conversation
+              </Link>
+            </MotionReveal>
+            <MotionReveal delay={0.6}>
+              <p
+                className="text-body-md italic mt-4 ui-muted"
+              >
+                Whenever you're ready, we'll begin wherever you are.
+              </p>
+            </MotionReveal>
           </div>
-        </section>
-      </main>
+        </MotionSection>
+      </main >
 
 
       {/* Watermark */}

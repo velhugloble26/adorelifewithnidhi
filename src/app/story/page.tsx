@@ -3,6 +3,7 @@
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
+import { MotionSection, MotionReveal, MotionText, MotionStagger, MotionItem } from "@/components/ui/Motion";
 const NIDHI_STORY_IMG = "/beforebecametherapist.png";
 
 
@@ -60,34 +61,37 @@ export default function StoryPage() {
 
             <main>
                 {/* ── Hero ── */}
-                <section
+                <MotionSection
                     className="section-pad py-16 md:py-32 max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center gap-6 lg:gap-16"
                 >
                     {/* Text */}
                     <div className="w-full lg:w-1/2 flex flex-col items-start">
-                        <h1
-                            className="text-display-lg mb-6 max-w-2xl ui-heading"
-                        >
-                            "Before I became a therapist, I was always curious about people."
-                        </h1>
-                        <div
+                        <MotionText>
+                            <h1
+                                className="text-display-lg mb-6 max-w-2xl ui-heading"
+                            >
+                                "Before I became a therapist, I was always curious about people."
+                            </h1>
+                        </MotionText>
+                        <MotionStagger
+                            amount={0.5}
                             className="space-y-4 max-w-lg text-body-lg ui-copy"
                         >
-                            <p>What makes us think the way we do?</p>
-                            <p>Why do some experiences stay with us long after they have passed?</p>
-                            <p>Why do we sometimes repeat patterns we consciously want to change?</p>
-                            <p>And why can two people experience the same situation so differently?</p>
-                            <p className="pt-4">
+                            <MotionItem><p>What makes us think the way we do?</p></MotionItem>
+                            <MotionItem><p>Why do some experiences stay with us long after they have passed?</p></MotionItem>
+                            <MotionItem><p>Why do we sometimes repeat patterns we consciously want to change?</p></MotionItem>
+                            <MotionItem><p>And why can two people experience the same situation so differently?</p></MotionItem>
+                            <MotionItem><p className="pt-4">
                                 These questions gradually became more than a curiosity for me. They became
                                 the foundation of my work.
-                            </p>
-                        </div>
+                            </p></MotionItem>
+                        </MotionStagger>
                     </div>
 
                     {/* Image */}
                     <div className="w-full lg:w-1/2">
 
-                        <div
+                        <MotionReveal delay={0.55} direction="left"
                             className="aspect-[4/5] w-full rounded overflow-hidden relative group surface-sand"
                         >
                             <div
@@ -106,40 +110,38 @@ export default function StoryPage() {
                                 fill
                                 className="relative z-0 object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.15]"
                             />
-                        </div>
+                        </MotionReveal>
 
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Why Adore Life Exists ── */}
-                <section
+                <MotionSection
                     className="section-pad py-16 md:py-32 surface-sand"
                 >
                     <div className="max-w-[800px] mx-auto flex flex-col items-center text-center">
-                        <h2
+                        <MotionText><h2
                             className="text-headline-lg mb-8 ui-heading"
                         >
                             I believe people are rarely as simple as their problems make them appear.
-                        </h2>
-                        <div
-                            className="text-body-md space-y-6 text-left w-full ui-copy"
-                        >
-                            <p>
+                        </h2></MotionText>
+                        <MotionStagger amount={0.5} className="text-body-md space-y-6 text-left w-full ui-copy">
+                            <MotionItem><p>
                                 Over the years, I've met people who came to therapy believing that something
                                 was wrong with them. They described themselves as too anxious. Too emotional.
                                 Too sensitive. Too dependent. Too angry. Too insecure. Too stuck.
-                            </p>
-                            <p>
+                            </p></MotionItem>
+                            <MotionItem><p>
                                 But as we began exploring their stories, something else often emerged. Their
                                 thoughts, emotions and behaviours had a context. Their patterns had a
                                 history. Their reactions had meaning.
-                            </p>
-                            <p>
+                            </p></MotionItem>
+                            <MotionItem><p>
                                 And underneath what they were struggling with was usually a person trying, in
                                 their own way, to cope with something they had experienced, learned or
                                 carried for a long time.
-                            </p>
-                            <blockquote
+                            </p></MotionItem>
+                            <MotionItem><blockquote
                                 className="text-quote-intense italic pt-4 pb-2 pl-6 ml-2 my-4"
                                 style={{
                                     color: "var(--color-primary)",
@@ -149,13 +151,13 @@ export default function StoryPage() {
                                 That changed the way I understood therapy. I stopped seeing therapy as a
                                 process of fixing what was wrong. I began seeing it as a process of
                                 understanding what was there.
-                            </blockquote>
-                        </div>
+                            </blockquote></MotionItem>
+                        </MotionStagger>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── The Belief ── */}
-                <section
+                <MotionSection
                     className="section-pad py-32 md:py-48 flex items-center justify-center relative overflow-hidden surface-ivory"
                 >
                     <div
@@ -168,7 +170,7 @@ export default function StoryPage() {
                         }}
                     />
                     <div className="max-w-3xl mx-auto text-center">
-                        <h2
+                        <MotionText><h2
                             className="text-display-lg mb-12 relative inline-block ui-heading"
                         >
                             Everyone deserves to be understood.
@@ -179,34 +181,32 @@ export default function StoryPage() {
                                     backgroundColor: "var(--color-soft-teal)",
                                 }}
                             />
-                        </h2>
-                        <div
-                            className="text-body-lg space-y-4 ui-copy"
-                        >
-                            <p>
+                        </h2></MotionText>
+                        <MotionStagger amount={0.5} className="text-body-lg space-y-4 ui-copy">
+                            <MotionItem><p>
                                 Not just heard. Not simply advised. Not immediately analysed.{" "}
                                 <strong className="ui-heading">Understood.</strong>
-                            </p>
-                            <p>
+                            </p></MotionItem>
+                            <MotionItem><p>
                                 To understand someone's story is to look beyond what is visible on the
                                 surface. To become curious about what they feel. What they fear. What they
                                 have learned. What they protect. What they long for. And what they may not
                                 yet have the words to express.
-                            </p>
-                            <p className="pt-4 font-medium ui-heading">
+                            </p></MotionItem>
+                            <MotionItem><p className="pt-4 font-medium ui-heading">
                                 That is where I believe meaningful therapy begins.
-                            </p>
-                        </div>
+                            </p></MotionItem>
+                        </MotionStagger>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Philosophy & Approach ── */}
-                <section
+                <MotionSection
                     className="section-pad py-16 md:py-32 surface-container"
                 >
                     <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-16 items-center">
                         {/* Quote circle */}
-                        <div className="col-span-1 md:col-span-5 order-2 md:order-1">
+                        <MotionReveal direction="right" className="col-span-1 md:col-span-5 order-2 md:order-1">
                             <div
                                 className="aspect-square rounded-full p-8 flex items-center justify-center border relative"
                                 style={{
@@ -221,78 +221,70 @@ export default function StoryPage() {
                                         transform: "scale(1.1)",
                                     }}
                                 />
-                                <p
+                                <MotionText
                                     className="text-quote-intense text-center italic max-w-sm ui-heading"
                                 >
                                     "The therapy should fit the person, not the person fit the therapy."
-                                </p>
+                                </MotionText>
                             </div>
-                        </div>
+                        </MotionReveal>
 
                         {/* Content */}
-                        <div className="col-span-1 md:col-span-6 md:col-start-7 order-1 md:order-2 space-y-6">
-                            <span
+                        <MotionStagger amount={0.5} className="col-span-1 md:col-span-6 md:col-start-7 order-1 md:order-2 space-y-6">
+                            <MotionItem>                            <span
                                 className="text-label-md uppercase tracking-widest ui-muted"
                             >
                                 My Philosophy
-                            </span>
-                            <h2
+                            </span></MotionItem>
+                            <MotionText><h2
                                 className="text-headline-lg ui-heading"
                             >
                                 I don't believe there is a single formula for a human being.
-                            </h2>
-                            <p className="text-body-md ui-copy">
+                            </h2></MotionText>
+                            <MotionItem>                            <p className="text-body-md ui-copy">
                                 Every person who enters therapy brings a different history, personality,
                                 relationship with the world and way of making sense of life. So I don't
                                 believe therapy should ask a person to fit into a fixed formula.
-                            </p>
-                            <p className="text-body-md ui-copy">
+                            </p></MotionItem>
+                            <MotionItem>                            <p className="text-body-md ui-copy">
                                 Instead, I integrate appropriate evidence-informed psychological approaches
                                 according to the individual, their needs and their therapeutic goals. Our work
                                 may involve exploring thoughts and behaviours, emotions, relationships,
                                 beliefs, past experiences, mindfulness or deeper psychological patterns.
-                            </p>
-                            <p className="text-body-md font-medium ui-heading">
+                            </p></MotionItem>
+                            <MotionItem>                            <p className="text-body-md font-medium ui-heading">
                                 But the approach always begins with the person—not the technique.
-                            </p>
-                        </div>
+                            </p></MotionItem>
+                        </MotionStagger>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Values ── */}
-                <section
+                <MotionSection
                     className="section-pad py-16 md:py-32 surface-ivory"
                 >
                     <div className="max-w-[1440px] mx-auto">
-                        <div className="mb-12 md:mb-16">
-                            <span
+                        <MotionStagger amount={0.5} className="mb-12 md:mb-16">
+                            <MotionItem>                            <span
                                 className="text-label-md uppercase tracking-widest mb-4 block ui-muted"
                             >
                                 My Values
-                            </span>
-                            <h2
+                            </span></MotionItem>
+                            <MotionText><h2
                                 className="text-headline-lg max-w-2xl ui-heading"
                             >
                                 The principles that guide my work.
-                            </h2>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            </h2></MotionText>
+                        </MotionStagger>
+                        <MotionStagger amount={0.5} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {values.map((v) => (
-                                <div
+                                <MotionItem
                                     key={v.num}
-                                    className={`p-8 md:p-10 border flex flex-col justify-between group transition-colors duration-300${v.wide ? " lg:col-span-2" : ""}`}
+                                    className={`p-8 md:p-10 border flex flex-col justify-between group transition-colors duration-300 hover:border-[var(--color-soft-teal)]${v.wide ? " lg:col-span-2" : ""}`}
                                     style={{
                                         backgroundColor: "var(--color-surface)",
                                         borderColor: "var(--color-surface-dim)",
                                     }}
-                                    onMouseEnter={(e) =>
-                                    ((e.currentTarget as HTMLDivElement).style.borderColor =
-                                        "var(--color-soft-teal)")
-                                    }
-                                    onMouseLeave={(e) =>
-                                    ((e.currentTarget as HTMLDivElement).style.borderColor =
-                                        "var(--color-surface-dim)")
-                                    }
                                 >
                                     <span
                                         className="text-label-md mb-6 block opacity-50 group-hover:opacity-100 transition-opacity ui-muted"
@@ -319,14 +311,14 @@ export default function StoryPage() {
                                             </span>
                                         )}
                                     </div>
-                                </div>
+                                </MotionItem>
                             ))}
-                        </div>
+                        </MotionStagger>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Qualifications ── */}
-                <section
+                <MotionSection
                     className="section-pad py-16 border-t"
                     style={{
                         backgroundColor: "var(--color-surface-container-low)",
@@ -335,17 +327,17 @@ export default function StoryPage() {
                 >
                     <div className="max-w-[800px] mx-auto">
                         <div className="mb-10 text-center">
-                            <h2
+                            <MotionText><h2
                                 className="text-headline-lg mb-4 ui-heading"
                             >
                                 Professional expertise, grounded in human connection.
-                            </h2>
+                            </h2></MotionText>
                             <p className="text-body-md ui-copy">
                                 Nidhi Roy — Counselling Psychologist | Psychotherapist | Advanced Cognitive
                                 Hypnotic Psychotherapist (CHCP)
                             </p>
                         </div>
-                        <div className="space-y-4">
+                        <MotionReveal delay={0.5} className="space-y-4">
                             {qualifications.map((q) => (
                                 <div
                                     key={q.label}
@@ -383,43 +375,44 @@ export default function StoryPage() {
                                     )}
                                 </div>
                             ))}
-                        </div>
+                        </MotionReveal>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Closing CTA ── */}
-                <section
+                <MotionSection
                     className="section-pad py-32 text-center flex flex-col items-center"
                     style={{
                         background: `linear-gradient(180deg, var(--color-warm-ivory) 0%, var(--color-muted-sand) 100%)`,
                     }}
                 >
-                    <h2
+                    <MotionText><h2
                         className="text-display-lg max-w-2xl mb-6 ui-heading"
                     >
                         You don't have to have everything figured out.
-                    </h2>
-                    <p
-                        className="text-body-lg max-w-xl mb-12 ui-copy"
+                    </h2></MotionText>
+                    <MotionReveal delay={0.5}><p
+                        className="text-body-lg max-w-3xl mb-12 ui-copy"
                     >
                         A first conversation doesn't have to be a commitment to a long therapeutic
                         journey. It can simply be a beginning. A chance to talk. A chance to be heard.
                         A chance to see whether this feels like the right space for you.
-                    </p>
-                    <Link
+                    </p></MotionReveal>
+                    <MotionReveal delay={0.55}><Link
                         href="/conversation"
                         className="btn-primary inline-flex shadow-sm hover:shadow-md btn-lg"
                     >
                         Begin a Conversation
-                    </Link>
-                    <p
-                        className="text-body-md italic mt-6 ui-muted"
-                    >
-                        Whenever you're ready, we'll begin wherever you are.
-                    </p>
-                </section>
+                    </Link></MotionReveal>
+                    <MotionReveal delay={0.4}>
+                        <p
+                            className="text-body-md italic mt-6 ui-muted"
+                        >
+                            Whenever you're ready, we'll begin wherever you are.
+                        </p>
+                    </MotionReveal>
+                </MotionSection>
             </main>
-
         </>
     );
 }

@@ -1,3 +1,5 @@
+import { MotionReveal } from "./Motion";
+
 interface PullQuoteProps {
     quote: string;
     attribution?: string;
@@ -14,7 +16,7 @@ export default function PullQuote({
             className="w-full py-16 md:py-24 text-center"
             style={{ backgroundColor: bg }}
         >
-            <div className="section-pad max-w-4xl mx-auto">
+            <MotionReveal className="section-pad max-w-4xl mx-auto">
                 <span
                     className="material-symbols-outlined mb-6 text-4xl opacity-40 block"
                     style={{ color: "var(--color-soft-teal)" }}
@@ -39,7 +41,7 @@ export default function PullQuote({
                     className="w-16 h-px mx-auto mt-8"
                     style={{ backgroundColor: "var(--color-stone-grey)" }}
                 />
-            </div>
+            </MotionReveal>
         </section>
     );
 }

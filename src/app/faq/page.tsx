@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import { MotionSection } from "@/components/ui/Motion";
 import Link from "next/link";
 
 
@@ -58,7 +59,7 @@ export default function FAQPage() {
 
             <main className="flex-grow flex flex-col items-center w-full">
                 {/* ── Hero ── */}
-                <section className="w-full max-w-[800px] px-margin-mobile md:px-0 mx-auto mt-16 md:mt-32 mb-16 text-center">
+                <MotionSection className="w-full max-w-[800px] px-margin-mobile md:px-0 mx-auto mt-16 md:mt-32 mb-16 text-center">
                     <h1 className="text-display-lg mb-6 ui-heading">
                         You may have questions.<br />
                         <span className="italic ui-muted">
@@ -69,10 +70,10 @@ export default function FAQPage() {
                         Exploring therapy is a significant step. We've gathered some common questions to
                         help bring clarity and peace of mind as you consider beginning this process.
                     </p>
-                </section>
+                </MotionSection>
 
                 {/* ── Search Bar (Visual) ── */}
-                <section className="w-full max-w-[600px] px-margin-mobile md:px-0 mx-auto mb-16 md:mb-32">
+                <MotionSection className="w-full max-w-[600px] px-margin-mobile md:px-0 mx-auto mb-16 md:mb-32">
                     <div className="relative group">
                         <span
                             className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 transition-colors ui-muted"
@@ -86,10 +87,10 @@ export default function FAQPage() {
                             style={{ backgroundColor: "var(--color-surface-container-lowest)", paddingLeft: "3rem" }}
                         />
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── FAQ Categories ── */}
-                <section className="w-full max-w-[800px] px-margin-mobile md:px-0 mx-auto mb-32 flex flex-col gap-16">
+                <MotionSection className="w-full max-w-[800px] px-margin-mobile md:px-0 mx-auto mb-32 flex flex-col gap-16">
                     {faqs.map((category, catIndex) => (
                         <div key={category.category} className="w-full">
                             <h2
@@ -133,10 +134,10 @@ export default function FAQPage() {
                             )}
                         </div>
                     ))}
-                </section>
+                </MotionSection>
 
                 {/* ── CTA ── */}
-                <section
+                <MotionSection
                     className="w-full py-16 text-center surface-high"
                 >
                     <div className="max-w-[600px] mx-auto px-4">
@@ -173,7 +174,7 @@ export default function FAQPage() {
                             Ask a Question
                         </Link>
                     </div>
-                </section>
+                </MotionSection>
             </main>
 
         </>

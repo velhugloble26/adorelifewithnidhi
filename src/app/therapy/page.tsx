@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
+import { MotionSection, MotionText, MotionStagger, MotionItem, MotionReveal } from "@/components/ui/Motion";
 
 export const metadata: Metadata = {
     title: "Understanding Therapy",
@@ -77,35 +78,42 @@ export default function TherapyPage() {
 
             <main>
                 {/* ── Hero ── */}
-                <section
+                <MotionSection
                     className="section-pad py-16 md:py-32 flex flex-col items-center justify-center text-center max-w-[1440px] mx-auto"
                 >
-                    <h1
-                        className="text-display-lg max-w-3xl mb-8 ui-heading"
-                    >
-                        What if therapy begins with understanding?
-                    </h1>
-                    <div
+                    <MotionText>
+                        <h1
+                            className="text-display-lg max-w-3xl mb-8 ui-heading"
+                        >
+                            What if therapy begins with understanding?
+                        </h1>
+                    </MotionText>
+                    <MotionStagger
+                        amount={0.2}
                         className="max-w-2xl text-body-lg space-y-6 mb-12 ui-copy"
                     >
-                        <p>You don't need to arrive with a diagnosis.</p>
-                        <p>You don't need to know exactly what is wrong.</p>
-                        <p>And you don't need to have the right words.</p>
-                        <p>
-                            Therapy begins with a conversation—about what you're experiencing, what has
-                            brought you here, and what you hope might become different.
-                        </p>
-                    </div>
-                    <Link
-                        href="/conversation"
-                        className="btn-primary inline-flex btn-lg"
-                    >
-                        Begin a Conversation
-                    </Link>
-                </section>
+                        <MotionItem><p>You don't need to arrive with a diagnosis.</p></MotionItem>
+                        <MotionItem><p>You don't need to know exactly what is wrong.</p></MotionItem>
+                        <MotionItem><p>And you don't need to have the right words.</p></MotionItem>
+                        <MotionItem>
+                            <p>
+                                Therapy begins with a conversation—about what you're experiencing, what has
+                                brought you here, and what you hope might become different.
+                            </p>
+                        </MotionItem>
+                    </MotionStagger>
+                    <MotionReveal delay={0.4}>
+                        <Link
+                            href="/conversation"
+                            className="btn-primary inline-flex btn-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                        >
+                            Begin a Conversation
+                        </Link>
+                    </MotionReveal>
+                </MotionSection>
 
                 {/* ── Image break ── */}
-                <section className="section-pad max-w-[1440px] mx-auto mb-16 md:mb-32">
+                <MotionSection className="section-pad max-w-[1440px] mx-auto mb-16 md:mb-32">
                     <div
                         className="w-full rounded-xl overflow-hidden group"
                         style={{
@@ -121,139 +129,165 @@ export default function TherapyPage() {
                             className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.15]"
                         />
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── What is therapy ── */}
-                <section className="section-pad py-16 max-w-[1440px] mx-auto">
+                <MotionSection className="section-pad py-16 max-w-[1440px] mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                         <div className="md:col-span-5 md:pr-12">
-                            <h2
-                                className="text-headline-lg md:sticky"
-                                style={{ color: "var(--color-primary)", top: "8rem" }}
-                            >
-                                Therapy is a space to understand what is happening within you.
-                            </h2>
+                            <MotionText>
+                                <h2
+                                    className="text-headline-lg md:sticky"
+                                    style={{ color: "var(--color-primary)", top: "8rem" }}
+                                >
+                                    Therapy is a space to understand what is happening within you.
+                                </h2>
+                            </MotionText>
                         </div>
                         <div
-                            className="md:col-span-7 text-body-lg space-y-6 ui-copy"
+                            className="md:col-span-7"
                         >
-                            <p>Life can leave us carrying thoughts, emotions and patterns that we don't always understand.</p>
-                            <p>Sometimes we know what we're feeling. Sometimes we only know that something doesn't feel right.</p>
-                            <p>
-                                Therapy creates a confidential, professional space to slow down and explore those experiences
-                                with curiosity and compassion. Together, we can begin to understand:
-                            </p>
-                            <ul className="space-y-4 py-6 pl-9">
-                                {[
-                                    "What you're experiencing",
-                                    "What may be contributing to it",
-                                    "How your thoughts, emotions and behaviours connect",
-                                    "Why certain situations affect you in particular ways",
-                                    "What patterns may be repeating",
-                                    "What choices may be available to you",
-                                ].map((item) => (
-                                    <li
-                                        key={item}
-                                        className="relative"
-                                        style={{
-                                            listStyle: "none",
-                                        }}
-                                    >
-                                        <span
-                                            className="absolute font-bold"
-                                            style={{ left: "-1.5rem", color: "var(--color-stone-grey)" }}
-                                        >
-                                            ·
-                                        </span>
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-                            <p
-                                className="text-headline-md mt-8 ui-heading"
-                            >
-                                Therapy isn't about finding fault. It's about finding understanding.
-                            </p>
+                            <MotionStagger amount={0.2} className="text-body-lg space-y-6 ui-copy">
+                                <MotionItem><p>Life can leave us carrying thoughts, emotions and patterns that we don't always understand.</p></MotionItem>
+                                <MotionItem><p>Sometimes we know what we're feeling. Sometimes we only know that something doesn't feel right.</p></MotionItem>
+                                <MotionItem>
+                                    <p>
+                                        Therapy creates a confidential, professional space to slow down and explore those experiences
+                                        with curiosity and compassion. Together, we can begin to understand:
+                                    </p>
+                                </MotionItem>
+                                <MotionItem>
+                                    <ul className="space-y-4 py-6 pl-9">
+                                        {[
+                                            "What you're experiencing",
+                                            "What may be contributing to it",
+                                            "How your thoughts, emotions and behaviours connect",
+                                            "Why certain situations affect you in particular ways",
+                                            "What patterns may be repeating",
+                                            "What choices may be available to you",
+                                        ].map((item) => (
+                                            <li
+                                                key={item}
+                                                className="relative"
+                                                style={{
+                                                    listStyle: "none",
+                                                }}
+                                            >
+                                                <span
+                                                    className="absolute font-bold"
+                                                    style={{ left: "-1.5rem", color: "var(--color-stone-grey)" }}
+                                                >
+                                                    ·
+                                                </span>
+                                                {item}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </MotionItem>
+                            </MotionStagger>
+                            <MotionReveal delay={0.4}>
+                                <p
+                                    className="text-headline-md mt-8 ui-heading"
+                                >
+                                    Therapy isn't about finding fault. It's about finding understanding.
+                                </p>
+                            </MotionReveal>
                         </div>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── What therapy is NOT ── */}
-                <section
+                <MotionSection
                     className="py-16 md:py-32 my-16 md:my-32 surface-sand"
                 >
                     <div className="section-pad max-w-[1440px] mx-auto text-center max-w-4xl">
-                        <h2
-                            className="text-headline-lg mb-8 ui-heading"
-                        >
-                            Therapy isn't someone telling you how to live.
-                        </h2>
-                        <div
+                        <MotionText>
+                            <h2
+                                className="text-headline-lg mb-8 ui-heading"
+                            >
+                                Therapy isn't someone telling you how to live.
+                            </h2>
+                        </MotionText>
+                        <MotionStagger
+                            amount={0.2}
                             className="text-body-lg space-y-4 mb-12"
                             style={{ color: "var(--color-tertiary-container)" }}
                         >
-                            <p>
-                                It isn't a lecture. It isn't a list of instructions. It isn't about being
-                                told to "think positive." It isn't about judging your choices. And it isn't
-                                about making you dependent on therapy.
-                            </p>
-                            <p>
-                                Therapy is a collaborative process. You remain the expert on your own life.
-                                My role is to bring professional psychological understanding, curiosity and
-                                perspective to help you explore what may be difficult to see on your own.
-                            </p>
-                        </div>
-                        <blockquote
-                            className="text-quote-intense border-l-2 pl-8 py-2 mx-auto text-left max-w-2xl italic"
-                            style={{
-                                color: "var(--color-primary)",
-                                borderColor: "var(--color-stone-grey)",
-                            }}
-                        >
-                            "You don't need someone to tell you who to be. You need space to understand who you are."
-                        </blockquote>
+                            <MotionItem>
+                                <p>
+                                    It isn't a lecture. It isn't a list of instructions. It isn't about being
+                                    told to "think positive." It isn't about judging your choices. And it isn't
+                                    about making you dependent on therapy.
+                                </p>
+                            </MotionItem>
+                            <MotionItem>
+                                <p>
+                                    Therapy is a collaborative process. You remain the expert on your own life.
+                                    My role is to bring professional psychological understanding, curiosity and
+                                    perspective to help you explore what may be difficult to see on your own.
+                                </p>
+                            </MotionItem>
+                        </MotionStagger>
+                        <MotionReveal delay={0.4}>
+                            <blockquote
+                                className="text-quote-intense border-l-2 pl-8 py-2 mx-auto text-left max-w-2xl italic"
+                                style={{
+                                    color: "var(--color-primary)",
+                                    borderColor: "var(--color-stone-grey)",
+                                }}
+                            >
+                                "You don't need someone to tell you who to be. You need space to understand who you are."
+                            </blockquote>
+                        </MotionReveal>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Who therapy is for ── */}
-                <section className="section-pad py-16 max-w-[1440px] mx-auto">
+                <MotionSection className="section-pad py-16 max-w-[1440px] mx-auto">
                     <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2
-                            className="text-headline-lg mb-6 ui-heading"
-                        >
-                            You don't have to be in crisis to seek therapy.
-                        </h2>
-                        <p className="text-body-lg ui-copy">
-                            Therapy can be useful whenever something in your emotional life, relationships
-                            or way of coping feels difficult, confusing or stuck. You might be experiencing:
-                        </p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {therapyFor.map((group) => (
-                            <div
-                                key={group.title}
-                                className="p-8 rounded-xl surface-ivory"
+                        <MotionText>
+                            <h2
+                                className="text-headline-lg mb-6 ui-heading"
                             >
-                                <h3
-                                    className="text-headline-md mb-6 pb-4 border-b"
-                                    style={{
-                                        color: "var(--color-primary)",
-                                        borderColor: "var(--color-stone-grey)",
-                                    }}
-                                >
-                                    {group.title}
-                                </h3>
-                                <ul
-                                    className="space-y-4 text-body-md ui-copy"
-                                >
-                                    {group.items.map((item) => (
-                                        <li key={item}>{item}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
+                                You don't have to be in crisis to seek therapy.
+                            </h2>
+                        </MotionText>
+                        <MotionReveal delay={0.2}>
+                            <p className="text-body-lg ui-copy">
+                                Therapy can be useful whenever something in your emotional life, relationships
+                                or way of coping feels difficult, confusing or stuck. You might be experiencing:
+                            </p>
+                        </MotionReveal>
                     </div>
-                    <div className="mt-16 text-center">
+                    <MotionStagger amount={0.2} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {therapyFor.map((group) => (
+                            <MotionItem key={group.title}>
+                                <div
+                                    className="p-8 rounded-xl surface-ivory h-full transition-transform duration-300 hover:-translate-y-1 hover:shadow-md"
+                                >
+                                    <h3
+                                        className="text-headline-md mb-6 pb-4 border-b"
+                                        style={{
+                                            color: "var(--color-primary)",
+                                            borderColor: "var(--color-stone-grey)",
+                                        }}
+                                    >
+                                        {group.title}
+                                    </h3>
+                                    <ul
+                                        className="space-y-4 text-body-md ui-copy"
+                                    >
+                                        {group.items.map((item) => (
+                                            <li key={item} className="flex items-start gap-2">
+                                                <span className="text-[var(--color-soft-teal)]">•</span> {item}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </MotionItem>
+                        ))}
+                    </MotionStagger>
+                    <MotionReveal delay={0.4} className="mt-16 text-center">
                         <p className="text-body-lg mb-2 ui-copy">
                             Or perhaps you simply have a sense that:
                         </p>
@@ -263,11 +297,11 @@ export default function TherapyPage() {
                         <p className="text-body-md ui-muted">
                             You don't need a perfect reason to begin.
                         </p>
-                    </div>
-                </section>
+                    </MotionReveal>
+                </MotionSection>
 
                 {/* ── Journey steps ── */}
-                <section
+                <MotionSection
                     className="section-pad py-16 md:py-32 max-w-[1440px] mx-auto border-t mt-16 border-surface"
                 >
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -277,49 +311,56 @@ export default function TherapyPage() {
                             >
                                 The Adore Life Journey™
                             </span>
-                            <h2
-                                className="text-headline-lg mb-6 ui-heading"
-                            >
-                                From feeling understood to experiencing emotional freedom.
-                            </h2>
-                            <p
-                                className="text-body-lg mb-12 max-w-lg ui-copy"
-                            >
-                                There is no fixed timeline or formula for therapy. But the journey often
-                                involves moving through several layers of understanding.
-                            </p>
+                            <MotionText>
+                                <h2
+                                    className="text-headline-lg mb-6 ui-heading"
+                                >
+                                    From feeling understood to experiencing emotional freedom.
+                                </h2>
+                            </MotionText>
+                            <MotionReveal delay={0.2}>
+                                <p
+                                    className="text-body-lg mb-12 max-w-lg ui-copy"
+                                >
+                                    There is no fixed timeline or formula for therapy. But the journey often
+                                    involves moving through several layers of understanding.
+                                </p>
+                            </MotionReveal>
 
-                            <div
+                            <MotionStagger
+                                amount={0.2}
                                 className="space-y-8 relative pl-8"
                                 style={{
                                     borderLeft: "1px solid color-mix(in srgb, var(--color-stone-grey) 30%, transparent)",
                                 }}
                             >
                                 {journeySteps.map((step) => (
-                                    <div key={step.num} className="relative flex items-start gap-6">
-                                        <div
-                                            className="flex items-center justify-center w-6 h-6 rounded-full text-white z-10 shrink-0 shadow-sm absolute -left-11 surface-accent"
-                                        >
-                                            <span
-                                                className="text-label-md"
-                                                style={{ fontSize: "10px" }}
+                                    <MotionItem key={step.num}>
+                                        <div className="relative flex items-start gap-6 group">
+                                            <div
+                                                className="flex items-center justify-center w-6 h-6 rounded-full text-white z-10 shrink-0 shadow-sm absolute -left-11 surface-accent transition-transform duration-300 group-hover:scale-125"
                                             >
-                                                {step.num}
-                                            </span>
+                                                <span
+                                                    className="text-label-md"
+                                                    style={{ fontSize: "10px" }}
+                                                >
+                                                    {step.num}
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <h4
+                                                    className="text-headline-md mb-2 ui-heading transition-colors group-hover:text-[var(--color-soft-teal)]"
+                                                >
+                                                    {step.title}
+                                                </h4>
+                                                <p className="text-body-md ui-copy">
+                                                    {step.body}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h4
-                                                className="text-headline-md mb-2 ui-heading"
-                                            >
-                                                {step.title}
-                                            </h4>
-                                            <p className="text-body-md ui-copy">
-                                                {step.body}
-                                            </p>
-                                        </div>
-                                    </div>
+                                    </MotionItem>
                                 ))}
-                            </div>
+                            </MotionStagger>
                         </div>
 
                         {/* Illustration */}
@@ -340,15 +381,15 @@ export default function TherapyPage() {
                         </div>
                     </div>
 
-                    <div className="mt-12 text-center">
+                    <MotionReveal delay={0.6} className="mt-12 text-center">
                         <p className="text-headline-md ui-heading">
                             The goal isn't to become someone else. It is to become more fully yourself.
                         </p>
-                    </div>
-                </section>
+                    </MotionReveal>
+                </MotionSection>
 
                 {/* ── FAQ ── */}
-                <section
+                <MotionSection
                     className="section-pad py-16 max-w-[1440px] mx-auto surface-lowest"
                 >
                     <div className="max-w-3xl mx-auto">
@@ -390,36 +431,43 @@ export default function TherapyPage() {
                             ))}
                         </div>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Final CTA ── */}
-                <section
+                <MotionSection
                     id="contact"
                     className="section-pad py-16 md:py-32 flex flex-col items-center justify-center text-center max-w-[1440px] mx-auto my-16 md:my-32"
                 >
-                    <h2
-                        className="text-headline-lg max-w-2xl mb-8 ui-heading"
-                    >
-                        You don't need to know exactly what you need.
-                    </h2>
-                    <div
+                    <MotionText>
+                        <h2
+                            className="text-headline-lg max-w-2xl mb-8 ui-heading"
+                        >
+                            You don't need to know exactly what you need.
+                        </h2>
+                    </MotionText>
+                    <MotionStagger
+                        amount={0.2}
                         className="max-w-xl text-body-lg space-y-6 mb-12 ui-copy"
                     >
-                        <p>
-                            Sometimes the first step is simply saying:
-                            <br />
-                            <strong
-                                className="text-headline-md mt-2 block ui-heading"
-                            >
-                                "Something isn't feeling right, and I want to understand why."
-                            </strong>
-                        </p>
-                        <p>That's enough to begin.</p>
-                    </div>
-                    <div className="flex flex-col items-center gap-6">
+                        <MotionItem>
+                            <p>
+                                Sometimes the first step is simply saying:
+                                <br />
+                                <strong
+                                    className="text-headline-md mt-2 block ui-heading"
+                                >
+                                    "Something isn't feeling right, and I want to understand why."
+                                </strong>
+                            </p>
+                        </MotionItem>
+                        <MotionItem>
+                            <p>That's enough to begin.</p>
+                        </MotionItem>
+                    </MotionStagger>
+                    <MotionReveal delay={0.4} className="flex flex-col items-center gap-6">
                         <Link
                             href="/conversation"
-                            className="btn-primary inline-flex btn-lg"
+                            className="btn-primary inline-flex btn-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
                         >
                             Begin a Conversation
                         </Link>
@@ -428,8 +476,8 @@ export default function TherapyPage() {
                         >
                             Whenever you're ready, we'll begin wherever you are.
                         </span>
-                    </div>
-                </section>
+                    </MotionReveal>
+                </MotionSection>
             </main>
 
         </>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
+import { MotionReveal } from "@/components/ui/Motion";
 
 export default function BookingDetailPage() {
   const params = useParams();
@@ -43,7 +44,7 @@ export default function BookingDetailPage() {
     return (
       <>
         <Navbar />
-        <main className="section-pad py-16 text-center text-body-lg ui-copy">Loading booking details…</main>
+        <main className="section-pad py-16 text-center text-body-lg ui-copy"><MotionReveal>Loading booking details…</MotionReveal></main>
       </>
     );
   }
@@ -52,9 +53,9 @@ export default function BookingDetailPage() {
     return (
       <>
         <Navbar />
-        <main className="section-pad py-16">
+        <main className="section-pad py-16"><MotionReveal>
           <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-700">{error || "Booking not found."}</div>
-        </main>
+        </MotionReveal></main>
       </>
     );
   }
@@ -62,7 +63,7 @@ export default function BookingDetailPage() {
   return (
     <>
       <Navbar />
-      <main className="section-pad py-12 md:py-16 max-w-4xl mx-auto">
+      <main className="section-pad py-12 md:py-16 max-w-4xl mx-auto"><MotionReveal>
         <div className="mb-8 flex items-center justify-between gap-4">
           <div>
             <p className="text-label-md uppercase tracking-[0.2em] ui-accent">Booking Details</p>
@@ -100,7 +101,7 @@ export default function BookingDetailPage() {
             {booking.addNotes && <div className="md:col-span-2"><strong>Notes:</strong> {booking.addNotes}</div>}
           </div>
         </div>
-      </main>
+      </MotionReveal></main>
     </>
   );
 }

@@ -281,7 +281,7 @@ const BookingSchema = new mongoose.Schema(
     numberOfChildren: { type: Number, default: 0, min: 0 },
     currentlyTakingAnyPsychiatricMedication: { type: Boolean, default: false },
     medicationDetails: { type: String, default: null, trim: true },
-    whereuknowaboutus: { type: String, required: true, trim: true, enum: ['Social Media', 'Friend/Family', 'Search Engine', 'Advertisement', 'Other'] },
+    whereuknowaboutus: { type: String, required: true, trim: true, enum: ['Social Media', 'Instagram', 'Facebook', 'YouTube', 'Twitter/X', 'LinkedIn', 'Friend/Family', 'Doctor/Therapist Referral', 'Existing Client', 'Search Engine', 'Google Search', 'Website/Blog', 'Workshop/Event', 'Advertisement', 'Other'] },
 
     therapyGoals: {
       type: [String],

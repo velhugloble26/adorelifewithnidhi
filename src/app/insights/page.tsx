@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import { MotionSection } from "@/components/ui/Motion";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -23,7 +24,7 @@ export default function InsightsPage() {
 
             <main className="section-pad py-16 md:py-32 w-full max-w-[1440px] mx-auto flex flex-col items-center">
                 {/* ── Hero ── */}
-                <section className="text-center max-w-3xl mx-auto mb-16 md:mb-32">
+                <MotionSection className="text-center max-w-3xl mx-auto mb-16 md:mb-32">
                     <h1 className="text-display-lg mb-6 ui-heading">
                         A little more understanding can change the way you see yourself.
                     </h1>
@@ -32,10 +33,10 @@ export default function InsightsPage() {
                         designed to foster emotional clarity and self-compassion. This is a quiet
                         space to learn, unlearn, and grow at your own pace.
                     </p>
-                </section>
+                </MotionSection>
 
                 {/* ── Featured Insight ── */}
-                <section className="w-full mb-16 md:mb-32">
+                <MotionSection className="w-full mb-16 md:mb-32">
                     <div
                         className="rounded-xl overflow-hidden flex flex-col md:flex-row border shadow-sm"
                         style={{
@@ -86,10 +87,10 @@ export default function InsightsPage() {
                             </Link>
                         </div>
                     </div>
-                </section>
+                </MotionSection>
 
                 {/* ── Category Grid ── */}
-                <section className="w-full">
+                <MotionSection className="w-full">
                     <h3 className="text-headline-md mb-8 text-center ui-heading">
                         Explore by Theme
                     </h3>
@@ -134,7 +135,7 @@ export default function InsightsPage() {
                             </Link>
                         ))}
                     </div>
-                </section>
+                </MotionSection>
             </main>
 
         </>

@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { MotionReveal } from "./Motion";
 
 interface CtaSectionProps {
     icon?: string;
@@ -24,7 +25,7 @@ export default function CtaSection({
             className="w-full py-16 md:py-24 flex flex-col items-center justify-center text-center"
             style={{ backgroundColor: bg }}
         >
-            <div className="section-pad max-w-2xl mx-auto">
+            <MotionReveal className="section-pad max-w-2xl mx-auto">
                 {icon && (
                     <span
                         className="material-symbols-outlined mb-6 text-4xl block"
@@ -48,7 +49,7 @@ export default function CtaSection({
                     </p>
                 )}
                 <div className="flex gap-4 justify-center flex-wrap">{children}</div>
-            </div>
+            </MotionReveal>
         </section>
     );
 }
