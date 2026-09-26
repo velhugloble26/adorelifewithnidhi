@@ -540,11 +540,11 @@ function AdminCreateBooking({
               <option value="regular">Regular Session</option>
               <option value="four">4 Sessions</option>
               <option value="eight">8 Sessions</option>
+              <option value="foreign-psychologist-psychotherapist-8-session">
+                Foreign Individual Therapy · 8 Sessions
+              </option>
               <option value="foreign-couple-therapy-8-session">
                 Foreign Couple Therapy · 8 Sessions
-              </option>
-              <option value="foreign-psychologist-psychotherapist-8-session">
-                Foreign Psychologist · 8 Sessions
               </option>
             </select>
           </label>

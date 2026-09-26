@@ -29,7 +29,7 @@ export default function Page() {
     <>
       <main>
         <MotionSection
-          className="section-pad flex min-h-screen w-full flex-col items-center justify-center bg-cover bg-center bg-no-repeat py-12 text-center"
+          className="welcome-hero section-pad flex min-h-screen w-full flex-col items-center justify-center bg-cover bg-center bg-no-repeat py-12 text-center"
           style={{
             backgroundImage:
               `linear-gradient(rgba(250, 246, 238, 0.78), rgba(250, 246, 238, 0.78)), url("/heroSection.png")`,
@@ -61,7 +61,7 @@ export default function Page() {
 
         <div className="my-16 h-px w-full bg-gradient-to-r from-transparent via-stone-grey/20 to-transparent" />
 
-        <MotionSection id="recognition" className="section-pad mx-auto flex min-h-screen max-w-[1200px] flex-col justify-center py-32">
+        <MotionSection id="recognition" className="section-pad mx-auto flex min-h-screen max-w-[1440px] flex-col justify-center py-32">
           <MotionText>
             <h2 className="text-display-lg mb-10 text-primary">Perhaps you&apos;ve been carrying more than you realise.</h2>
           </MotionText>
@@ -102,7 +102,7 @@ export default function Page() {
           </div>
         </MotionSection>
 
-        <MotionSection className="section-pad mx-auto flex min-h-screen max-w-[1200px] flex-col items-center justify-center py-32 text-center">
+        <MotionSection className="section-pad mx-auto flex min-h-screen max-w-[1440px] flex-col items-center justify-center py-32 text-center">
           <MotionText>
             <h2 className="text-display-lg mb-10 text-primary">Understanding changes everything.</h2>
           </MotionText>
@@ -122,7 +122,7 @@ export default function Page() {
           </MotionStagger>
         </MotionSection>
 
-        <MotionSection className="section-pad mx-auto flex min-h-screen max-w-[1200px] flex-col justify-center py-32">
+        <MotionSection className="section-pad mx-auto flex min-h-screen max-w-[1440px] flex-col justify-center py-32">
           <MotionText>
             <h2 className="text-display-lg mb-10 text-primary">Imagine having a space where you don&apos;t have to pretend you&apos;re okay.</h2>
           </MotionText>

@@ -115,7 +115,7 @@ export default function ConversationPage() {
                                 <div className="flex flex-col relative group/field">
                                     <label
                                         htmlFor="name"
-                                        className="text-label-md mb-1 transition-colors ui-muted"
+                                        className="text-label-md mb-1 transition-colors ui-text"
                                     >
                                         Name
                                     </label>
@@ -134,7 +134,7 @@ export default function ConversationPage() {
                                 <div className="flex flex-col relative group/field">
                                     <label
                                         htmlFor="phone"
-                                        className="text-label-md mb-1 transition-colors ui-muted"
+                                        className="text-label-md mb-1 transition-colors ui-text"
                                     >
                                         Phone / WhatsApp
                                     </label>
@@ -157,7 +157,7 @@ export default function ConversationPage() {
                             <div className="flex flex-col relative group/field">
                                 <label
                                     htmlFor="email"
-                                    className="text-label-md mb-1 ui-muted"
+                                    className="text-label-md mb-1 ui-text"
                                 >
                                     Email Address
                                 </label>
@@ -180,7 +180,7 @@ export default function ConversationPage() {
                                 <div className="flex flex-col relative group/field">
                                     <label
                                         htmlFor="session"
-                                        className="text-label-md mb-1 ui-muted"
+                                        className="text-label-md mb-1 ui-text"
                                     >
                                         Preferred Session
                                     </label>
@@ -208,7 +208,7 @@ export default function ConversationPage() {
                                 <div className="flex flex-col relative group/field">
                                     <label
                                         htmlFor="format"
-                                        className="text-label-md mb-1 ui-muted"
+                                        className="text-label-md mb-1 ui-text"
                                     >
                                         Preferred Format
                                     </label>

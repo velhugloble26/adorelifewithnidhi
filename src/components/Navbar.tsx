@@ -1,6 +1,6 @@
 "use client";
 
-import { AUTH_ME } from "@/utils/api";
+import { AUTH_ME, MY_BOOKINGS } from "@/utils/api";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +17,7 @@ export default function Navbar() {
     const isLandingPage = pathname === "/";
     const [landingNavRevealed, setLandingNavRevealed] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [hasBookings, setHasBookings] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const navLinksVisible = !isLandingPage || landingNavRevealed;
 
@@ -50,18 +50,34 @@ export default function Navbar() {
     useEffect(() => {
         let active = true;
 
-        fetch(AUTH_ME)
-            .then((res) => res.ok ? res.json() : null)
-            .then((payload) => {
-                if (!active) return;
-                setIsAuthenticated(Boolean(payload?.success && payload?.data?.user));
-            })
-            .catch(() => setIsAuthenticated(false));
+        async function loadBookingState() {
+            try {
+                const authResponse = await fetch(AUTH_ME, { cache: "no-store" });
+                const authPayload = authResponse.ok ? await authResponse.json() : null;
+                if (!authPayload?.success || !authPayload?.data?.user) {
+                    if (active) setHasBookings(false);
+                    return;
+                }
+
+                const bookingsResponse = await fetch(MY_BOOKINGS, { cache: "no-store" });
+                const bookingsPayload = bookingsResponse.ok ? await bookingsResponse.json() : null;
+                if (active) {
+                    setHasBookings(Boolean(bookingsPayload?.success && bookingsPayload?.data?.bookings?.length));
+                }
+            } catch {
+                if (active) setHasBookings(false);
+            }
+        }
+
+        loadBookingState();
 
         return () => {
             active = false;
         };
     }, []);
+
+    const bookingCtaHref = hasBookings ? "/my-bookings" : "/conversation";
+    const bookingCtaLabel = hasBookings ? "My Bookings" : "Begin";
 
     const navLinks = [
         { href: "/home", label: "Home" },
@@ -135,11 +151,11 @@ export default function Navbar() {
                     {/* CTA + mobile toggle */}
                     <div className="flex items-center gap-4">
                         <Link
-                            href="/conversation"
+                            href={bookingCtaHref}
                             className="hidden md:inline-flex btn-primary hover:-translate-y-0.5 hover:shadow-md transition-all duration-300"
                             style={{ paddingTop: "0.5rem", paddingBottom: "0.5rem" }}
                         >
-                            Begin
+                            {bookingCtaLabel}
                         </Link>
                         <motion.div
                             className="md:hidden"
@@ -205,11 +221,11 @@ export default function Navbar() {
                                 transition={{ delay: 0.1 + navLinks.length * 0.05, duration: 0.4 }}
                             >
                                 <Link
-                                    href="/conversation"
+                                    href={bookingCtaHref}
                                     onClick={() => setMobileOpen(false)}
                                     className="btn-primary mt-4 self-start inline-flex hover:-translate-y-1 hover:shadow-md transition-all duration-300"
                                 >
-                                    Begin
+                                    {bookingCtaLabel}
                                 </Link>
                             </motion.div>
                         </motion.nav>

@@ -192,7 +192,7 @@ export default function HomePage() {
         <MotionSection
           className="py-32 section-pad surface-low"
         >
-          <div className="max-w-[1200px] mx-auto">
+          <div className="max-w-[1440px] mx-auto">
             <div className="max-w-[800px] mx-auto text-center mb-16">
               <MotionText>
                 <h2 className="text-headline-lg mb-6 ui-heading">
@@ -403,7 +403,7 @@ export default function HomePage() {
         < section
           className="py-32 section-pad surface-low"
         >
-          <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Image */}
             <div className="lg:col-span-5 relative">
               <div
@@ -528,7 +528,7 @@ export default function HomePage() {
         <MotionSection
           className="py-32 section-pad surface-base"
         >
-          <div className="max-w-[1200px] mx-auto">
+          <div className="max-w-[1440px] mx-auto">
             <div className="text-center mb-16 max-w-[800px] mx-auto">
               <MotionText>
                 <h2

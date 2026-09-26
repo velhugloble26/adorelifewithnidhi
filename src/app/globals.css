@@ -94,28 +94,28 @@
   --radius-xl: 0.75rem;
 
   /* ---------- FONT SIZES ---------- */
-  --text-display-lg: 64px;
+  --text-display-lg: 62px;
   --text-display-lg--line-height: 72px;
   --text-display-lg--letter-spacing: -0.02em;
   --text-display-lg--font-weight: 400;
 
-  --text-headline-lg: 42px;
+  --text-headline-lg: 40px;
   --text-headline-lg--line-height: 50px;
   --text-headline-lg--font-weight: 500;
 
-  --text-headline-md: 32px;
+  --text-headline-md: 30px;
   --text-headline-md--line-height: 42px;
   --text-headline-md--font-weight: 500;
 
-  --text-body-lg: 23px;
+  --text-body-lg: 20px;
   --text-body-lg--line-height: 38px;
   --text-body-lg--font-weight: 400;
 
-  --text-body-md: 20px;
+  --text-body-md: 18px;
   --text-body-md--line-height: 32px;
   --text-body-md--font-weight: 400;
 
-  --text-label-md: 18px;
+  --text-label-md: 16px;
   --text-label-md--line-height: 26px;
   --text-label-md--letter-spacing: 0.05em;
   --text-label-md--font-weight: 600;
@@ -674,13 +674,23 @@ details>summary::-webkit-details-marker {
 .section-pad {
   padding-left: clamp(1rem, 4vw, 4rem);
   padding-right: clamp(1rem, 4vw, 4rem);
-  margin-top: -3rem;
+  margin-top: -1rem;
 
 }
 
 @media (min-width: 768px) {
   .section-pad {
-    margin-top: -3rem;
+    margin-top: -1rem;
+  }
+}
+
+.welcome-hero {
+  margin-top: 3rem;
+}
+
+@media (min-width: 768px) {
+  .welcome-hero {
+    margin-top: 4rem;
   }
 }
 

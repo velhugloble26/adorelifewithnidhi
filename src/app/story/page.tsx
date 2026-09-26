@@ -392,7 +392,7 @@ export default function StoryPage() {
                         You don't have to have everything figured out.
                     </h2></MotionText>
                     <MotionReveal delay={0.5}><p
-                        className="text-body-lg max-w-xl mb-12 ui-copy"
+                        className="text-body-lg max-w-3xl mb-12 ui-copy"
                     >
                         A first conversation doesn't have to be a commitment to a long therapeutic
                         journey. It can simply be a beginning. A chance to talk. A chance to be heard.

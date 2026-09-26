@@ -18,8 +18,8 @@ const steps = [
 ];
 const packagess = [
   {
-    id: "couple-therapy",
-    name: "Couple Therapy",
+    id: "psychologist-psychotherapist",
+    name: "Individual Therapy",
     sessions: [
       {
         id: "regular",
@@ -45,8 +45,8 @@ const packagess = [
     ],
   },
   {
-    id: "psychologist-psychotherapist",
-    name: "Psychologist & Psychotherapist",
+    id: "couple-therapy",
+    name: "Couple Therapy",
     sessions: [
       {
         id: "regular",
@@ -378,10 +378,10 @@ export default function BookSessionPage() {
     <>
       <Navbar />
 
-      <main className="section-pad py-5 md:py-10 max-w-16xl mx-auto"><MotionReveal>
+      <main className="section-pad py-5 md:py-10 max-w-16xl mx-auto mt-5"><MotionReveal>
         <div className="mb-8">
           <p className="text-label-md uppercase tracking-[0.2em] ui-accent">Book your session</p>
-          <h1 className="text-display-lg ui-heading mt-2">Book a Session</h1>
+          <h1 className="text-display-lg ui-heading mt-4">Book a Session</h1>
         </div>
 
         <div className="mb-10 overflow-hidden rounded-xl border border-slate-200 bg-white/70">

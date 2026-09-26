@@ -36,7 +36,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
       <p className="text-label-md mb-5 uppercase tracking-widest ui-accent">{blog.category}</p><h1 className="text-display-lg mb-6 ui-heading">{blog.title}</h1><p className="text-body-lg mx-auto mb-6 max-w-3xl ui-copy">{blog.excerpt}</p>
       <time className="text-label-md ui-muted" dateTime={blog.created_at}>{new Intl.DateTimeFormat("en-IN", { dateStyle: "long" }).format(new Date(blog.created_at))}</time>
     </header>
-    <div className="section-pad mx-auto mb-14 w-full max-w-[1200px]"><div className="aspect-[16/9] overflow-hidden rounded-xl surface-container"><Image src={blog.image} alt={blog.title} width={1600} height={900} priority className="h-full w-full object-cover" /></div></div>
+    <div className="section-pad mx-auto mb-14 w-full max-w-[1440px]"><div className="aspect-[16/9] overflow-hidden rounded-xl surface-container"><Image src={blog.image} alt={blog.title} width={1600} height={900} priority className="h-full w-full object-cover" /></div></div>
     <div className="section-pad mx-auto w-full max-w-[850px]"><div className="text-body-lg whitespace-pre-line ui-copy">{blog.content}</div></div>
   </article></main></>;
 }
