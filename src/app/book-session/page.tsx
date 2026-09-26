@@ -186,6 +186,13 @@ export default function BookSessionPage() {
   }, []);
 
   const updateField = (field: string, value: unknown) => {
+    if (field === "phone") {
+      const contactValue = String(value);
+      setBooking((current) => ({ ...current, phone: contactValue, whatsappNumber: contactValue }));
+      setErrors((current) => ({ ...current, phone: "", whatsappNumber: "" }));
+      return;
+    }
+
     setBooking((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: "" }));
   };
@@ -197,7 +204,6 @@ export default function BookSessionPage() {
     if (!booking.lastName || booking.lastName.trim().length < 2) nextErrors.lastName = "Last name is required.";
     if (!/^\S+@\S+\.\S+$/.test(booking.email)) nextErrors.email = "Enter a valid email address.";
     if (!/^\d{10}$/.test(booking.phone)) nextErrors.phone = "Enter a valid 10-digit phone number.";
-    if (!/^\d{10}$/.test(booking.whatsappNumber)) nextErrors.whatsappNumber = "Enter a valid 10-digit WhatsApp number.";
     if (!booking.identifyYourGender) nextErrors.identifyYourGender = "Select your gender.";
     if (!booking.dob) nextErrors.dob = "Date of birth is required.";
     if (!booking.location.trim()) nextErrors.location = "Location is required.";
@@ -659,14 +665,9 @@ export default function BookSessionPage() {
                 {errors.email && <div className="text-sm text-red-600 mt-1">{errors.email}</div>}
               </div>
               <div>
-                <label className="text-label-md ui-copy block mb-2">Phone Number</label>
+                <label className="text-label-md ui-copy block mb-2">Phone/WhatsApp Number</label>
                 <input type="tel" inputMode="numeric" maxLength={10} className="ghost-input" value={booking.phone} onChange={(e) => updateField("phone", e.target.value)} />
                 {errors.phone && <div className="text-sm text-red-600 mt-1">{errors.phone}</div>}
-              </div>
-              <div>
-                <label className="text-label-md ui-copy block mb-2">WhatsApp Number</label>
-                <input type="tel" inputMode="numeric" maxLength={10} className="ghost-input" value={booking.whatsappNumber} onChange={(e) => updateField("whatsappNumber", e.target.value)} />
-                {errors.whatsappNumber && <div className="text-sm text-red-600 mt-1">{errors.whatsappNumber}</div>}
               </div>
               <div>
                 <label className="text-label-md ui-copy block mb-2">Gender</label>
@@ -711,7 +712,22 @@ export default function BookSessionPage() {
               <div>
                 <label className="text-label-md ui-copy block mb-2">How did you hear about us?</label>
                 <select className="ghost-input" value={booking.whereuknowaboutus} onChange={(e) => updateField("whereuknowaboutus", e.target.value)}>
-                  <option value="">Select an option</option><option>Social Media</option><option>Friend/Family</option><option>Search Engine</option><option>Advertisement</option><option>Other</option>
+                  <option value="">Select an option</option>
+                  <option>Social Media</option>
+                  <option>Instagram</option>
+                  <option>Facebook</option>
+                  <option>YouTube</option>
+                  <option>Twitter/X</option>
+                  <option>LinkedIn</option>
+                  <option>Friend/Family</option>
+                  <option>Doctor/Therapist Referral</option>
+                  <option>Existing Client</option>
+                  <option>Search Engine</option>
+                  <option>Google Search</option>
+                  <option>Website/Blog</option>
+                  <option>Workshop/Event</option>
+                  <option>Advertisement</option>
+                  <option>Other</option>
                 </select>
                 {errors.whereuknowaboutus && <div className="text-sm text-red-600 mt-1">{errors.whereuknowaboutus}</div>}
               </div>

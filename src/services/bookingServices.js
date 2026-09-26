@@ -55,7 +55,7 @@ export function validateBookingRequest(data) {
   const allowedGenders = ['Male', 'Female', 'Non-Binary', 'Transgender', 'Prefer not to say', 'Other'];
   const allowedSessionModes = ['Online', 'Offline'];
   const allowedRelationshipStatuses = ['Single', 'In a relationship', 'Married', 'Divorced', 'Widowed', 'Other'];
-  const allowedReferralSources = ['Social Media', 'Friend/Family', 'Search Engine', 'Advertisement', 'Other'];
+  const allowedReferralSources = ['Social Media', 'Instagram', 'Facebook', 'YouTube', 'Twitter/X', 'LinkedIn', 'Friend/Family', 'Doctor/Therapist Referral', 'Existing Client', 'Search Engine', 'Google Search', 'Website/Blog', 'Workshop/Event', 'Advertisement', 'Other'];
   const allowedTherapyGoals = [
     'Managing stress, anxiety, or overwhelming emotions',
     'Healing from past trauma or unresolved emotional pain',
